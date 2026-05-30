@@ -7,6 +7,14 @@
     "open": "2026-05-30",
     "close": "2026-07-04",
     "html": "de_hs_24J67O.html"
+  },
+  {
+    "id": "de002",
+    "title": "test02",
+    "week": "2026-w02",
+    "class": "11A4",
+    "open": "2026-06-01",
+    "close": "2026-06-08",
     "html": "de_hs_VRNZ4P.html"
   }
 ]
