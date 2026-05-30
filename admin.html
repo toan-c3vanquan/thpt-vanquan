@@ -31,9 +31,11 @@
     <h2>➕ Thêm nhiều đề mới (chọn nhiều file HTML)</h2>
     <label>Lớp áp dụng * (chọn một hoặc nhiều)</label>
     <div class="checkbox-group" id="classCheckboxes">
-        <label><input type="checkbox" value="10"> Lớp 10</label>
-        <label><input type="checkbox" value="11"> Lớp 11</label>
-        <label><input type="checkbox" value="12"> Lớp 12</label>
+        <label><input type="checkbox" value="10"> Toán 10</label>
+        <label><input type="checkbox" value="11"> Toán 11</label>
+        <label><input type="checkbox" value="12"> Toán 12</label>
+        <label><input type="checkbox" value="ontn"> Ôn TN</label>
+        <label><input type="checkbox" value="thithu"> Thi thử</label>
     </div>
     <label>Tuần (chung)</label>
     <input type="text" id="week" placeholder="2026-W01">
@@ -45,7 +47,7 @@
     <input type="file" id="htmlFiles" accept=".html" multiple>
     <div id="selectedFilesList" class="file-list" style="display:none;"></div>
     <button id="addMultipleBtn">➕ Thêm đề & Xuất exams.json (cũ + mới)</button>
-    <div class="warning">⚠️ Mỗi file HTML sẽ tạo một đề riêng, áp dụng cho tất cả lớp đã chọn. Tiêu đề = tên file (bỏ .html). Bạn có thể sửa lại trong exams.json sau.</div>
+    <div class="warning">⚠️ Mỗi file HTML sẽ tạo một đề riêng, áp dụng cho tất cả mục đã chọn (Toán 10,11,12, Ôn TN, Thi thử). Tiêu đề = tên file (bỏ .html). Có thể sửa lại trong exams.json sau.</div>
 </div>
 <script>
     let currentExams = [];
@@ -60,9 +62,18 @@
     function renderExamList() {
         const container = document.getElementById("examList");
         if(!currentExams.length){ container.innerHTML="<p>Chưa có đề nào.</p>"; return; }
-        let html = `<table><thead><tr><th>ID</th><th>Tiêu đề</th><th>Lớp</th><th>Tuần</th><th>Mở</th><th>Đóng</th><th>File</th><th>Xóa</th></tr></thead><tbody>`;
+        let html = `<table><thead><tr><th>ID</th><th>Tiêu đề</th><th>Danh mục</th><th>Tuần</th><th>Mở</th><th>Đóng</th><th>File</th><th>Xóa</th></tr></thead><tbody>`;
         currentExams.forEach((ex,idx)=>{
-            html += `<tr><td>${ex.id}</td><td>${ex.title}</td><td>${ex.class}</td><td>${ex.week||''}</td><td>${ex.open}</td><td>${ex.close}</td><td>${ex.html}</td><td><button class="delBtn" data-idx="${idx}">🗑️</button></td></tr>`;
+            html += `<tr>
+                <td>${ex.id}</td>
+                <td>${ex.title}</td>
+                <td>${ex.grade || ex.class}</td>
+                <td>${ex.week||''}</td>
+                <td>${ex.open}</td>
+                <td>${ex.close}</td>
+                <td>${ex.html}</td>
+                <td><button class="delBtn" data-idx="${idx}">🗑️</button></td>
+            </tr>`;
         });
         html += `</tbody></table><p class="success">✅ Tổng số đề: ${currentExams.length}</p>`;
         container.innerHTML = html;
@@ -86,8 +97,8 @@
     document.getElementById("addMultipleBtn").onclick = async ()=>{
         const files = Array.from(fileInput.files);
         if(!files.length){ alert("Chọn ít nhất một file HTML."); return; }
-        const selectedClasses = Array.from(document.querySelectorAll('#classCheckboxes input:checked')).map(cb=>cb.value);
-        if(!selectedClasses.length){ alert("Chọn ít nhất một lớp."); return; }
+        const selectedGrades = Array.from(document.querySelectorAll('#classCheckboxes input:checked')).map(cb=>cb.value);
+        if(!selectedGrades.length){ alert("Chọn ít nhất một danh mục (Toán 10,11,12, Ôn TN, Thi thử)."); return; }
         const week = document.getElementById("week").value.trim();
         const open = document.getElementById("open").value;
         const close = document.getElementById("close").value;
@@ -96,9 +107,18 @@
         for(const file of files){
             const title = file.name.replace(/\.html$/i,"");
             const idPrefix = title.replace(/[^a-zA-Z0-9]/g,"_");
-            for(const cls of selectedClasses){
-                const id = `${idPrefix}_${cls}_${Date.now()}_${Math.floor(Math.random()*1000)}`;
-                newExams.push({ id, title, grade: cls, class: cls, week, open, close, html: file.name });
+            for(const grade of selectedGrades){
+                const id = `${idPrefix}_${grade}_${Date.now()}_${Math.floor(Math.random()*1000)}`;
+                newExams.push({
+                    id: id,
+                    title: title,
+                    grade: grade,
+                    class: grade,   // Để tương thích với cả lọc lớp nếu cần
+                    week: week,
+                    open: open,
+                    close: close,
+                    html: file.name
+                });
             }
         }
         const updated = [...currentExams, ...newExams];
