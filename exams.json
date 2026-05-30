@@ -1,56 +1,38 @@
 [
   {
-    "id": "de002_11A4",
-    "title": "testtiep",
-    "week": "w01",
+    "id": "2_11A4",
+    "title": "tiep tục",
+    "week": "2",
     "class": "11A4",
     "open": "2026-05-30",
     "close": "2026-06-30",
-    "html": "de_hs_EXYB5CR.html"
+    "html": "de_hs_UQE7QA.html"
   },
   {
-    "id": "de002_11A5",
-    "title": "testtiep",
-    "week": "w01",
+    "id": "2_11A5",
+    "title": "tiep tục",
+    "week": "2",
     "class": "11A5",
     "open": "2026-05-30",
     "close": "2026-06-30",
-    "html": "de_hs_EXYB5CR.html"
+    "html": "de_hs_UQE7QA.html"
   },
   {
-    "id": "de002_11A6",
-    "title": "testtiep",
-    "week": "w01",
+    "id": "2_11A6",
+    "title": "tiep tục",
+    "week": "2",
     "class": "11A6",
     "open": "2026-05-30",
     "close": "2026-06-30",
-    "html": "de_hs_EXYB5CR.html"
+    "html": "de_hs_UQE7QA.html"
   },
   {
-    "id": "de002_11A7",
-    "title": "testtiep",
-    "week": "w01",
+    "id": "2_11A7",
+    "title": "tiep tục",
+    "week": "2",
     "class": "11A7",
     "open": "2026-05-30",
     "close": "2026-06-30",
-    "html": "de_hs_EXYB5CR.html"
-  },
-  {
-    "id": "de002_12A1",
-    "title": "testtiep",
-    "week": "w01",
-    "class": "12A1",
-    "open": "2026-05-30",
-    "close": "2026-06-30",
-    "html": "de_hs_EXYB5CR.html"
-  },
-  {
-    "id": "de002_12A2",
-    "title": "testtiep",
-    "week": "w01",
-    "class": "12A2",
-    "open": "2026-05-30",
-    "close": "2026-06-30",
-    "html": "de_hs_EXYB5CR.html"
+    "html": "de_hs_UQE7QA.html"
   }
 ]
