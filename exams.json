@@ -1,20 +1,56 @@
 [
   {
-    "id": "de001",
-    "title": "test01",
-    "week": "2026-w01",
+    "id": "de002_11A4",
+    "title": "testtiep",
+    "week": "w01",
     "class": "11A4",
     "open": "2026-05-30",
-    "close": "2026-07-04",
-    "html": "de_hs_24J67O.html"
+    "close": "2026-06-30",
+    "html": "de_hs_EXYB5CR.html"
   },
   {
-    "id": "de002",
-    "title": "test02",
-    "week": "2026-w02",
-    "class": "11A4",
+    "id": "de002_11A5",
+    "title": "testtiep",
+    "week": "w01",
+    "class": "11A5",
     "open": "2026-05-30",
-    "close": "2026-06-08",
-    "html": "de_hs_VRNZ4P.html"
+    "close": "2026-06-30",
+    "html": "de_hs_EXYB5CR.html"
+  },
+  {
+    "id": "de002_11A6",
+    "title": "testtiep",
+    "week": "w01",
+    "class": "11A6",
+    "open": "2026-05-30",
+    "close": "2026-06-30",
+    "html": "de_hs_EXYB5CR.html"
+  },
+  {
+    "id": "de002_11A7",
+    "title": "testtiep",
+    "week": "w01",
+    "class": "11A7",
+    "open": "2026-05-30",
+    "close": "2026-06-30",
+    "html": "de_hs_EXYB5CR.html"
+  },
+  {
+    "id": "de002_12A1",
+    "title": "testtiep",
+    "week": "w01",
+    "class": "12A1",
+    "open": "2026-05-30",
+    "close": "2026-06-30",
+    "html": "de_hs_EXYB5CR.html"
+  },
+  {
+    "id": "de002_12A2",
+    "title": "testtiep",
+    "week": "w01",
+    "class": "12A2",
+    "open": "2026-05-30",
+    "close": "2026-06-30",
+    "html": "de_hs_EXYB5CR.html"
   }
 ]
