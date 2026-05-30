@@ -4,80 +4,168 @@
     <meta charset="UTF-8">
     <title>Quản trị đề thi - LMS Mini</title>
     <style>
-        body { font-family: system-ui; max-width: 800px; margin: 0 auto; padding: 20px; background: #f5f7fb; }
+        body { font-family: system-ui; max-width: 1200px; margin: 0 auto; padding: 20px; background: #f5f7fb; }
         .card { background: white; border-radius: 16px; padding: 20px; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
         label { font-weight: bold; display: block; margin-top: 12px; }
         input, textarea, select { width: 100%; padding: 8px; margin-top: 5px; border-radius: 8px; border: 1px solid #ccc; }
+        .checkbox-group { display: flex; gap: 15px; flex-wrap: wrap; margin-top: 8px; }
+        .checkbox-group label { display: inline-flex; align-items: center; gap: 5px; font-weight: normal; margin-top: 0; }
         button { background: #1e3c72; color: white; padding: 10px 20px; border: none; border-radius: 8px; margin-top: 20px; cursor: pointer; }
+        button.danger { background: #c0392b; }
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background: #e2e8f0; }
         .warning { background: #fff3cd; padding: 12px; border-radius: 8px; margin-top: 15px; }
+        .success { background: #d4edda; padding: 12px; border-radius: 8px; margin-top: 15px; }
     </style>
 </head>
 <body>
 <h1>🛠 Quản trị kho đề</h1>
+
+<div class="card">
+    <h2>📋 Danh sách đề hiện có</h2>
+    <div id="examList">Đang tải...</div>
+    <button id="refreshListBtn" style="background: #27ae60; margin-top: 10px;">🔄 Làm mới danh sách</button>
+</div>
+
 <div class="card">
     <h2>➕ Thêm đề mới</h2>
-    <label>Tiêu đề</label>
+    <label>Tiêu đề *</label>
     <input type="text" id="title" placeholder="VD: Ôn tập Hàm số">
-    <label>Lớp</label>
-    <select id="class">
-        <option>11A4</option><option>11A5</option><option>11A6</option>
-    </select>
+
+    <label>Lớp áp dụng * (có thể chọn nhiều)</label>
+    <div class="checkbox-group" id="classCheckboxes">
+        <label><input type="checkbox" value="11A4"> 11A4</label>
+        <label><input type="checkbox" value="11A5"> 11A5</label>
+        <label><input type="checkbox" value="11A6"> 11A6</label>
+        <label><input type="checkbox" value="11A7"> 11A7</label>
+        <label><input type="checkbox" value="12A1"> 12A1</label>
+        <label><input type="checkbox" value="12A2"> 12A2</label>
+    </div>
+
     <label>Tuần (VD: 2026-W01)</label>
     <input type="text" id="week" placeholder="2026-W01">
-    <label>Ngày mở (YYYY-MM-DD)</label>
+
+    <label>Ngày mở (YYYY-MM-DD) *</label>
     <input type="date" id="open">
-    <label>Ngày đóng (YYYY-MM-DD)</label>
+
+    <label>Ngày đóng (YYYY-MM-DD) *</label>
     <input type="date" id="close">
-    <label>ID đề (không dấu cách, VD: de003)</label>
+
+    <label>ID đề (không dấu cách, VD: de003) *</label>
     <input type="text" id="id" placeholder="de003">
-    <label>Chọn file HTML đề</label>
+
+    <label>Chọn file HTML đề *</label>
     <input type="file" id="htmlFile" accept=".html">
-    <button id="addBtn">➕ Thêm đề & Xuất exams.json</button>
-    <div id="info" class="warning">Sau khi thêm, bạn sẽ tải file exams.json mới về và upload lên GitHub thay thế file cũ.</div>
+
+    <button id="addBtn">➕ Thêm đề (giữ nguyên đề cũ)</button>
+    <div id="info" class="warning">Sau khi thêm, bạn sẽ tải file <strong>exams.json</strong> mới về. Hãy upload file này lên GitHub (thay thế file cũ) và upload file HTML đề lên cùng thư mục. Các đề cũ vẫn được giữ nguyên.</div>
 </div>
+
 <script>
+    let currentExams = [];
+
+    async function loadExams() {
+        try {
+            const res = await fetch("exams.json?v=" + Date.now());
+            if (res.ok) {
+                currentExams = await res.json();
+            } else {
+                currentExams = [];
+            }
+        } catch(e) {
+            currentExams = [];
+        }
+        renderExamList();
+    }
+
+    function renderExamList() {
+        const container = document.getElementById("examList");
+        if (!currentExams.length) {
+            container.innerHTML = "<p>Chưa có đề nào. Hãy thêm đề mới.</p>";
+            return;
+        }
+        let html = `<table>
+            <thead><tr><th>ID</th><th>Tiêu đề</th><th>Lớp</th><th>Tuần</th><th>Mở</th><th>Đóng</th><th>File HTML</th><th>Thao tác</th></tr></thead>
+            <tbody>`;
+        currentExams.forEach((ex, index) => {
+            html += `<tr>
+                <td>${ex.id}</td>
+                <td>${ex.title}</td>
+                <td>${ex.class}</td>
+                <td>${ex.week || ''}</td>
+                <td>${ex.open}</td>
+                <td>${ex.close}</td>
+                <td>${ex.html}</td>
+                <td><button class="deleteBtn" data-index="${index}">🗑️ Xóa</button></td>
+            </tr>`;
+        });
+        html += `</tbody></table>`;
+        container.innerHTML = html;
+        // Gắn sự kiện xóa
+        document.querySelectorAll('.deleteBtn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const idx = parseInt(btn.getAttribute('data-index'));
+                if (confirm(`Xóa đề "${currentExams[idx].title}"?`)) {
+                    currentExams.splice(idx, 1);
+                    renderExamList();
+                }
+            });
+        });
+    }
+
+    document.getElementById("refreshListBtn").onclick = () => loadExams();
+
     document.getElementById("addBtn").onclick = async () => {
         const title = document.getElementById("title").value.trim();
-        const className = document.getElementById("class").value;
         const week = document.getElementById("week").value.trim();
         const open = document.getElementById("open").value;
         const close = document.getElementById("close").value;
         const id = document.getElementById("id").value.trim();
         const htmlFile = document.getElementById("htmlFile").files[0];
 
+        // Lấy các lớp được chọn
+        const selectedClasses = Array.from(document.querySelectorAll('#classCheckboxes input:checked')).map(cb => cb.value);
+        if (selectedClasses.length === 0) {
+            alert("Vui lòng chọn ít nhất một lớp.");
+            return;
+        }
         if (!title || !open || !close || !id || !htmlFile) {
-            alert("Vui lòng điền đầy đủ thông tin và chọn file HTML.");
+            alert("Vui lòng điền đầy đủ thông tin (có dấu *).");
             return;
         }
 
-        // Đọc exams.json hiện tại (nếu có)
-        let currentExams = [];
-        try {
-            const res = await fetch("exams.json");
-            currentExams = await res.json();
-        } catch(e) { /* file chưa tồn tại */ }
-
-        // Kiểm tra trùng id
+        // Kiểm tra trùng ID
         if (currentExams.find(ex => ex.id === id)) {
-            alert(`ID ${id} đã tồn tại. Vui lòng đổi ID khác.`);
+            alert(`ID ${id} đã tồn tại. Hãy dùng ID khác.`);
             return;
         }
 
-        // Giả sử file HTML sẽ được upload riêng lên GitHub, ở đây ta chỉ lưu tên file
         const htmlFileName = htmlFile.name;
-        const newExam = {
-            id: id,
-            title: title,
-            week: week,
-            class: className,
-            open: open,
-            close: close,
-            html: htmlFileName
-        };
-        currentExams.push(newExam);
+
+        // Tạo một đề riêng cho mỗi lớp (vì mỗi đề chỉ gắn với một lớp trong cách hiển thị)
+        // Nhưng thầy muốn một đề hiển thị cho nhiều lớp, ta có thể tạo nhiều bản sao với cùng id? Không nên.
+        // Giải pháp: lưu trường class dưới dạng mảng? Nhưng trong index.html hiện tại chỉ so sánh string.
+        // Để tương thích, ta sẽ tạo một đề cho mỗi lớp, nhưng có cùng title, cùng html, cùng open/close, khác class.
+        // Điều này giúp mỗi lớp thấy đề riêng.
+        let newExams = [];
+        for (let cls of selectedClasses) {
+            newExams.push({
+                id: id + "_" + cls,  // tạo id riêng theo lớp để tránh trùng
+                title: title,
+                week: week,
+                class: cls,
+                open: open,
+                close: close,
+                html: htmlFileName
+            });
+        }
+
+        // Gộp với danh sách cũ
+        const updatedExams = [...currentExams, ...newExams];
         
         // Xuất file exams.json
-        const jsonStr = JSON.stringify(currentExams, null, 2);
+        const jsonStr = JSON.stringify(updatedExams, null, 2);
         const blob = new Blob([jsonStr], {type: "application/json"});
         const url = URL.createObjectURL(blob);
         const a = document.createElement("a");
@@ -88,8 +176,23 @@
         document.body.removeChild(a);
         URL.revokeObjectURL(url);
         
-        alert("Đã tạo file exams.json mới. Hãy tải file này lên GitHub (thay thế exams.json cũ) và upload file HTML đề lên cùng thư mục.");
+        alert(`Đã tạo file exams.json mới với ${updatedExams.length} đề (bao gồm ${currentExams.length} đề cũ + ${newExams.length} đề mới). Hãy tải file này lên GitHub, đồng thời upload file HTML ${htmlFileName} lên cùng thư mục.`);
+        
+        // Cập nhật lại danh sách hiển thị
+        currentExams = updatedExams;
+        renderExamList();
+        
+        // Reset form
+        document.getElementById("title").value = "";
+        document.getElementById("week").value = "";
+        document.getElementById("open").value = "";
+        document.getElementById("close").value = "";
+        document.getElementById("id").value = "";
+        document.getElementById("htmlFile").value = "";
+        document.querySelectorAll('#classCheckboxes input:checked').forEach(cb => cb.checked = false);
     };
+
+    loadExams();
 </script>
 </body>
 </html>
