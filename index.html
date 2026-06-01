@@ -68,10 +68,10 @@
     let allExams = [];
     let currentCategory = "11";
 
-    // Hàm lấy số lượt nộp bài (dùng key "exam_submits")
-    function getSubmits(examId) {
+    // Lấy số lượt nộp theo tên file (key là tên file HTML)
+    function getSubmits(fileName) {
         let submits = JSON.parse(localStorage.getItem("exam_submits")) || {};
-        return submits[examId] || 0;
+        return submits[fileName] || 0;
     }
 
     function getToday() {
@@ -155,7 +155,7 @@
             if (status === "future") { extraClass = "future-card"; btnText = "⏳ Sắp mở"; btnDisabled = true; }
             if (status === "closed") { extraClass = "closed-card"; btnText = "🔒 Đã đóng"; btnDisabled = true; }
             const btnClass = btnDisabled ? "btn btn-disabled" : "btn";
-            const submits = getSubmits(ex.id);
+            const submits = getSubmits(ex.html);
             const btnLink = btnDisabled ? "#" : ex.html;
             return `
                 <div class="de-card ${extraClass}">

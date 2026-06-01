@@ -2,7 +2,7 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <title>Quản trị đề - Tự động chèn script đếm lượt nộp</title>
+    <title>Quản trị đề - Thêm nhiều đề cùng lúc + Khôi phục JSON cũ</title>
     <style>
         body { font-family: system-ui; max-width: 1200px; margin: 0 auto; padding: 20px; background: #f5f7fb; }
         .card { background: white; border-radius: 16px; padding: 20px; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
@@ -20,8 +20,7 @@
     </style>
 </head>
 <body>
-<h1>🛠 Quản trị kho đề - Tự động chèn script đếm lượt nộp</h1>
-
+<h1>🛠 Quản trị kho đề - Thêm nhiều đề cùng lúc + Khôi phục JSON cũ</h1>
 <div class="card">
     <h2>📋 Danh sách đề hiện có</h2>
     <div id="examList">Đang tải...</div>
@@ -30,14 +29,14 @@
         <button id="downloadCurrentBtn" style="background:#2980b9;">💾 Tải exams.json hiện tại</button>
         <button id="downloadBackupBtn" style="background:#6c757d;">📂 Tải exams.json cũ (backup)</button>
     </div>
-    <hr>
-    <h3>📂 Khôi phục dữ liệu từ file JSON cũ</h3>
-    <div style="display: flex; gap: 10px;">
+    <hr style="margin: 20px 0;">
+    <h3>📂 Khôi phục dữ liệu từ file JSON cũ (đã tải từ GitHub)</h3>
+    <div style="display: flex; gap: 10px; align-items: flex-end;">
         <div style="flex:1"><input type="file" id="uploadJsonFile" accept=".json"></div>
-        <button id="loadJsonBtn">🔄 Nạp file JSON</button>
+        <button id="loadJsonBtn" style="margin-top: 24px;">🔄 Nạp file JSON & thay thế danh sách</button>
     </div>
+    <div class="warning">⚠️ Khi nạp file JSON, dữ liệu hiện tại (nếu có) sẽ bị thay thế hoàn toàn. Hãy dùng "Tải exams.json hiện tại" để backup trước khi nạp.</div>
 </div>
-
 <div class="card">
     <h2>➕ Thêm đề mới (tự động chèn script đếm lượt nộp)</h2>
     <label>Lớp áp dụng *</label>
@@ -73,7 +72,6 @@
         Hãy giải nén và upload toàn bộ lên GitHub.
     </div>
 </div>
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 <script>
     let currentExams = [];
@@ -125,9 +123,7 @@
         URL.revokeObjectURL(a.href);
     }
 
-    // Hàm chèn script đếm submit vào nội dung HTML (dùng tên file làm key)
     function injectSubmitScript(htmlContent, fileName) {
-        // Tạo script dùng fileName làm định danh
         const scriptCode = `
 <script>
 (function() {
@@ -138,11 +134,12 @@
         submits[FILE_NAME] = (submits[FILE_NAME] || 0) + 1;
         localStorage.setItem(KEY, JSON.stringify(submits));
         console.log("Đã tăng lượt nộp cho:", FILE_NAME);
+        alert("Đã ghi nhận lượt nộp bài!");
     }
-    // Gắn sự kiện cho form hoặc nút submit
-    const form = document.querySelector("form");
-    if (form) {
-        form.addEventListener("submit", increaseSubmit);
+    // Tìm nút nộp bài bằng ID hoặc text
+    const submitBtn = document.getElementById("submit-btn");
+    if (submitBtn) {
+        submitBtn.addEventListener("click", increaseSubmit);
     } else {
         const btns = document.querySelectorAll("button, input[type=submit]");
         btns.forEach(btn => {
@@ -154,16 +151,13 @@
 })();
 <\/script>
         `;
-        // Chèn script trước thẻ </body>
         if (htmlContent.includes("</body>")) {
             return htmlContent.replace("</body>", scriptCode + "\n</body>");
         } else {
-            // Nếu không có body, thêm vào cuối
             return htmlContent + scriptCode;
         }
     }
 
-    // Xử lý thêm đề
     document.getElementById("addMultipleBtn").onclick = async () => {
         const files = Array.from(document.getElementById("htmlFiles").files);
         if(!files.length){ alert("Chọn ít nhất một file HTML."); return; }
@@ -174,16 +168,13 @@
         const close = document.getElementById("close").value;
         if(!open || !close){ alert("Chọn ngày mở và đóng."); return; }
 
-        // Đọc nội dung từng file HTML, chèn script, lưu lại để tạo zip
         const zip = new JSZip();
         let newExams = [];
 
         for (const file of files) {
             const originalContent = await file.text();
             const injectedContent = injectSubmitScript(originalContent, file.name);
-            // Thêm file đã chèn script vào zip (giữ tên gốc)
             zip.file(file.name, injectedContent);
-
             const title = file.name.replace(/\.html$/i, "");
             const idPrefix = title.replace(/[^a-zA-Z0-9]/g, "_");
             for (const grade of selectedGrades) {
@@ -202,23 +193,16 @@
         }
 
         const updatedExams = [...currentExams, ...newExams];
-        // Thêm exams.json vào zip
         zip.file("exams.json", JSON.stringify(updatedExams, null, 2));
-
-        // Tạo và tải zip
         const zipBlob = await zip.generateAsync({ type: "blob" });
         const link = document.createElement("a");
         link.href = URL.createObjectURL(zipBlob);
         link.download = "de_thi_export.zip";
         link.click();
         URL.revokeObjectURL(link.href);
-
         alert(`✅ Đã tạo file ZIP chứa:\n- exams.json (${updatedExams.length} đề)\n- ${files.length} file HTML đã chèn script đếm lượt nộp.\n👉 Giải nén và upload toàn bộ lên GitHub.`);
-
-        // Cập nhật currentExams và giao diện
         currentExams = updatedExams;
         renderExamList();
-        // Reset form
         document.getElementById("htmlFiles").value = "";
         document.getElementById("selectedFilesList").style.display = "none";
         document.getElementById("week").value = "";
@@ -227,7 +211,15 @@
         document.querySelectorAll('#classCheckboxes input:checked').forEach(cb=>cb.checked=false);
     };
 
-    // Các hàm khác (load, tải json, nạp file json)
+    document.getElementById("htmlFiles").onchange = () => {
+        const files = Array.from(document.getElementById("htmlFiles").files);
+        const div = document.getElementById("selectedFilesList");
+        if(files.length){
+            div.style.display = "block";
+            div.innerHTML = `<strong>Đã chọn ${files.length} file:</strong><ul>${files.map(f=>`<li>${f.name}</li>`).join('')}</ul>`;
+        } else div.style.display = "none";
+    };
+
     document.getElementById("refreshListBtn").onclick = loadFromServer;
     document.getElementById("downloadCurrentBtn").onclick = () => downloadJson("exams.json", currentExams);
     document.getElementById("downloadBackupBtn").onclick = () => downloadJson("exams_cu.json", currentExams);
@@ -248,15 +240,6 @@
         reader.readAsText(fileInput.files[0]);
         fileInput.value = "";
     };
-    document.getElementById("htmlFiles").onchange = () => {
-        const files = Array.from(document.getElementById("htmlFiles").files);
-        const div = document.getElementById("selectedFilesList");
-        if(files.length){
-            div.style.display = "block";
-            div.innerHTML = `<strong>Đã chọn ${files.length} file:</strong><ul>${files.map(f=>`<li>${f.name}</li>`).join('')}</ul>`;
-        } else div.style.display = "none";
-    };
-
     loadFromServer();
 </script>
 </body>
