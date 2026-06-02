@@ -1,12 +1,42 @@
 [
   {
-    "id": "de_hs_AWTVGG_thithu_1780306019702_105",
-    "title": "de_hs_AWTVGG",
+    "id": "de_hs_L4UTU2_thithu_1780390061514_390",
+    "title": "de_hs_L4UTU2",
     "grade": "thithu",
     "class": "thithu",
-    "week": "123",
-    "open": "2026-06-01",
-    "close": "2026-06-15",
-    "html": "de_hs_AWTVGG.html"
+    "week": "2/6-5/6",
+    "open": "2026-06-02",
+    "close": "2026-06-23",
+    "html": "de_hs_L4UTU2.html"
+  },
+  {
+    "id": "de_hs_TYDIKJ_thithu_1780390061517_818",
+    "title": "de_hs_TYDIKJ",
+    "grade": "thithu",
+    "class": "thithu",
+    "week": "2/6-5/6",
+    "open": "2026-06-02",
+    "close": "2026-06-23",
+    "html": "de_hs_TYDIKJ.html"
+  },
+  {
+    "id": "de_hs_X8V6WK_thithu_1780390061519_333",
+    "title": "de_hs_X8V6WK",
+    "grade": "thithu",
+    "class": "thithu",
+    "week": "2/6-5/6",
+    "open": "2026-06-02",
+    "close": "2026-06-23",
+    "html": "de_hs_X8V6WK.html"
+  },
+  {
+    "id": "de_hs_E6IKCO_thithu_1780390061522_13",
+    "title": "de_hs_E6IKCO",
+    "grade": "thithu",
+    "class": "thithu",
+    "week": "2/6-5/6",
+    "open": "2026-06-02",
+    "close": "2026-06-23",
+    "html": "de_hs_E6IKCO.html"
   }
 ]
