@@ -1,62 +1,32 @@
 [
   {
-    "id": "de1_hs_IJG8T1_thithu_1780908220100_948",
-    "title": "de1_hs_IJG8T1",
+    "id": "de010_thithu_1780965696236_788",
+    "title": "de010",
     "grade": "thithu",
     "class": "thithu",
-    "week": "123",
-    "open": "2026-06-08",
-    "close": "2026-06-11",
-    "html": "de1_hs_IJG8T1.html"
+    "week": "2",
+    "open": "2026-06-09",
+    "close": "2026-06-12",
+    "html": "de010.html"
   },
   {
-    "id": "de2_hs_TRFMTA_thithu_1780908220103_858",
-    "title": "de2_hs_TRFMTA",
+    "id": "de009_thithu_1780965696239_413",
+    "title": "de009",
     "grade": "thithu",
     "class": "thithu",
-    "week": "123",
-    "open": "2026-06-08",
-    "close": "2026-06-11",
-    "html": "de2_hs_TRFMTA.html"
+    "week": "2",
+    "open": "2026-06-09",
+    "close": "2026-06-12",
+    "html": "de009.html"
   },
   {
-    "id": "de3_hs_XQLXY9_thithu_1780908220105_497",
-    "title": "de3_hs_XQLXY9",
+    "id": "de008_thithu_1780965696240_458",
+    "title": "de008",
     "grade": "thithu",
     "class": "thithu",
-    "week": "123",
-    "open": "2026-06-08",
-    "close": "2026-06-11",
-    "html": "de3_hs_XQLXY9.html"
-  },
-  {
-    "id": "de4_hs_6BIAA7_thithu_1780908220107_948",
-    "title": "de4_hs_6BIAA7",
-    "grade": "thithu",
-    "class": "thithu",
-    "week": "123",
-    "open": "2026-06-08",
-    "close": "2026-06-11",
-    "html": "de4_hs_6BIAA7.html"
-  },
-  {
-    "id": "de5_hs_E85PV3_thithu_1780908220109_349",
-    "title": "de5_hs_E85PV3",
-    "grade": "thithu",
-    "class": "thithu",
-    "week": "123",
-    "open": "2026-06-08",
-    "close": "2026-06-11",
-    "html": "de5_hs_E85PV3.html"
-  },
-  {
-    "id": "de6_hs_7CCYN7_thithu_1780908220112_23",
-    "title": "de6_hs_7CCYN7",
-    "grade": "thithu",
-    "class": "thithu",
-    "week": "123",
-    "open": "2026-06-08",
-    "close": "2026-06-11",
-    "html": "de6_hs_7CCYN7.html"
+    "week": "2",
+    "open": "2026-06-09",
+    "close": "2026-06-12",
+    "html": "de008.html"
   }
 ]
