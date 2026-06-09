@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Hệ thống đề thi Toán THPT</title>
+    <title>HỆ THỐNG ĐỀ THI TOÁN THPT_free</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Segoe UI', system-ui, sans-serif; background: #f0f2f5; padding-bottom: 40px; }
@@ -29,6 +29,7 @@
         .future-card { border-left-color: #f39c12; }
         .note { text-align: center; margin-top: 30px; color: #666; }
         .luot-lam { font-size: 0.8rem; color: #27ae60; margin-top: 8px; font-weight: bold; }
+        .no-time-badge { display: inline-block; background: #f39c12; color: #1e3c72; border-radius: 20px; font-size: 0.7rem; padding: 2px 8px; margin-left: 8px; vertical-align: middle; }
         @media (max-width: 768px) {
             .menu-desktop { display: none; }
             .menu-mobile { display: block; }
@@ -38,7 +39,7 @@
 </head>
 <body>
 <div class="header">
-    <h1>🎓 HỆ THỐNG ĐỀ THI TOÁN THPT</h1>
+    <h1>🎓 HỆ THỐNG ĐỀ THI TOÁN THPT_free</h1>
 </div>
 <div class="menu-desktop" id="desktopMenu"></div>
 <div class="menu-mobile">
@@ -50,25 +51,23 @@
 </div>
 
 <script>
-    const categories = [
-        { id: "2", name: "Toán 2" },
-        { id: "3", name: "Toán 3" },
-        { id: "4", name: "Toán 4" },
-        { id: "5", name: "Toán 5" },
-        { id: "6", name: "Toán 6" },
-        { id: "7", name: "Toán 7" },
-        { id: "8", name: "Toán 8" },
-        { id: "9", name: "Toán 9" },
-        { id: "10", name: "Toán 10" },
-        { id: "11", name: "Toán 11" },
+    // Danh sách gốc tất cả các lớp (sẽ được lọc theo cấu hình từ admin)
+    const ALL_CATEGORIES = [
+        { id: "2", name: "Toán 2" }, { id: "3", name: "Toán 3" },
+        { id: "4", name: "Toán 4" }, { id: "5", name: "Toán 5" },
+        { id: "6", name: "Toán 6" }, { id: "7", name: "Toán 7" },
+        { id: "8", name: "Toán 8" }, { id: "9", name: "Toán 9" },
+        { id: "10", name: "Toán 10" }, { id: "11", name: "Toán 11" },
         { id: "12", name: "Toán 12" },
         { id: "ontn", name: "Ôn TN" },
         { id: "thithu", name: "Thi thử" }
     ];
+
+    let activeCategories = [];      // Sau khi lọc từ gradeVisibility
     let allExams = [];
     let currentCategory = "11";
 
-    // Lấy số lượt nộp theo tên file (key là tên file HTML)
+    // Lấy số lượt nộp theo tên file
     function getSubmits(fileName) {
         let submits = JSON.parse(localStorage.getItem("exam_submits")) || {};
         return submits[fileName] || 0;
@@ -82,7 +81,31 @@
         return `${year}-${month}-${day}`;
     }
 
+    // Đọc cấu hình lớp được bật từ localStorage (do admin cài)
+    function loadEnabledGrades() {
+        let visibility = localStorage.getItem("gradeVisibility");
+        if (!visibility) {
+            // Mặc định tất cả đều bật nếu chưa có cấu hình
+            const defaultVis = {};
+            ALL_CATEGORIES.forEach(cat => defaultVis[cat.id] = true);
+            localStorage.setItem("gradeVisibility", JSON.stringify(defaultVis));
+            return defaultVis;
+        }
+        return JSON.parse(visibility);
+    }
+
+    // Lọc danh mục dựa trên cấu hình bật/tắt
+    function filterCategories() {
+        const enabled = loadEnabledGrades();
+        activeCategories = ALL_CATEGORIES.filter(cat => enabled[cat.id] === true);
+        if (activeCategories.length === 0) {
+            // Fallback: nếu không có lớp nào được bật, hiển thị tất cả (tránh trắng)
+            activeCategories = [...ALL_CATEGORIES];
+        }
+    }
+
     async function loadExams() {
+        filterCategories(); // lấy danh sách lớp được phép hiển thị
         try {
             const res = await fetch("exams.json?v=" + Date.now());
             if (!res.ok) throw new Error("Không tải được exams.json");
@@ -99,13 +122,14 @@
         const desktopDiv = document.getElementById("desktopMenu");
         const mobileDiv = document.getElementById("mobileMenuList");
         let desktopHtml = "", mobileHtml = "";
-        categories.forEach(cat => {
+        activeCategories.forEach(cat => {
             const activeClass = (currentCategory === cat.id) ? "active" : "";
             desktopHtml += `<a href="#" data-cat="${cat.id}" class="${activeClass}">${cat.name}</a>`;
             mobileHtml += `<a href="#" data-cat="${cat.id}" class="${activeClass}">${cat.name}</a>`;
         });
         desktopDiv.innerHTML = desktopHtml;
         mobileDiv.innerHTML = mobileHtml;
+        // Gắn sự kiện click
         document.querySelectorAll("[data-cat]").forEach(el => {
             el.addEventListener("click", (e) => {
                 e.preventDefault();
@@ -120,6 +144,18 @@
         });
     }
 
+    // Xác định trạng thái của đề dựa vào timeLimited và ngày tháng
+    function getExamStatus(exam, today) {
+        // Nếu đề không bị giới hạn thời gian (timeLimited === false) -> luôn mở
+        if (exam.timeLimited === false) {
+            return "open";
+        }
+        // Ngược lại (timeLimited === true hoặc không có trường) -> kiểm tra ngày
+        if (today >= exam.open && today <= exam.close) return "open";
+        if (today < exam.open) return "future";
+        return "closed";
+    }
+
     function renderContent(gradeId) {
         const container = document.getElementById("content");
         const today = getToday();
@@ -130,8 +166,9 @@
         }
         let openList = [], futureList = [], closedList = [];
         exams.forEach(ex => {
-            if (today >= ex.open && today <= ex.close) openList.push(ex);
-            else if (today < ex.open) futureList.push(ex);
+            const status = getExamStatus(ex, today);
+            if (status === "open") openList.push(ex);
+            else if (status === "future") futureList.push(ex);
             else closedList.push(ex);
         });
         let html = "";
@@ -157,11 +194,14 @@
             const btnClass = btnDisabled ? "btn btn-disabled" : "btn";
             const submits = getSubmits(ex.html);
             const btnLink = btnDisabled ? "#" : ex.html;
+            const noLimitBadge = (ex.timeLimited === false) ? '<span class="no-time-badge">♾️ Không giới hạn</span>' : '';
             return `
                 <div class="de-card ${extraClass}">
-                    <h3>📄 ${ex.title}</h3>
-                    <div class="de-meta">📅 Mở: ${ex.open} | Đóng: ${ex.close}</div>
-                    <div class="de-meta">🏫 Lớp: ${ex.class || "Chung"} | Tuần: ${ex.week || ""}</div>
+                    <h3>📄 ${ex.title} ${noLimitBadge}</h3>
+                    <div class="de-meta">
+                        ${ex.timeLimited !== false ? `📅 Mở: ${ex.open} | Đóng: ${ex.close}` : '⏰ Luôn mở (không giới hạn thời gian)'}
+                    </div>
+                    <div class="de-meta">🏫 Lớp: ${ex.class || ex.grade} | Tuần: ${ex.week || ""}</div>
                     <div class="luot-lam">📊 Lượt nộp: ${submits}</div>
                     <a href="${btnLink}" class="${btnClass}">${btnText}</a>
                 </div>
