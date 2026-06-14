@@ -185,7 +185,11 @@
         }).join("");
     }
 
-    // ========== RENDER TÀI LIỆU - CÁCH XEM MỚI: KHÔNG POPUP, CHUYỂN TRANG TRỰC TIẾP ==========
+    // Hàm xem PDF: chuyển hướng đến file (trình duyệt tự xử lý)
+    function viewDocument(fileUrl) {
+        window.location.href = fileUrl;
+    }
+
     function renderTaiLieu() {
         let container = document.getElementById("content");
         if(!allDocs.length) {
@@ -205,8 +209,7 @@
         docs.forEach(doc => {
             let fileExt = doc.type || (doc.file.split('.').pop().toLowerCase());
             let isPdf = fileExt === 'pdf';
-            // XEM: dùng thẻ a bình thường, không target="_blank" -> trình duyệt tự xử lý (hiển thị hoặc tải)
-            let viewLink = isPdf ? `<a href="${doc.file}" class="btn btn-view">📖 Xem</a>` : '';
+            let viewBtn = isPdf ? `<button class="btn btn-view" onclick="viewDocument('${doc.file}')">📖 Xem</button>` : '';
             html += `
                 <div class="doc-card">
                     <h3>📘 ${escapeHtml(doc.title)}</h3>
@@ -214,7 +217,7 @@
                     <div class="de-meta">📁 ${doc.file} ${doc.grade ? `| Lớp ${doc.grade}` : ''}</div>
                     <div class="doc-actions">
                         <a href="${doc.file}" download class="btn btn-download">⬇️ Tải về</a>
-                        ${viewLink}
+                        ${viewBtn}
                     </div>
                 </div>
             `;
