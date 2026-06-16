@@ -2,415 +2,829 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <title>Quản trị - Đề thi & Tài liệu (Môn + Lớp chuẩn) - Có khôi phục JSON</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản trị - Hệ thống đề thi</title>
     <style>
-        * { box-sizing: border-box; }
-        body { font-family: system-ui; max-width: 1200px; margin: 0 auto; padding: 20px; background: #f5f7fb; }
-        .card { background: white; border-radius: 16px; padding: 20px; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
-        label { font-weight: bold; display: block; margin-top: 12px; }
-        input, select, textarea { width: 100%; padding: 8px; margin-top: 5px; border-radius: 8px; border: 1px solid #ccc; }
-        .checkbox-group { display: flex; gap: 15px; flex-wrap: wrap; margin-top: 8px; max-height: 150px; overflow-y: auto; border: 1px solid #eee; padding: 8px; border-radius: 8px; background: #fafafa; }
-        .checkbox-group label { display: inline-flex; align-items: center; gap: 5px; font-weight: normal; margin-top: 0; width: calc(25% - 15px); min-width: 90px; }
-        button { background: #1e3c72; color: white; padding: 10px 20px; border: none; border-radius: 8px; margin-top: 20px; cursor: pointer; }
-        table { width: 100%; border-collapse: collapse; margin-top: 15px; overflow-x: auto; display: block; }
-        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
-        th { background: #e2e8f0; }
-        .warning { background: #fff3cd; padding: 12px; border-radius: 8px; margin-top: 15px; }
-        .success { background: #d4edda; padding: 12px; border-radius: 8px; }
-        .file-list { background: #f0f0f0; padding: 10px; border-radius: 8px; margin-top: 10px; }
-        hr { margin: 20px 0; }
-        .subject-select { max-height: 200px; overflow-y: auto; }
-        .flex-row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Segoe UI', system-ui, sans-serif; background: #f0f2f5; color: #222; }
+
+        /* ── HEADER ── */
+        .admin-header {
+            background: #1e3c72; color: white; padding: 14px 24px;
+            display: flex; align-items: center; gap: 14px;
+            position: sticky; top: 0; z-index: 200; box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+        .admin-header h1 { font-size: 1.15rem; flex: 1; }
+        .admin-header .badge { background: #f39c12; color: #1e3c72; border-radius: 20px; padding: 3px 12px; font-size: 0.8rem; font-weight: bold; }
+
+        /* ── TABS ── */
+        .tab-bar { background: #0f2b4f; display: flex; gap: 4px; padding: 0 20px; }
+        .tab-btn {
+            padding: 10px 20px; border: none; background: transparent; color: #aac;
+            font-size: 0.9rem; font-weight: bold; cursor: pointer; border-bottom: 3px solid transparent;
+            transition: 0.2s;
+        }
+        .tab-btn.active { color: #f39c12; border-bottom-color: #f39c12; }
+        .tab-btn:hover:not(.active) { color: white; }
+
+        /* ── LAYOUT ── */
+        .tab-panel { display: none; max-width: 1200px; margin: 0 auto; padding: 20px 16px; }
+        .tab-panel.active { display: block; }
+
+        /* ── CARDS ── */
+        .card { background: white; border-radius: 14px; padding: 20px; margin-bottom: 18px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+        .card-title { font-size: 1.05rem; font-weight: bold; color: #1e3c72; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+        .card-title .cnt { font-size: 0.8rem; background: #e8f0fe; color: #1e3c72; border-radius: 20px; padding: 2px 10px; }
+
+        /* ── FORM ── */
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .form-row.three { grid-template-columns: 1fr 1fr 1fr; }
+        .form-group { margin-top: 10px; }
+        .form-group label { font-size: 0.82rem; font-weight: bold; color: #555; display: block; margin-bottom: 4px; }
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%; padding: 8px 10px; border-radius: 8px; border: 1px solid #ddd;
+            font-size: 0.9rem; transition: border 0.2s;
+        }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            outline: none; border-color: #1e3c72;
+        }
+        .checkbox-group {
+            display: flex; gap: 10px; flex-wrap: wrap; margin-top: 6px;
+            max-height: 130px; overflow-y: auto; border: 1px solid #eee;
+            padding: 8px; border-radius: 8px; background: #fafafa;
+        }
+        .checkbox-group label { display: inline-flex; align-items: center; gap: 5px; font-weight: normal; font-size: 0.85rem; min-width: 90px; }
+
+        /* ── BUTTONS ── */
+        .btn { display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; border: none; border-radius: 8px; font-size: 0.88rem; font-weight: bold; cursor: pointer; transition: 0.15s; }
+        .btn:hover { filter: brightness(0.9); }
+        .btn-primary   { background: #1e3c72; color: white; }
+        .btn-success   { background: #27ae60; color: white; }
+        .btn-info      { background: #2980b9; color: white; }
+        .btn-warning   { background: #f39c12; color: #1e3c72; }
+        .btn-danger    { background: #e74c3c; color: white; padding: 4px 8px; font-size: 0.8rem; }
+        .btn-sm        { padding: 4px 10px; font-size: 0.8rem; }
+        .btn-group     { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; align-items: center; }
+
+        /* ── SEARCH / FILTER BAR ── */
+        .filter-bar {
+            display: flex; gap: 8px; flex-wrap: wrap; align-items: center;
+            background: #f8f9fa; padding: 10px 12px; border-radius: 10px; margin-bottom: 12px;
+        }
+        .filter-bar input[type=text] { flex: 1; min-width: 160px; padding: 7px 12px; border-radius: 8px; border: 1px solid #ddd; font-size: 0.88rem; }
+        .filter-bar select { padding: 7px 10px; border-radius: 8px; border: 1px solid #ddd; font-size: 0.85rem; background: white; }
+        .filter-bar .count-info { font-size: 0.8rem; color: #888; margin-left: auto; white-space: nowrap; }
+
+        /* ── TABLE ── */
+        .tbl-wrap { overflow-x: auto; border-radius: 10px; border: 1px solid #eee; }
+        table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+        th { background: #e8f0fe; color: #1e3c72; padding: 9px 10px; text-align: left; font-weight: bold; white-space: nowrap; }
+        td { padding: 8px 10px; border-bottom: 1px solid #f0f0f0; vertical-align: middle; }
+        tr:last-child td { border-bottom: none; }
+        tr:hover td { background: #f9fbff; }
+        .hl { background: #fff176; border-radius: 2px; }
+        .type-badge { font-size: 0.72rem; padding: 2px 7px; border-radius: 12px; font-weight: bold; white-space: nowrap; }
+        .type-html  { background: #e8f0fe; color: #1e3c72; }
+        .type-quiz  { background: #d4edda; color: #1a5c2b; }
+        .type-link  { background: #f3e5f5; color: #6a1b9a; }
+        .type-img   { background: #fff3e0; color: #e65100; }
+        .type-video { background: #fce4ec; color: #880e4f; }
+        .type-pdf   { background: #ffebee; color: #b71c1c; }
+        .type-docx  { background: #e3f2fd; color: #0d47a1; }
+        .status-open   { color: #27ae60; font-weight: bold; }
+        .status-future { color: #2980b9; }
+        .status-closed { color: #aaa; }
+
+        /* ── QUIZ BUILDER ── */
+        .question-item { background: #f8f9fa; padding: 12px 14px; margin: 10px 0; border-radius: 10px; border-left: 4px solid #1e3c72; }
+        .question-item .q-header { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+        .question-item input[type=text] { padding: 7px 10px; border-radius: 7px; border: 1px solid #ddd; font-size: 0.88rem; }
+        .options-group { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-top: 8px; }
+        .option-row { display: flex; align-items: center; gap: 6px; }
+        .option-row input[type=text] { flex: 1; }
+        .option-row label { white-space: nowrap; font-size: 0.8rem; font-weight: normal; }
+
+        /* ── MISC ── */
+        .warning-box { background: #fff8e1; border-left: 4px solid #f39c12; padding: 10px 14px; border-radius: 8px; font-size: 0.85rem; margin-top: 10px; }
+        .success-box { background: #e8f5e9; border-left: 4px solid #27ae60; padding: 10px 14px; border-radius: 8px; font-size: 0.85rem; margin-top: 10px; }
+        .file-preview { background: #f0f2f5; padding: 10px; border-radius: 8px; margin-top: 8px; font-size: 0.85rem; }
+        hr { border: none; border-top: 1px solid #eee; margin: 18px 0; }
+        .empty { text-align: center; color: #aaa; padding: 24px; font-size: 0.95rem; }
+        @media (max-width: 600px) {
+            .form-row, .form-row.three { grid-template-columns: 1fr; }
+            .options-group { grid-template-columns: 1fr; }
+        }
     </style>
 </head>
 <body>
-<h1>🛠 Quản trị hệ thống (Đề thi + Tài liệu theo Môn + Lớp)</h1>
 
-<!-- Cấu hình hiển thị lớp -->
-<div class="card">
-    <h2>🔘 Bật / Tắt hiển thị lớp (cho học sinh)</h2>
-    <div class="checkbox-group" id="gradeVisibilityGroup"></div>
-    <button id="saveGradeVisibilityBtn" style="background:#27ae60;">💾 Lưu cấu hình</button>
+<div class="admin-header">
+    <h1>🛠 Quản trị hệ thống đề thi</h1>
+    <span class="badge" id="headerStats">Đang tải...</span>
 </div>
 
-<!-- Quản lý đề thi -->
-<div class="card">
-    <h2>📋 Đề thi</h2>
-    <div id="examList">Đang tải...</div>
-    <div class="flex-row" style="margin-top: 10px;">
-        <button id="refreshListBtn" style="background:#27ae60;">🔄 Làm mới từ server</button>
-        <button id="downloadCurrentBtn" style="background:#2980b9;">💾 Tải exams.json hiện tại</button>
-        <label style="background:#e0e0e0; padding: 5px 10px; border-radius: 8px; display: inline-flex; gap: 5px; align-items: center;">
-            📂 Nạp exams.json cũ: <input type="file" id="uploadExamsJson" accept=".json" style="width: auto;">
-        </label>
-    </div>
-    <hr>
-    <h3>➕ Thêm đề mới</h3>
-    
-    <label>Môn *</label>
-    <select id="examSubject" class="subject-select">
-        <option value="Toán">Toán</option>
-        <option value="Vật lý">Vật lý</option>
-        <option value="Hóa học">Hóa học</option>
-        <option value="Ngữ văn">Ngữ văn</option>
-        <option value="Tiếng Anh">Tiếng Anh</option>
-        <option value="Lịch sử">Lịch sử</option>
-        <option value="Địa lý">Địa lý</option>
-        <option value="GDCD">GDCD</option>
-        <option value="Sinh học">Sinh học</option>
-        <option value="Tin học">Tin học</option>
-        <option value="Công nghệ">Công nghệ</option>
-    </select>
-
-    <label>Lớp * (chọn nhiều)</label>
-    <div class="checkbox-group" id="classCheckboxes"></div>
-
-    <label>Tuần (không bắt buộc)</label><input type="text" id="week" placeholder="2026-W01">
-
-    <div style="margin:10px 0;">
-        <label><input type="checkbox" id="timeLimitedCheckbox" checked> ⏱️ Có giới hạn thời gian</label>
-    </div>
-    <div id="dateRangeArea">
-        <label>Ngày mở</label><input type="date" id="open">
-        <label>Ngày đóng</label><input type="date" id="close">
-    </div>
-    <label>File HTML đề</label><input type="file" id="htmlFiles" accept=".html" multiple>
-    <div id="selectedFilesList" class="file-list"></div>
-    <button id="addMultipleBtn">📦 Tạo ZIP (exams.json + HTML đã chèn script)</button>
+<div class="tab-bar">
+    <button class="tab-btn active" data-tab="exams">📋 Đề thi</button>
+    <button class="tab-btn" data-tab="docs">📚 Tài liệu</button>
+    <button class="tab-btn" data-tab="settings">⚙️ Cài đặt</button>
 </div>
 
-<!-- Quản lý tài liệu -->
-<div class="card">
-    <h2>📚 Tài liệu học tập (PDF, DOCX) – Có Môn + Lớp</h2>
-    <div id="docList">Đang tải...</div>
-    <div class="flex-row" style="margin-top: 10px;">
-        <button id="refreshDocsBtn" style="background:#27ae60;">🔄 Làm mới từ server</button>
-        <button id="downloadDocsBtn" style="background:#2980b9;">💾 Tải docs.json hiện tại</button>
-        <label style="background:#e0e0e0; padding: 5px 10px; border-radius: 8px; display: inline-flex; gap: 5px; align-items: center;">
-            📂 Nạp docs.json cũ: <input type="file" id="uploadDocsJson" accept=".json" style="width: auto;">
-        </label>
+<!-- ══════════════ TAB: ĐỀ THI ══════════════ -->
+<div class="tab-panel active" id="tab-exams">
+
+    <!-- Danh sách đề -->
+    <div class="card">
+        <div class="card-title">📋 Danh sách đề thi <span class="cnt" id="examCount">0 đề</span></div>
+
+        <div class="filter-bar">
+            <input type="text" id="examSearch" placeholder="🔍 Tìm tên đề, môn, tuần...">
+            <select id="filterExamGrade">
+                <option value="">Tất cả lớp</option>
+            </select>
+            <select id="filterExamSubject">
+                <option value="">Tất cả môn</option>
+                <option>Toán</option><option>Vật lý</option><option>Hóa học</option>
+                <option>Ngữ văn</option><option>Tiếng Anh</option><option>Lịch sử</option>
+                <option>Địa lý</option><option>GDCD</option><option>Sinh học</option>
+                <option>Tin học</option><option>Công nghệ</option>
+            </select>
+            <select id="filterExamType">
+                <option value="">Tất cả loại</option>
+                <option value="html">📄 HTML</option>
+                <option value="quiz">📝 Trắc nghiệm</option>
+            </select>
+            <span class="count-info" id="examFilterInfo"></span>
+        </div>
+
+        <div class="tbl-wrap">
+            <table id="examTable">
+                <thead>
+                    <tr>
+                        <th>#</th><th>Tiêu đề</th><th>Loại</th><th>Môn</th>
+                        <th>Lớp</th><th>Tuần</th><th>Thời gian</th><th>Trạng thái</th><th>Xóa</th>
+                    </tr>
+                </thead>
+                <tbody id="examTbody"><tr><td colspan="9" class="empty">Đang tải...</td></tr></tbody>
+            </table>
+        </div>
+
+        <div class="btn-group">
+            <button class="btn btn-success" id="refreshListBtn">🔄 Làm mới</button>
+            <button class="btn btn-info" id="downloadCurrentBtn">💾 Tải exams.json</button>
+            <label class="btn btn-warning" style="cursor:pointer;">
+                📂 Nạp exams.json <input type="file" id="uploadExamsJson" accept=".json" style="display:none;">
+            </label>
+        </div>
     </div>
-    <hr>
-    <h3>➕ Thêm tài liệu mới</h3>
-    <label>Tiêu đề *</label><input type="text" id="docTitle" placeholder="VD: Đề cương giữa kỳ">
-    <label>Mô tả (ngắn)</label><textarea id="docDesc" rows="2" placeholder="Nội dung tóm tắt..."></textarea>
-    
-    <label>Lớp *</label>
-    <select id="docGrade"></select>
-    
-    <label>Môn *</label>
-    <select id="docSubject" class="subject-select">
-        <option value="Toán">Toán</option>
-        <option value="Vật lý">Vật lý</option>
-        <option value="Hóa học">Hóa học</option>
-        <option value="Ngữ văn">Ngữ văn</option>
-        <option value="Tiếng Anh">Tiếng Anh</option>
-        <option value="Lịch sử">Lịch sử</option>
-        <option value="Địa lý">Địa lý</option>
-        <option value="GDCD">GDCD</option>
-        <option value="Sinh học">Sinh học</option>
-        <option value="Tin học">Tin học</option>
-        <option value="Công nghệ">Công nghệ</option>
-    </select>
-    
-    <label>Chọn file (.pdf, .docx)</label>
-    <input type="file" id="docFiles" accept=".pdf,.docx" multiple>
-    <div id="selectedDocFilesList" class="file-list"></div>
-    <button id="addDocsBtn">📦 Tạo ZIP (docs.json + tài liệu)</button>
+
+    <!-- Thêm đề mới -->
+    <div class="card">
+        <div class="card-title">➕ Thêm đề mới</div>
+
+        <div class="form-group">
+            <label>Loại đề</label>
+            <select id="examType">
+                <option value="html">📄 File HTML</option>
+                <option value="quiz">📝 Trắc nghiệm trực tiếp</option>
+            </select>
+        </div>
+
+        <div id="htmlUploadArea">
+            <div class="form-group">
+                <label>File HTML (chọn nhiều)</label>
+                <input type="file" id="htmlFiles" accept=".html" multiple>
+                <div id="selectedFilesList" class="file-preview" style="display:none;"></div>
+            </div>
+        </div>
+
+        <div id="quizBuilderArea" style="display:none;">
+            <div id="questionsContainer"></div>
+            <button type="button" id="addQuestionBtn" class="btn btn-success" style="margin-top:10px;">➕ Thêm câu hỏi</button>
+        </div>
+
+        <div class="form-row" style="margin-top:4px;">
+            <div class="form-group">
+                <label>Môn học</label>
+                <select id="examSubject">
+                    <option>Toán</option><option>Vật lý</option><option>Hóa học</option>
+                    <option>Ngữ văn</option><option>Tiếng Anh</option><option>Lịch sử</option>
+                    <option>Địa lý</option><option>GDCD</option><option>Sinh học</option>
+                    <option>Tin học</option><option>Công nghệ</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Tuần (VD: 2026-W01)</label>
+                <input type="text" id="week" placeholder="2026-W01">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Lớp (chọn nhiều)</label>
+            <div class="checkbox-group" id="classCheckboxes"></div>
+        </div>
+
+        <div class="form-group">
+            <label style="display:inline-flex;align-items:center;gap:6px;cursor:pointer;">
+                <input type="checkbox" id="timeLimitedCheckbox" checked> ⏱️ Có giới hạn thời gian
+            </label>
+        </div>
+        <div id="dateRangeArea" class="form-row">
+            <div class="form-group">
+                <label>📅 Ngày mở</label>
+                <input type="date" id="open">
+            </div>
+            <div class="form-group">
+                <label>📅 Ngày đóng</label>
+                <input type="date" id="close">
+            </div>
+        </div>
+
+        <div class="btn-group">
+            <button id="addMultipleBtn" class="btn btn-primary">📦 Tạo ZIP & thêm đề</button>
+        </div>
+    </div>
+</div>
+
+<!-- ══════════════ TAB: TÀI LIỆU ══════════════ -->
+<div class="tab-panel" id="tab-docs">
+
+    <!-- Danh sách tài liệu -->
+    <div class="card">
+        <div class="card-title">📚 Danh sách tài liệu <span class="cnt" id="docCount">0 tài liệu</span></div>
+
+        <div class="filter-bar">
+            <input type="text" id="docSearch" placeholder="🔍 Tìm tiêu đề, mô tả...">
+            <select id="filterDocGrade">
+                <option value="">Tất cả lớp</option>
+            </select>
+            <select id="filterDocSubject">
+                <option value="">Tất cả môn</option>
+                <option>Toán</option><option>Vật lý</option><option>Hóa học</option>
+                <option>Ngữ văn</option><option>Tiếng Anh</option><option>Lịch sử</option>
+                <option>Địa lý</option><option>GDCD</option><option>Sinh học</option>
+                <option>Tin học</option><option>Công nghệ</option>
+            </select>
+            <select id="filterDocType">
+                <option value="">Tất cả loại</option>
+                <option value="image">🖼️ Ảnh</option>
+                <option value="video">🎥 Video</option>
+                <option value="pdf">📄 PDF</option>
+                <option value="docx">📝 DOCX</option>
+                <option value="link">🔗 Link</option>
+            </select>
+            <span class="count-info" id="docFilterInfo"></span>
+        </div>
+
+        <div class="tbl-wrap">
+            <table>
+                <thead>
+                    <tr><th>#</th><th>Tiêu đề</th><th>Lớp</th><th>Môn</th><th>Loại</th><th>File/Link</th><th>Xóa</th></tr>
+                </thead>
+                <tbody id="docTbody"><tr><td colspan="7" class="empty">Đang tải...</td></tr></tbody>
+            </table>
+        </div>
+
+        <div class="btn-group">
+            <button class="btn btn-success" id="refreshDocsBtn">🔄 Làm mới</button>
+            <button class="btn btn-info" id="downloadDocsBtn">💾 Tải docs.json</button>
+            <label class="btn btn-warning" style="cursor:pointer;">
+                📂 Nạp docs.json <input type="file" id="uploadDocsJson" accept=".json" style="display:none;">
+            </label>
+        </div>
+    </div>
+
+    <!-- Thêm tài liệu mới -->
+    <div class="card">
+        <div class="card-title">➕ Thêm tài liệu mới</div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label>Tiêu đề *</label>
+                <input type="text" id="docTitle" placeholder="VD: Bài giảng chương 1">
+            </div>
+            <div class="form-group">
+                <label>Mô tả</label>
+                <input type="text" id="docDesc" placeholder="Mô tả ngắn (không bắt buộc)">
+            </div>
+        </div>
+        <div class="form-row three">
+            <div class="form-group">
+                <label>Lớp *</label>
+                <select id="docGrade"></select>
+            </div>
+            <div class="form-group">
+                <label>Môn *</label>
+                <select id="docSubject">
+                    <option>Toán</option><option>Vật lý</option><option>Hóa học</option>
+                    <option>Ngữ văn</option><option>Tiếng Anh</option><option>Lịch sử</option>
+                    <option>Địa lý</option><option>GDCD</option><option>Sinh học</option>
+                    <option>Tin học</option><option>Công nghệ</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Loại tài liệu</label>
+                <select id="docMediaType">
+                    <option value="file">📁 File (Ảnh/Video/PDF/DOCX)</option>
+                    <option value="link">🔗 Link ngoài (YouTube, Drive...)</option>
+                </select>
+            </div>
+        </div>
+
+        <div id="docFileArea" class="form-group">
+            <label>Chọn file</label>
+            <input type="file" id="docFiles" accept="image/*,video/*,.pdf,.docx" multiple>
+            <div id="selectedDocFilesList" class="file-preview" style="display:none;"></div>
+        </div>
+        <div id="docLinkArea" style="display:none;" class="form-group">
+            <label>URL liên kết *</label>
+            <input type="text" id="docLinkUrl" placeholder="https://www.youtube.com/watch?v=...">
+            <div class="warning-box" style="margin-top:6px;">🎬 YouTube sẽ hiển thị trực tiếp trên trang học sinh. Drive, OneDrive... sẽ có nút mở link và sao chép.</div>
+        </div>
+
+        <div class="btn-group">
+            <button id="addDocsBtn" class="btn btn-primary">📦 Tạo ZIP / Thêm tài liệu</button>
+        </div>
+        <div class="warning-box" style="margin-top:10px;">📸 Ảnh: JPG, PNG, GIF &nbsp;|&nbsp; 🎥 Video: MP4, WebM &nbsp;|&nbsp; 📄 PDF &nbsp;|&nbsp; 📝 DOCX &nbsp;|&nbsp; 🔗 Link ngoài</div>
+    </div>
+</div>
+
+<!-- ══════════════ TAB: CÀI ĐẶT ══════════════ -->
+<div class="tab-panel" id="tab-settings">
+    <div class="card">
+        <div class="card-title">🔘 Bật / Tắt lớp hiển thị cho học sinh</div>
+        <p style="font-size:0.85rem;color:#666;margin-bottom:12px;">Chỉ các lớp được bật mới xuất hiện trong menu của học sinh.</p>
+        <div class="checkbox-group" id="gradeVisibilityGroup" style="max-height:none;"></div>
+        <div class="btn-group">
+            <button id="saveGradeVisibilityBtn" class="btn btn-success">💾 Lưu cấu hình</button>
+            <button id="selectAllGradesBtn" class="btn btn-warning btn-sm">✅ Bật tất cả</button>
+            <button id="deselectAllGradesBtn" class="btn btn-sm" style="background:#eee;color:#555;">❌ Tắt tất cả</button>
+        </div>
+    </div>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 <script>
     let currentExams = [];
-    let currentDocs = [];
+    let currentDocs  = [];
+    let quizQuestions = [];
 
-    // DANH SÁCH LỚP CHUẨN (đã bao gồm thi thử)
+    // Filter state
+    let examSearch = "", filterExamGrade = "", filterExamSubject = "", filterExamType = "";
+    let docSearch  = "", filterDocGrade  = "", filterDocSubject  = "", filterDocType  = "";
+
     const ALL_GRADES = [
-        { id: "2", name: "Lớp 2" }, { id: "3", name: "Lớp 3" }, { id: "4", name: "Lớp 4" },
-        { id: "5", name: "Lớp 5" }, { id: "6", name: "Lớp 6" }, { id: "7", name: "Lớp 7" },
-        { id: "8", name: "Lớp 8" }, { id: "9", name: "Lớp 9" }, { id: "10", name: "Lớp 10" },
-        { id: "11", name: "Lớp 11" }, { id: "12", name: "Lớp 12" },
-        { id: "ontn", name: "Ôn TN" },
-        { id: "thithu9", name: "Thi thử lớp 9" },
-        { id: "thithu12", name: "Thi thử lớp 12" }
+        { id:"2",name:"Lớp 2" },{ id:"3",name:"Lớp 3" },{ id:"4",name:"Lớp 4" },
+        { id:"5",name:"Lớp 5" },{ id:"6",name:"Lớp 6" },{ id:"7",name:"Lớp 7" },
+        { id:"8",name:"Lớp 8" },{ id:"9",name:"Lớp 9" },{ id:"10",name:"Lớp 10" },
+        { id:"11",name:"Lớp 11" },{ id:"12",name:"Lớp 12" },
+        { id:"ontn",name:"Ôn TN" },{ id:"thithu9",name:"Thi thử lớp 9" },{ id:"thithu12",name:"Thi thử lớp 12" }
     ];
 
-    // Grade visibility - tự động cập nhật khi có lớp mới
+    /* ── UTILS ── */
+    function escapeHtml(s) {
+        if (!s) return '';
+        return String(s).replace(/[&<>"']/g, m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+    }
+    function hl(s, q) {
+        if (!q) return escapeHtml(s);
+        let re = new RegExp(q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'),'gi');
+        return escapeHtml(s).replace(re, m=>`<span class="hl">${m}</span>`);
+    }
+    function getToday() {
+        let d = new Date();
+        return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+    }
+    function getExamStatus(ex, today) {
+        if (ex.timeLimited === false) return "open";
+        if (today >= ex.open && today <= ex.close) return "open";
+        if (today < ex.open) return "future";
+        return "closed";
+    }
+
+    /* ── TABS ── */
+    document.querySelectorAll(".tab-btn").forEach(btn => {
+        btn.onclick = () => {
+            document.querySelectorAll(".tab-btn").forEach(b=>b.classList.remove("active"));
+            document.querySelectorAll(".tab-panel").forEach(p=>p.classList.remove("active"));
+            btn.classList.add("active");
+            document.getElementById("tab-"+btn.dataset.tab).classList.add("active");
+        };
+    });
+
+    /* ── GRADE VISIBILITY ── */
     function loadGradeVisibility() {
         let vis = localStorage.getItem("gradeVisibility");
-        let defaultVis = {};
-        ALL_GRADES.forEach(g => defaultVis[g.id] = true);
-        if (!vis) {
-            localStorage.setItem("gradeVisibility", JSON.stringify(defaultVis));
-            return defaultVis;
-        }
+        let def = {}; ALL_GRADES.forEach(g=>def[g.id]=true);
+        if (!vis) { localStorage.setItem("gradeVisibility",JSON.stringify(def)); return def; }
         try {
-            let parsed = JSON.parse(vis);
-            let changed = false;
-            for (let g of ALL_GRADES) {
-                if (parsed[g.id] === undefined) {
-                    parsed[g.id] = true;
-                    changed = true;
-                }
-            }
-            if (changed) {
-                localStorage.setItem("gradeVisibility", JSON.stringify(parsed));
-            }
-            return parsed;
-        } catch(e) {
-            localStorage.setItem("gradeVisibility", JSON.stringify(defaultVis));
-            return defaultVis;
-        }
+            let p = JSON.parse(vis), changed=false;
+            for (let k in p) if (!ALL_GRADES.some(g=>g.id===k)) { delete p[k]; changed=true; }
+            for (let g of ALL_GRADES) if (p[g.id]===undefined) { p[g.id]=true; changed=true; }
+            if (changed) localStorage.setItem("gradeVisibility",JSON.stringify(p));
+            return p;
+        } catch(e) { localStorage.setItem("gradeVisibility",JSON.stringify(def)); return def; }
     }
-    function saveGradeVisibility(vis){ localStorage.setItem("gradeVisibility",JSON.stringify(vis)); alert("Đã lưu cấu hình lớp"); renderGradeVisibilityCheckboxes(); }
-    function renderGradeVisibilityCheckboxes(){
-        let vis=loadGradeVisibility();
-        let html="";
-        ALL_GRADES.forEach(g=>{ html+=`<label><input type="checkbox" value="${g.id}" ${vis[g.id]?"checked":""}> ${g.name}</label>`; });
-        document.getElementById("gradeVisibilityGroup").innerHTML=html;
+    function saveGradeVisibility(vis) {
+        localStorage.setItem("gradeVisibility",JSON.stringify(vis));
+        alert("Đã lưu cấu hình lớp!");
+        renderGradeVisibilityCheckboxes();
+    }
+    function renderGradeVisibilityCheckboxes() {
+        let vis = loadGradeVisibility();
+        document.getElementById("gradeVisibilityGroup").innerHTML =
+            ALL_GRADES.map(g=>`<label><input type="checkbox" value="${g.id}" ${vis[g.id]?"checked":""}> ${g.name}</label>`).join("");
+    }
+    document.getElementById("saveGradeVisibilityBtn").onclick = () => {
+        let vis={};
+        document.querySelectorAll("#gradeVisibilityGroup input").forEach(cb=>{ vis[cb.value]=cb.checked; });
+        saveGradeVisibility(vis);
+    };
+    document.getElementById("selectAllGradesBtn").onclick = () => {
+        document.querySelectorAll("#gradeVisibilityGroup input").forEach(cb=>cb.checked=true);
+    };
+    document.getElementById("deselectAllGradesBtn").onclick = () => {
+        document.querySelectorAll("#gradeVisibilityGroup input").forEach(cb=>cb.checked=false);
+    };
+
+    /* ── GRADE SELECTS ── */
+    function populateGradeSelects() {
+        ["filterExamGrade","filterDocGrade"].forEach(id=>{
+            let sel = document.getElementById(id);
+            sel.innerHTML = '<option value="">Tất cả lớp</option>' +
+                ALL_GRADES.map(g=>`<option value="${g.id}">${g.name}</option>`).join("");
+        });
+        let dg = document.getElementById("docGrade");
+        dg.innerHTML = '<option value="">-- Chọn lớp --</option>' +
+            ALL_GRADES.map(g=>`<option value="${g.id}">${g.name}</option>`).join("");
+        let cg = document.getElementById("classCheckboxes");
+        cg.innerHTML = ALL_GRADES.map(g=>`<label><input type="checkbox" value="${g.id}"> ${g.name}</label>`).join("");
     }
 
-    // Exams
-    async function loadExams(){
-        try{
-            let res=await fetch("exams.json?v="+Date.now());
-            if(res.ok){
-                currentExams = await res.json();
-                renderExamList();
-            } else {
-                console.warn("Không thể tải exams.json, giữ nguyên dữ liệu cũ.");
-            }
-        }catch(e){
-            console.error("Lỗi fetch exams.json:", e);
-            alert("Không thể kết nối đến exams.json. Kiểm tra lại đường dẫn.");
-        }
+    /* ── LOAD DATA ── */
+    async function loadExams() {
+        try {
+            let r = await fetch("exams.json?v="+Date.now());
+            if (r.ok) { currentExams = await r.json(); renderExamList(); }
+            else console.warn("Không tải được exams.json");
+        } catch(e) { console.error(e); }
     }
-    function renderExamList(){
-        let container=document.getElementById("examList");
-        if(!currentExams.length){ container.innerHTML="<p>Chưa có đề.</p>"; return; }
-        let html=`<table><thead>
-            <tr><th>ID</th><th>Tiêu đề</th><th>Môn</th><th>Lớp</th><th>Tuần</th><th>Thời gian</th><th>Mở</th><th>Đóng</th><th>File</th><th>Xóa</th></tr>
-        </thead><tbody>`;
-        currentExams.forEach((ex,idx)=>{
-            let timeStatus = ex.timeLimited===false ? "♾️ Không giới hạn" : "⏱️ Có hạn";
-            html+=`<tr>
-                <td>${ex.id}</td>
-                <td>${ex.title}</td>
-                <td>${ex.subject || 'Toán'}</td>
-                <td>${ex.grade}</td>
-                <td>${ex.week||''}</td>
-                <td>${timeStatus}</td>
-                <td>${ex.open||'—'}</td>
-                <td>${ex.close||'—'}</td>
-                <td>${ex.html}</td>
-                <td><button class="delExamBtn" data-idx="${idx}">🗑️</button></td>
-            </tr>`;
+    async function loadDocs() {
+        try {
+            let r = await fetch("docs.json?v="+Date.now());
+            if (r.ok) { currentDocs = await r.json(); renderDocList(); }
+            else console.warn("Không tải được docs.json");
+        } catch(e) { console.error(e); }
+    }
+    function updateHeaderStats() {
+        document.getElementById("headerStats").textContent =
+            `${currentExams.length} đề · ${currentDocs.length} tài liệu`;
+    }
+
+    /* ── RENDER ĐỀ THI ── */
+    function renderExamList() {
+        updateHeaderStats();
+        let today = getToday();
+        let q = examSearch.toLowerCase().trim();
+        let list = currentExams.filter((ex,idx)=>{
+            ex._idx = idx; // lưu index gốc để xóa đúng
+            if (filterExamGrade   && ex.grade   !== filterExamGrade)   return false;
+            if (filterExamSubject && ex.subject  !== filterExamSubject) return false;
+            if (filterExamType    && ex.type     !== filterExamType)    return false;
+            if (q && ![(ex.title||''),(ex.subject||''),(ex.week||''),(ex.grade||'')]
+                .join(' ').toLowerCase().includes(q)) return false;
+            return true;
         });
-        html+=`</tbody></td><p class="success">Tổng: ${currentExams.length} đề</p>`;
-        container.innerHTML=html;
+        document.getElementById("examCount").textContent = currentExams.length + " đề";
+        document.getElementById("examFilterInfo").textContent = list.length !== currentExams.length
+            ? `Hiển thị ${list.length}/${currentExams.length}` : `${list.length} đề`;
+
+        if (!list.length) {
+            document.getElementById("examTbody").innerHTML =
+                `<tr><td colspan="9" class="empty">${currentExams.length?'😕 Không tìm thấy đề phù hợp.':'📭 Chưa có đề thi nào.'}</td></tr>`;
+            return;
+        }
+        document.getElementById("examTbody").innerHTML = list.map((ex,i)=>{
+            let realIdx = currentExams.indexOf(ex);
+            let typeLabel = ex.type==='quiz'
+                ? '<span class="type-badge type-quiz">📝 Trắc nghiệm</span>'
+                : '<span class="type-badge type-html">📄 HTML</span>';
+            let timeInfo = ex.timeLimited===false ? '♾️ Không giới hạn' : `${ex.open||''} → ${ex.close||''}`;
+            let st = getExamStatus(ex,today);
+            let stLabel = st==='open'
+                ? '<span class="status-open">🔥 Đang mở</span>'
+                : st==='future'
+                    ? '<span class="status-future">📅 Sắp mở</span>'
+                    : '<span class="status-closed">🔒 Đã đóng</span>';
+            return `<tr>
+                <td style="color:#aaa;font-size:0.78rem;">${i+1}</td>
+                <td><strong>${hl(ex.title,examSearch)}</strong></td>
+                <td>${typeLabel}</td>
+                <td>${hl(ex.subject||'Toán',examSearch)}</td>
+                <td>${hl(ex.grade,examSearch)}</td>
+                <td>${hl(ex.week||'',examSearch)}</td>
+                <td style="font-size:0.8rem;color:#555;">${timeInfo}</td>
+                <td>${stLabel}</td>
+                <td><button class="btn btn-danger delExamBtn" data-idx="${realIdx}">🗑️</button></td>
+            </tr>`;
+        }).join("");
         document.querySelectorAll(".delExamBtn").forEach(btn=>{
-            btn.onclick=()=>{ if(confirm("Xóa đề?")){ currentExams.splice(parseInt(btn.dataset.idx),1); renderExamList(); } };
-        });
-    }
-    document.getElementById("uploadExamsJson").onchange = (e) => {
-        let file = e.target.files[0];
-        if(!file) return;
-        let reader = new FileReader();
-        reader.onload = (ev) => {
-            try {
-                let data = JSON.parse(ev.target.result);
-                if(Array.isArray(data)) {
-                    currentExams = data;
+            btn.onclick = ()=>{
+                let ex = currentExams[parseInt(btn.dataset.idx)];
+                if (confirm(`Xóa đề "${ex?.title}"?`)) {
+                    currentExams.splice(parseInt(btn.dataset.idx),1);
                     renderExamList();
-                    alert(`Đã nạp ${data.length} đề. Lưu ý: dữ liệu cũ đã được thay thế hoàn toàn.`);
-                } else throw new Error();
-            } catch(err) { alert("File JSON không hợp lệ"); }
-        };
-        reader.readAsText(file);
-        e.target.value = "";
-    };
+                }
+            };
+        });
+    }
 
-    // Docs
-    async function loadDocs(){
-        try{
-            let res=await fetch("docs.json?v="+Date.now());
-            if(res.ok){
-                currentDocs = await res.json();
-                renderDocList();
-            } else {
-                console.warn("Không thể tải docs.json, giữ nguyên dữ liệu cũ.");
-            }
-        }catch(e){
-            console.error("Lỗi fetch docs.json:", e);
-            alert("Không thể kết nối đến docs.json.");
+    /* ── RENDER TÀI LIỆU ── */
+    function renderDocList() {
+        updateHeaderStats();
+        let q = docSearch.toLowerCase().trim();
+        let list = currentDocs.filter((doc,idx)=>{
+            doc._idx = idx;
+            if (filterDocGrade   && doc.grade    !== filterDocGrade)   return false;
+            if (filterDocSubject && doc.subject  !== filterDocSubject) return false;
+            if (filterDocType    && doc.mediaType !== filterDocType)   return false;
+            if (q && ![(doc.title||''),(doc.description||''),(doc.grade||''),(doc.subject||'')]
+                .join(' ').toLowerCase().includes(q)) return false;
+            return true;
+        });
+        document.getElementById("docCount").textContent = currentDocs.length + " tài liệu";
+        document.getElementById("docFilterInfo").textContent = list.length !== currentDocs.length
+            ? `Hiển thị ${list.length}/${currentDocs.length}` : `${list.length} tài liệu`;
+
+        if (!list.length) {
+            document.getElementById("docTbody").innerHTML =
+                `<tr><td colspan="7" class="empty">${currentDocs.length?'😕 Không tìm thấy tài liệu phù hợp.':'📭 Chưa có tài liệu nào.'}</td></tr>`;
+            return;
         }
-    }
-    function renderDocList(){
-        let container=document.getElementById("docList");
-        if(!currentDocs.length){ container.innerHTML="<p>Chưa có tài liệu.</p>"; return; }
-        let html=`</table><thead>
-            <tr><th>Tiêu đề</th><th>Mô tả</th><th>Lớp</th><th>Môn</th><th>File</th><th>Xóa</th></tr>
-        </thead><tbody>`;
-        currentDocs.forEach((doc,idx)=>{
-            html+=`<tr>
-                <td>${doc.title}</td>
-                <td>${doc.description||''}</td>
-                <td>${doc.grade||''}</td>
-                <td>${doc.subject||''}</td>
-                <td>${doc.file}</td>
-                <td><button class="delDocBtn" data-idx="${idx}">🗑️</button></td>
+        const TYPE_LABELS = { link:'🔗 Link', image:'🖼️ Ảnh', video:'🎥 Video', pdf:'📄 PDF', docx:'📝 DOCX' };
+        const TYPE_CLASS  = { link:'type-link', image:'type-img', video:'type-video', pdf:'type-pdf', docx:'type-docx' };
+        document.getElementById("docTbody").innerHTML = list.map((doc,i)=>{
+            let realIdx = currentDocs.indexOf(doc);
+            let mt = doc.mediaType || 'file';
+            let typeBadge = `<span class="type-badge ${TYPE_CLASS[mt]||''}">${TYPE_LABELS[mt]||mt}</span>`;
+            let fileCell = doc.mediaType==='link'
+                ? `<a href="${escapeHtml(doc.file)}" target="_blank" style="color:#2980b9;font-size:0.8rem;">${escapeHtml(doc.file.length>45?doc.file.slice(0,45)+'…':doc.file)}</a>`
+                : `<span style="font-size:0.8rem;">${escapeHtml(doc.file)}</span>`;
+            return `<tr>
+                <td style="color:#aaa;font-size:0.78rem;">${i+1}</td>
+                <td><strong>${hl(doc.title,docSearch)}</strong>${doc.description?`<br><span style="font-size:0.78rem;color:#888;">${hl(doc.description,docSearch)}</span>`:''}</td>
+                <td>${escapeHtml(doc.grade||'')}</td>
+                <td>${escapeHtml(doc.subject||'')}</td>
+                <td>${typeBadge}</td>
+                <td>${fileCell}</td>
+                <td><button class="btn btn-danger delDocBtn" data-idx="${realIdx}">🗑️</button></td>
             </tr>`;
-        });
-        html+=`</tbody></table><p class="success">Tổng: ${currentDocs.length} tài liệu</p>`;
-        container.innerHTML=html;
+        }).join("");
         document.querySelectorAll(".delDocBtn").forEach(btn=>{
-            btn.onclick=()=>{ if(confirm("Xóa tài liệu?")){ currentDocs.splice(parseInt(btn.dataset.idx),1); renderDocList(); } };
+            btn.onclick = ()=>{
+                let doc = currentDocs[parseInt(btn.dataset.idx)];
+                if (confirm(`Xóa tài liệu "${doc?.title}"?`)) {
+                    currentDocs.splice(parseInt(btn.dataset.idx),1);
+                    renderDocList();
+                }
+            };
         });
     }
-    document.getElementById("uploadDocsJson").onchange = (e) => {
-        let file = e.target.files[0];
-        if(!file) return;
-        let reader = new FileReader();
-        reader.onload = (ev) => {
+
+    /* ── FILTER EVENTS ── */
+    function bindFilters() {
+        document.getElementById("examSearch").oninput = e=>{ examSearch=e.target.value; renderExamList(); };
+        document.getElementById("filterExamGrade").onchange = e=>{ filterExamGrade=e.target.value; renderExamList(); };
+        document.getElementById("filterExamSubject").onchange = e=>{ filterExamSubject=e.target.value; renderExamList(); };
+        document.getElementById("filterExamType").onchange = e=>{ filterExamType=e.target.value; renderExamList(); };
+        document.getElementById("docSearch").oninput = e=>{ docSearch=e.target.value; renderDocList(); };
+        document.getElementById("filterDocGrade").onchange = e=>{ filterDocGrade=e.target.value; renderDocList(); };
+        document.getElementById("filterDocSubject").onchange = e=>{ filterDocSubject=e.target.value; renderDocList(); };
+        document.getElementById("filterDocType").onchange = e=>{ filterDocType=e.target.value; renderDocList(); };
+    }
+
+    /* ── UPLOAD JSON ── */
+    document.getElementById("uploadExamsJson").onchange = e=>{
+        let file=e.target.files[0]; if(!file)return;
+        new FileReader().onload = ev=>{
             try {
-                let data = JSON.parse(ev.target.result);
-                if(Array.isArray(data)) {
-                    currentDocs = data;
-                    renderDocList();
-                    alert(`Đã nạp ${data.length} tài liệu. Dữ liệu cũ đã được thay thế.`);
-                } else throw new Error();
-            } catch(err) { alert("File JSON không hợp lệ"); }
+                let d=JSON.parse(ev.target.result);
+                if(!Array.isArray(d)) throw 0;
+                currentExams=d; renderExamList(); alert(`Đã nạp ${d.length} đề.`);
+            } catch { alert("File JSON không hợp lệ"); }
+        }, (new FileReader()).readAsText(file);
+        // fix: use correct reader
+        let reader=new FileReader();
+        reader.onload=ev=>{
+            try { let d=JSON.parse(ev.target.result); if(!Array.isArray(d)) throw 0;
+                currentExams=d; renderExamList(); alert(`Đã nạp ${d.length} đề.`);
+            } catch { alert("File JSON không hợp lệ"); }
         };
         reader.readAsText(file);
-        e.target.value = "";
+        e.target.value="";
+    };
+    document.getElementById("uploadDocsJson").onchange = e=>{
+        let file=e.target.files[0]; if(!file)return;
+        let reader=new FileReader();
+        reader.onload=ev=>{
+            try { let d=JSON.parse(ev.target.result); if(!Array.isArray(d)) throw 0;
+                currentDocs=d; renderDocList(); alert(`Đã nạp ${d.length} tài liệu.`);
+            } catch { alert("File JSON không hợp lệ"); }
+        };
+        reader.readAsText(file); e.target.value="";
     };
 
-    // Thêm đề
-    function injectSubmitScript(htmlContent, fileName){
-        let script=`<script>(function(){const KEY="exam_submits";const FILE_NAME="${fileName.replace(/"/g,'\\"')}";function increaseSubmit(){let s=JSON.parse(localStorage.getItem(KEY))||{};s[FILE_NAME]=(s[FILE_NAME]||0)+1;localStorage.setItem(KEY,JSON.stringify(s));alert("Đã ghi nhận lượt nộp bài!");}let btn=document.getElementById("submit-btn");if(btn)btn.addEventListener("click",increaseSubmit);else document.querySelectorAll("button,input[type=submit]").forEach(b=>{if(b.innerText.includes("Nộp")||b.value.includes("Nộp"))b.addEventListener("click",increaseSubmit);});})();<\/script>`;
-        return htmlContent.includes("</body>") ? htmlContent.replace("</body>",script+"\n</body>") : htmlContent+script;
-    }
-    document.getElementById("timeLimitedCheckbox").onchange=e=>{
-        document.getElementById("dateRangeArea").style.display=e.target.checked?"block":"none";
-        if(!e.target.checked){ document.getElementById("open").value=""; document.getElementById("close").value=""; }
+    /* ── DOWNLOAD ── */
+    document.getElementById("refreshListBtn").onclick = ()=>{ if(confirm("Làm mới? Mọi thay đổi chưa xuất sẽ mất.")) loadExams(); };
+    document.getElementById("downloadCurrentBtn").onclick = ()=>{
+        let a=document.createElement("a");
+        a.href=URL.createObjectURL(new Blob([JSON.stringify(currentExams,null,2)],{type:"application/json"}));
+        a.download="exams.json"; a.click();
     };
-    document.getElementById("addMultipleBtn").onclick=async()=>{
+    document.getElementById("refreshDocsBtn").onclick = ()=>{ if(confirm("Làm mới? Mọi thay đổi chưa xuất sẽ mất.")) loadDocs(); };
+    document.getElementById("downloadDocsBtn").onclick = ()=>{
+        let a=document.createElement("a");
+        a.href=URL.createObjectURL(new Blob([JSON.stringify(currentDocs,null,2)],{type:"application/json"}));
+        a.download="docs.json"; a.click();
+    };
+
+    /* ── FILE PREVIEW ── */
+    document.getElementById("htmlFiles").onchange = ()=>{
         let files=Array.from(document.getElementById("htmlFiles").files);
-        if(!files.length){ alert("Chọn file HTML"); return; }
-        let grades=Array.from(document.querySelectorAll('#classCheckboxes input:checked')).map(cb=>cb.value);
-        if(!grades.length){ alert("Chọn ít nhất một lớp"); return; }
-        let subject = document.getElementById("examSubject").value;
-        if(!subject){ alert("Chọn môn"); return; }
+        let div=document.getElementById("selectedFilesList");
+        div.style.display=files.length?"block":"none";
+        div.innerHTML=`<strong>✅ ${files.length} file đã chọn:</strong><ul>${files.map(f=>`<li>${f.name}</li>`).join("")}</ul>`;
+    };
+    document.getElementById("docFiles").onchange = ()=>{
+        let files=Array.from(document.getElementById("docFiles").files);
+        let div=document.getElementById("selectedDocFilesList");
+        div.style.display=files.length?"block":"none";
+        div.innerHTML=`<strong>✅ ${files.length} file đã chọn:</strong><ul>${files.map(f=>`<li>${f.name}</li>`).join("")}</ul>`;
+    };
+
+    /* ── EXAM TYPE TOGGLE ── */
+    document.getElementById("examType").onchange = function(){
+        let t=this.value;
+        document.getElementById("htmlUploadArea").style.display=t==="html"?"block":"none";
+        document.getElementById("quizBuilderArea").style.display=t==="quiz"?"block":"none";
+        if(t==="quiz"&&quizQuestions.length===0) document.getElementById("addQuestionBtn").click();
+    };
+    document.getElementById("timeLimitedCheckbox").onchange = function(){
+        document.getElementById("dateRangeArea").style.display=this.checked?"grid":"none";
+    };
+
+    /* ── DOC MEDIA TYPE TOGGLE ── */
+    document.getElementById("docMediaType").onchange = function(){
+        let isLink=this.value==="link";
+        document.getElementById("docFileArea").style.display=isLink?"none":"block";
+        document.getElementById("docLinkArea").style.display=isLink?"block":"none";
+    };
+
+    /* ── QUIZ BUILDER ── */
+    function renderQuestionBuilder() {
+        let c=document.getElementById("questionsContainer");
+        if(!quizQuestions.length){ c.innerHTML="<p style='color:#aaa;padding:8px;'>Chưa có câu hỏi. Nhấn ➕ để thêm.</p>"; return; }
+        c.innerHTML=quizQuestions.map((q,idx)=>`
+            <div class="question-item">
+                <div class="q-header">
+                    <strong>Câu ${idx+1}</strong>
+                    <input type="text" value="${escapeHtml(q.text)}" placeholder="Nội dung câu hỏi" style="flex:1;" onchange="quizQuestions[${idx}].text=this.value">
+                    <button class="btn btn-danger del-question" data-idx="${idx}">❌</button>
+                </div>
+                <div class="options-group">
+                    ${q.options.map((opt,oi)=>`
+                        <div class="option-row">
+                            <span style="font-size:0.8rem;font-weight:bold;color:#666;">${String.fromCharCode(65+oi)}.</span>
+                            <input type="text" value="${escapeHtml(opt)}" placeholder="Đáp án ${String.fromCharCode(65+oi)}" onchange="quizQuestions[${idx}].options[${oi}]=this.value">
+                            <label><input type="radio" name="correct_${idx}" value="${oi}" ${q.correct==oi?'checked':''} onchange="quizQuestions[${idx}].correct=${oi}"> Đúng</label>
+                        </div>`).join("")}
+                </div>
+            </div>`).join("");
+        document.querySelectorAll(".del-question").forEach(btn=>{
+            btn.onclick=()=>{ quizQuestions.splice(parseInt(btn.dataset.idx),1); renderQuestionBuilder(); };
+        });
+    }
+    document.getElementById("addQuestionBtn").onclick = ()=>{
+        quizQuestions.push({text:"Câu hỏi mới",options:["Đáp án A","Đáp án B","Đáp án C","Đáp án D"],correct:0});
+        renderQuestionBuilder();
+    };
+
+    /* ── THÊM ĐỀ THI ── */
+    document.getElementById("addMultipleBtn").onclick = async ()=>{
+        let examType=document.getElementById("examType").value;
+        let subject=document.getElementById("examSubject").value;
         let week=document.getElementById("week").value.trim();
         let timeLimited=document.getElementById("timeLimitedCheckbox").checked;
         let open=timeLimited?document.getElementById("open").value:"";
         let close=timeLimited?document.getElementById("close").value:"";
-        if(timeLimited && (!open||!close)){ alert("Nhập ngày mở/đóng"); return; }
-        let zip=new JSZip();
-        let newExams=[];
-        for(let file of files){
-            let content=await file.text();
-            let injected=injectSubmitScript(content,file.name);
-            zip.file(file.name,injected);
-            let title=file.name.replace(/\.html$/i,"");
-            let idPrefix=title.replace(/[^a-zA-Z0-9]/g,"_");
-            for(let grade of grades){
-                let id=`${idPrefix}_${grade}_${Date.now()}_${Math.floor(Math.random()*1000)}`;
-                newExams.push({
-                    id, title,
-                    subject: subject,
-                    grade: grade,
-                    class: grade,
-                    week, open, close,
-                    html: file.name,
-                    timeLimited
-                });
+        if(timeLimited&&(!open||!close)){ alert("Nhập ngày mở và đóng"); return; }
+        let zip=new JSZip(), newExams=[];
+
+        if(examType==="html"){
+            let files=Array.from(document.getElementById("htmlFiles").files);
+            if(!files.length){ alert("Chọn file HTML"); return; }
+            let grades=Array.from(document.querySelectorAll('#classCheckboxes input:checked')).map(cb=>cb.value);
+            if(!grades.length){ alert("Chọn ít nhất một lớp"); return; }
+            for(let file of files){
+                let content=await file.text();
+                let script=`<script>(function(){const KEY="exam_submits";const FILE_NAME="${file.name.replace(/"/g,'\\"')}";function inc(){let s=JSON.parse(localStorage.getItem(KEY))||{};s[FILE_NAME]=(s[FILE_NAME]||0)+1;localStorage.setItem(KEY,JSON.stringify(s));alert("Đã ghi nhận lượt nộp bài!");}let btn=document.getElementById("submit-btn");if(btn)btn.addEventListener("click",inc);else document.querySelectorAll("button,input[type=submit]").forEach(b=>{if(b.innerText.includes("Nộp")||b.value.includes("Nộp"))b.addEventListener("click",inc);});})();<\/script>`;
+                let injected=content.includes("</body>")?content.replace("</body>",script+"\n</body>"):content+script;
+                zip.file(file.name,injected);
+                let title=file.name.replace(/\.html$/i,"");
+                let idPrefix=title.replace(/[^a-zA-Z0-9]/g,"_");
+                for(let grade of grades){
+                    let id=`${idPrefix}_${grade}_${Date.now()}_${Math.floor(Math.random()*1000)}`;
+                    newExams.push({id,title,subject,grade,class:grade,week,open,close,html:file.name,timeLimited,type:"html"});
+                }
             }
+        } else {
+            if(!quizQuestions.length){ alert("Chưa có câu hỏi nào"); return; }
+            let grades=Array.from(document.querySelectorAll('#classCheckboxes input:checked')).map(cb=>cb.value);
+            if(grades.length!==1){ alert("Với trắc nghiệm, chỉ chọn 1 lớp"); return; }
+            let grade=grades[0];
+            let title=subject+" - "+grade+(week?" - Tuần "+week:"");
+            let id=`quiz_${subject}_${grade}_${Date.now()}_${Math.random().toString(36).substr(2,6)}`;
+            newExams.push({id,title,subject,grade,week,open,close,timeLimited,type:"quiz",
+                questions:quizQuestions.map(q=>({text:q.text,options:[...q.options],correct:q.correct}))});
         }
+
         let allExams=[...currentExams,...newExams];
         zip.file("exams.json",JSON.stringify(allExams,null,2));
         let blob=await zip.generateAsync({type:"blob"});
-        let a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="de_thi_export.zip";a.click();URL.revokeObjectURL(a.href);
-        alert(`Đã tạo ZIP (${allExams.length} đề). Upload lên GitHub.`);
+        let a=document.createElement("a"); a.href=URL.createObjectURL(blob); a.download="de_thi_export.zip"; a.click();
+        URL.revokeObjectURL(a.href);
+        alert(`✅ Đã tạo ZIP với ${allExams.length} đề. Hãy upload lên GitHub!`);
         currentExams=allExams; renderExamList();
-        document.getElementById("htmlFiles").value=""; document.getElementById("selectedFilesList").innerHTML="";
+        document.getElementById("htmlFiles").value="";
+        document.getElementById("selectedFilesList").innerHTML=""; document.getElementById("selectedFilesList").style.display="none";
+        quizQuestions=[]; renderQuestionBuilder();
+        document.getElementById("examType").dispatchEvent(new Event('change'));
     };
 
-    // Thêm tài liệu
-    function updateDocGradeSelect(){
-        let select=document.getElementById("docGrade");
-        select.innerHTML='<option value="">-- Chọn lớp --</option>';
-        ALL_GRADES.forEach(g=>{ select.innerHTML+=`<option value="${g.id}">${g.name}</option>`; });
-    }
-    document.getElementById("addDocsBtn").onclick=async()=>{
-        let files=Array.from(document.getElementById("docFiles").files);
-        if(!files.length){ alert("Chọn file PDF/DOCX"); return; }
+    /* ── THÊM TÀI LIỆU ── */
+    document.getElementById("addDocsBtn").onclick = async ()=>{
         let title=document.getElementById("docTitle").value.trim();
         if(!title){ alert("Nhập tiêu đề"); return; }
         let desc=document.getElementById("docDesc").value.trim();
         let grade=document.getElementById("docGrade").value;
         let subject=document.getElementById("docSubject").value;
-        if(!grade){ alert("Chọn lớp"); return; }
-        if(!subject){ alert("Chọn môn"); return; }
-        let zip=new JSZip();
+        if(!grade||!subject){ alert("Chọn lớp và môn"); return; }
+        let mediaTypeChoice=document.getElementById("docMediaType").value;
         let newDocs=[];
-        for(let file of files){
-            let ext=file.name.split('.').pop().toLowerCase();
-            if(ext!=='pdf' && ext!=='docx'){ alert(`Bỏ qua ${file.name} (chỉ PDF/DOCX)`); continue; }
-            let fileData=await file.arrayBuffer();
-            zip.file(file.name,fileData);
+
+        if(mediaTypeChoice==="link"){
+            let url=document.getElementById("docLinkUrl").value.trim();
+            if(!url){ alert("Nhập URL"); return; }
+            if(!url.startsWith("http")){ alert("URL phải bắt đầu bằng https://"); return; }
             let id=`doc_${Date.now()}_${Math.random().toString(36).substr(2,6)}`;
-            newDocs.push({ id, title, description: desc, file: file.name, type: ext, grade, subject });
+            newDocs.push({id,title,description:desc,file:url,mediaType:"link",grade,subject});
+            let allDocs=[...currentDocs,...newDocs];
+            let a=document.createElement("a");
+            a.href=URL.createObjectURL(new Blob([JSON.stringify(allDocs,null,2)],{type:"application/json"}));
+            a.download="docs.json"; a.click(); URL.revokeObjectURL(a.href);
+            alert(`✅ Đã thêm link và tải docs.json (${allDocs.length} tài liệu). Upload lên GitHub!`);
+            currentDocs=allDocs; renderDocList();
+            document.getElementById("docTitle").value="";
+            document.getElementById("docDesc").value="";
+            document.getElementById("docLinkUrl").value="";
+        } else {
+            let files=Array.from(document.getElementById("docFiles").files);
+            if(!files.length){ alert("Chọn file"); return; }
+            let zip=new JSZip();
+            for(let file of files){
+                let ext=file.name.split('.').pop().toLowerCase();
+                let mt="";
+                if(ext.match(/jpg|jpeg|png|gif/)) mt="image";
+                else if(ext.match(/mp4|webm/)) mt="video";
+                else if(ext==="pdf") mt="pdf";
+                else if(ext==="docx") mt="docx";
+                else { alert(`Bỏ qua ${file.name} (không hỗ trợ)`); continue; }
+                zip.file(file.name,await file.arrayBuffer());
+                let id=`doc_${Date.now()}_${Math.random().toString(36).substr(2,6)}`;
+                newDocs.push({id,title,description:desc,file:file.name,mediaType:mt,grade,subject});
+            }
+            if(!newDocs.length){ alert("Không có file hợp lệ"); return; }
+            let allDocs=[...currentDocs,...newDocs];
+            zip.file("docs.json",JSON.stringify(allDocs,null,2));
+            let blob=await zip.generateAsync({type:"blob"});
+            let a=document.createElement("a"); a.href=URL.createObjectURL(blob); a.download="tai_lieu_export.zip"; a.click();
+            URL.revokeObjectURL(a.href);
+            alert(`✅ Đã tạo ZIP (${allDocs.length} tài liệu). Upload lên GitHub!`);
+            currentDocs=allDocs; renderDocList();
+            document.getElementById("docTitle").value="";
+            document.getElementById("docDesc").value="";
+            document.getElementById("docFiles").value="";
+            document.getElementById("selectedDocFilesList").style.display="none";
         }
-        if(newDocs.length===0){ alert("Không có file hợp lệ"); return; }
-        let allDocs=[...currentDocs,...newDocs];
-        zip.file("docs.json",JSON.stringify(allDocs,null,2));
-        let blob=await zip.generateAsync({type:"blob"});
-        let a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="tai_lieu_export.zip";a.click();URL.revokeObjectURL(a.href);
-        alert(`Đã tạo ZIP (${allDocs.length} tài liệu). Upload lên GitHub.`);
-        currentDocs=allDocs; renderDocList();
-        document.getElementById("docTitle").value=""; document.getElementById("docDesc").value=""; document.getElementById("docFiles").value=""; document.getElementById("selectedDocFilesList").innerHTML="";
-    };
-    document.getElementById("docFiles").onchange=()=>{
-        let files=Array.from(document.getElementById("docFiles").files);
-        let div=document.getElementById("selectedDocFilesList");
-        if(files.length){ div.style.display="block"; div.innerHTML=`<strong>Đã chọn ${files.length} file:</strong><ul>${files.map(f=>`<li>${f.name}</li>`).join('')}</ul>`; }
-        else div.style.display="none";
-    };
-    document.getElementById("htmlFiles").onchange=()=>{
-        let files=Array.from(document.getElementById("htmlFiles").files);
-        let div=document.getElementById("selectedFilesList");
-        if(files.length){ div.style.display="block"; div.innerHTML=`<strong>Đã chọn ${files.length} file:</strong><ul>${files.map(f=>`<li>${f.name}</li>`).join('')}</ul>`; }
-        else div.style.display="none";
     };
 
-    // Các nút (có xác nhận trước khi làm mới)
-    document.getElementById("refreshListBtn").onclick = () => {
-        if(confirm("Làm mới sẽ mất mọi thay đổi chưa xuất ZIP. Tiếp tục?")) loadExams();
-    };
-    document.getElementById("downloadCurrentBtn").onclick=()=>{ let a=document.createElement("a");a.href=URL.createObjectURL(new Blob([JSON.stringify(currentExams,null,2)],{type:"application/json"}));a.download="exams.json";a.click(); };
-    document.getElementById("refreshDocsBtn").onclick = () => {
-        if(confirm("Làm mới sẽ mất mọi thay đổi chưa xuất ZIP. Tiếp tục?")) loadDocs();
-    };
-    document.getElementById("downloadDocsBtn").onclick=()=>{ let a=document.createElement("a");a.href=URL.createObjectURL(new Blob([JSON.stringify(currentDocs,null,2)],{type:"application/json"}));a.download="docs.json";a.click(); };
-    document.getElementById("saveGradeVisibilityBtn").onclick=()=>{
-        let vis={};
-        document.querySelectorAll("#gradeVisibilityGroup input").forEach(cb=>{ vis[cb.value]=cb.checked; });
-        saveGradeVisibility(vis);
-    };
-
-    function renderClassCheckboxes(){
-        let container=document.getElementById("classCheckboxes");
-        container.innerHTML="";
-        ALL_GRADES.forEach(g=>{ container.innerHTML+=`<label><input type="checkbox" value="${g.id}"> ${g.name}</label>`; });
-    }
-
+    /* ── INIT ── */
+    populateGradeSelects();
     renderGradeVisibilityCheckboxes();
-    renderClassCheckboxes();
-    updateDocGradeSelect();
+    bindFilters();
     loadExams();
     loadDocs();
-    document.getElementById("dateRangeArea").style.display="block";
+    document.getElementById("examType").dispatchEvent(new Event('change'));
+    document.getElementById("dateRangeArea").style.display="grid";
 </script>
 </body>
 </html>
