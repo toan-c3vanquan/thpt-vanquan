@@ -19,27 +19,130 @@
         .menu-mobile-list a.active { background: #f39c12; color: #1e3c72; }
         .container { max-width: 1200px; margin: 20px auto; padding: 0 16px; }
         .category-title { font-size: 1.8rem; margin: 20px 0 10px; color: #1e3c72; border-left: 6px solid #f39c12; padding-left: 12px; }
-        .de-list, .doc-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 16px; }
-        .de-card, .doc-card { background: white; border-radius: 16px; padding: 16px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); transition: 0.2s; border-left: 5px solid #1e3c72; }
-        .doc-card { border-left-color: #27ae60; }
+
+        /* ===== TOOLBAR ===== */
+        .toolbar {
+            background: white; border-radius: 16px; padding: 14px 16px;
+            margin-bottom: 18px; display: flex; gap: 10px; flex-wrap: wrap;
+            align-items: center; box-shadow: 0 2px 6px rgba(0,0,0,0.07);
+        }
+        .search-box {
+            flex: 1; min-width: 180px; display: flex; align-items: center;
+            background: #f0f2f5; border-radius: 30px; padding: 6px 14px; gap: 8px;
+        }
+        .search-box input {
+            border: none; background: transparent; outline: none;
+            font-size: 0.95rem; width: 100%;
+        }
+        .toolbar-right { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+        .toolbar select {
+            padding: 7px 12px; border-radius: 8px; border: 1px solid #ddd;
+            background: #f8f9fa; font-size: 0.88rem; cursor: pointer;
+        }
+        .view-btn {
+            background: #f0f2f5; border: none; border-radius: 8px;
+            padding: 7px 10px; cursor: pointer; font-size: 1.1rem;
+            transition: 0.15s; color: #555;
+        }
+        .view-btn.active { background: #1e3c72; color: white; }
+        .expand-all-btn {
+            background: #e8f0fe; color: #1e3c72; border: none; border-radius: 8px;
+            padding: 7px 12px; cursor: pointer; font-size: 0.85rem; font-weight: bold;
+            white-space: nowrap;
+        }
+        .expand-all-btn:hover { background: #1e3c72; color: white; }
+
+        /* ===== ACCORDION ===== */
+        .accordion { margin-bottom: 12px; border-radius: 14px; overflow: hidden; box-shadow: 0 2px 6px rgba(0,0,0,0.08); }
+        .accordion-header {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 13px 18px; cursor: pointer; user-select: none;
+            transition: background 0.2s;
+        }
+        .accordion-header:hover { filter: brightness(0.96); }
+        .accordion-header.status-open   { background: #fff7e6; border-left: 5px solid #f39c12; }
+        .accordion-header.status-future { background: #eaf4ff; border-left: 5px solid #2980b9; }
+        .accordion-header.status-closed { background: #f5f5f5; border-left: 5px solid #aaa; }
+        .accordion-header .acc-title { font-size: 1.05rem; font-weight: bold; color: #1e3c72; display: flex; align-items: center; gap: 10px; }
+        .acc-badge { font-size: 0.75rem; background: #1e3c72; color: white; border-radius: 20px; padding: 2px 10px; }
+        .acc-badge.open  { background: #f39c12; color: #1e3c72; }
+        .acc-badge.future{ background: #2980b9; }
+        .acc-badge.closed{ background: #aaa; }
+        .accordion-arrow { font-size: 1.1rem; color: #888; transition: transform 0.25s; }
+        .accordion-arrow.open { transform: rotate(180deg); }
+        .accordion-body { display: none; background: white; padding: 14px; }
+        .accordion-body.open { display: block; }
+
+        /* ===== GRID / LIST ===== */
+        .de-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 14px; }
+        .de-list.list-view { display: flex; flex-direction: column; gap: 8px; }
+
+        .de-card {
+            background: white; border-radius: 14px; padding: 14px 16px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.08); transition: 0.2s;
+            border-left: 5px solid #1e3c72;
+        }
+        .de-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.13); transform: translateY(-2px); }
+        .de-list.list-view .de-card {
+            display: flex; align-items: center; gap: 16px;
+            padding: 10px 14px; border-radius: 10px;
+            flex-wrap: wrap;
+        }
+        .de-list.list-view .de-card h3 { flex: 1; min-width: 180px; font-size: 0.95rem; margin: 0; }
+        .de-list.list-view .de-card .de-meta { font-size: 0.8rem; white-space: nowrap; }
+        .de-list.list-view .de-card .luot-lam { white-space: nowrap; }
+        .de-list.list-view .de-card .card-actions { margin-top: 0; }
+
+        .closed-card { opacity: 0.75; border-left-color: #aaa !important; }
+        .future-card { border-left-color: #2980b9 !important; }
+
+        .doc-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 16px; }
+        .doc-card { background: white; border-radius: 16px; padding: 16px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); transition: 0.2s; border-left: 5px solid #27ae60; }
+
         .btn { display: inline-block; background: #1e3c72; color: white; padding: 6px 14px; border-radius: 24px; text-decoration: none; margin-top: 8px; font-size: 0.85rem; border: none; cursor: pointer; margin-right: 8px; }
         .btn-download { background: #27ae60; }
         .btn-view { background: #f39c12; color: #1e3c72; }
-        .btn-disabled { background: #aaa; pointer-events: none; }
-        .closed-card { opacity: 0.7; border-left-color: gray; }
-        .future-card { border-left-color: #f39c12; }
-        .luot-lam { font-size: 0.8rem; color: #27ae60; margin-top: 8px; font-weight: bold; }
-        .no-time-badge { display: inline-block; background: #f39c12; color: #1e3c72; border-radius: 20px; font-size: 0.7rem; padding: 2px 8px; margin-left: 8px; vertical-align: middle; }
+        .btn-disabled { background: #bbb; pointer-events: none; }
+        .luot-lam { font-size: 0.8rem; color: #27ae60; margin-top: 6px; font-weight: bold; }
+        .de-meta { font-size: 0.8rem; color: #666; margin-top: 4px; }
+        .no-time-badge { display: inline-block; background: #f39c12; color: #1e3c72; border-radius: 20px; font-size: 0.7rem; padding: 2px 8px; margin-left: 6px; vertical-align: middle; }
+
+        /* status section label inside accordion */
+        .status-label { font-size: 0.82rem; font-weight: bold; color: #888; margin: 10px 0 6px; padding-left: 4px; }
+        .status-label.lbl-open   { color: #e67e22; }
+        .status-label.lbl-future { color: #2980b9; }
+        .status-label.lbl-closed { color: #aaa; }
+
+        /* search highlight */
+        .hl { background: #fff176; border-radius: 3px; padding: 0 1px; }
+
+        /* no-result */
+        .no-result { text-align: center; padding: 30px; color: #aaa; font-size: 1rem; }
+
+        /* count pill */
+        .count-pill { font-size: 0.75rem; color: #888; }
+
         .filters { display: flex; gap: 15px; margin-bottom: 20px; flex-wrap: wrap; align-items: flex-end; background: white; padding: 15px; border-radius: 16px; }
         .filters .filter-group { flex: 1; min-width: 150px; }
         .filters label { font-weight: bold; display: block; margin-bottom: 5px; }
         .filters select, .filters button { width: 100%; padding: 8px; border-radius: 8px; border: 1px solid #ccc; }
-        .filters button { background: #1e3c72; color: white; border: none; cursor: pointer; margin-top: 0; }
+        .filters button { background: #1e3c72; color: white; border: none; cursor: pointer; }
+
+        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.8); justify-content: center; align-items: center; }
+        .modal-content { background: white; padding: 20px; border-radius: 16px; max-width: 90%; max-height: 90%; overflow: auto; position: relative; }
+        .modal .close { position: absolute; top: 10px; right: 20px; font-size: 30px; cursor: pointer; }
+        .doc-card img { max-width: 100%; border-radius: 8px; margin-top: 10px; cursor: pointer; }
+        .doc-card video { width: 100%; border-radius: 8px; margin-top: 10px; }
+        .quiz-option { margin: 8px 0; }
+        .question { margin-bottom: 20px; border-bottom: 1px solid #ddd; padding-bottom: 10px; }
+
         @media (max-width: 768px) {
             .menu-desktop { display: none; }
             .menu-mobile { display: block; }
             .category-title { font-size: 1.5rem; }
             .btn { padding: 8px 16px; font-size: 0.9rem; }
+            .toolbar { gap: 8px; }
+            .de-list { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -56,92 +159,109 @@
     <div style="text-align:center; padding: 40px;">Đang tải dữ liệu...</div>
 </div>
 
+<!-- Modal làm bài trắc nghiệm -->
+<div id="quizModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2 id="quizTitle"></h2>
+        <div id="quizArea"></div>
+        <div id="quizResult" style="margin-top:20px; font-weight:bold;"></div>
+        <button id="submitQuizBtn" style="background:#28a745;">Nộp bài</button>
+    </div>
+</div>
+
+<!-- Modal xem ảnh/video phóng to -->
+<div id="mediaModal" class="modal">
+    <span class="close" style="color:white; font-size:40px; position:absolute; top:20px; right:40px;">&times;</span>
+    <img id="modalImage" style="display:none; max-width:90%; max-height:90%; margin:auto;">
+    <video id="modalVideo" controls style="display:none; max-width:90%; max-height:90%; margin:auto;"></video>
+</div>
+
 <script>
-    // DANH SÁCH LỚP CHUẨN (cả thi thử lớp 9 và 12)
     const ALL_CATEGORIES = [
-        { id: "2", name: "Lớp 2" }, { id: "3", name: "Lớp 3" }, { id: "4", name: "Lớp 4" },
-        { id: "5", name: "Lớp 5" }, { id: "6", name: "Lớp 6" }, { id: "7", name: "Lớp 7" },
-        { id: "8", name: "Lớp 8" }, { id: "9", name: "Lớp 9" }, { id: "10", name: "Lớp 10" },
-        { id: "11", name: "Lớp 11" }, { id: "12", name: "Lớp 12" },
+        { id: "2", name: "Lớp 2" },{ id: "3", name: "Lớp 3" },{ id: "4", name: "Lớp 4" },
+        { id: "5", name: "Lớp 5" },{ id: "6", name: "Lớp 6" },{ id: "7", name: "Lớp 7" },
+        { id: "8", name: "Lớp 8" },{ id: "9", name: "Lớp 9" },{ id: "10", name: "Lớp 10" },
+        { id: "11", name: "Lớp 11" },{ id: "12", name: "Lớp 12" },
         { id: "ontn", name: "Ôn TN" },
         { id: "thithu9", name: "Thi thử lớp 9" },
         { id: "thithu12", name: "Thi thử lớp 12" }
     ];
-
     let activeCategories = [];
     let allExams = [];
     let allDocs = [];
     let currentTab = "de";
+    let currentCategory = "11";
+    let currentDocGrade = "11";
+    let currentDocSubject = "Toán";
+    let currentQuiz = null;
 
-    // Hàm loadGradeVisibility: tự động xóa các key không hợp lệ và thêm mới
+    // Trạng thái toolbar
+    let searchQuery = "";
+    let sortOrder = "default";   // default | name-asc | name-desc | newest
+    let viewMode = "grid";       // grid | list
+    let allGroupsOpen = true;
+    let groupOpenState = {};     // groupKey -> bool
+
+    /* =========================================================
+       UTILS
+    ========================================================= */
+    function escapeHtml(str) {
+        if (!str) return '';
+        return str.replace(/[&<>"']/g, m =>
+            ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[m]));
+    }
+    function highlight(str, q) {
+        if (!q) return escapeHtml(str);
+        let re = new RegExp(q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'), 'gi');
+        return escapeHtml(str).replace(re, m => `<span class="hl">${m}</span>`);
+    }
+
+    /* Extract nhóm từ title: "DE12BAI3_001" → "BAI3", "DE12_001" → "Chung" */
+    function getGroup(ex) {
+        if (ex.group) return ex.group;
+        let m = (ex.title || ex.html || '').match(/BAI(\d+)/i);
+        if (m) return 'Bài ' + parseInt(m[1]);
+        m = (ex.title || '').match(/BÀI\s*(\d+)/i);
+        if (m) return 'Bài ' + parseInt(m[1]);
+        return 'Chung';
+    }
+
+    /* =========================================================
+       LOAD DATA
+    ========================================================= */
     function loadGradeVisibility() {
         let vis = localStorage.getItem("gradeVisibility");
         let defaultVis = {};
         ALL_CATEGORIES.forEach(c => defaultVis[c.id] = true);
-        
-        if (!vis) {
-            localStorage.setItem("gradeVisibility", JSON.stringify(defaultVis));
-            return defaultVis;
-        }
-        
+        if (!vis) { localStorage.setItem("gradeVisibility", JSON.stringify(defaultVis)); return defaultVis; }
         try {
             let parsed = JSON.parse(vis);
             let changed = false;
-            
-            // Xóa các key không còn trong ALL_CATEGORIES (ví dụ "thithu" cũ)
-            for (let key in parsed) {
-                if (!ALL_CATEGORIES.some(c => c.id === key)) {
-                    delete parsed[key];
-                    changed = true;
-                }
-            }
-            // Thêm các lớp mới nếu thiếu
-            for (let cat of ALL_CATEGORIES) {
-                if (parsed[cat.id] === undefined) {
-                    parsed[cat.id] = true;
-                    changed = true;
-                }
-            }
-            if (changed) {
-                localStorage.setItem("gradeVisibility", JSON.stringify(parsed));
-            }
+            for (let key in parsed) if (!ALL_CATEGORIES.some(c => c.id === key)) { delete parsed[key]; changed = true; }
+            for (let cat of ALL_CATEGORIES) if (parsed[cat.id] === undefined) { parsed[cat.id] = true; changed = true; }
+            if (changed) localStorage.setItem("gradeVisibility", JSON.stringify(parsed));
             return parsed;
-        } catch(e) {
-            localStorage.setItem("gradeVisibility", JSON.stringify(defaultVis));
-            return defaultVis;
-        }
+        } catch(e) { localStorage.setItem("gradeVisibility", JSON.stringify(defaultVis)); return defaultVis; }
     }
-
     function filterCategories() {
         let enabled = loadGradeVisibility();
         activeCategories = ALL_CATEGORIES.filter(c => enabled[c.id] === true);
         if (activeCategories.length === 0) activeCategories = [...ALL_CATEGORIES];
     }
-
     async function loadExams() {
-        try {
-            let res = await fetch("exams.json?v=" + Date.now());
-            if (res.ok) allExams = await res.json();
-            else console.warn("Không thể tải exams.json");
-        } catch(e) { console.error("Lỗi fetch exams.json:", e); }
+        try { let r = await fetch("exams.json?v="+Date.now()); if(r.ok) allExams = await r.json(); } catch(e){}
     }
     async function loadDocs() {
-        try {
-            let res = await fetch("docs.json?v=" + Date.now());
-            if (res.ok) allDocs = await res.json();
-            else console.warn("Không thể tải docs.json");
-        } catch(e) { console.error("Lỗi fetch docs.json:", e); }
+        try { let r = await fetch("docs.json?v="+Date.now()); if(r.ok) allDocs = await r.json(); } catch(e){}
     }
-
     function getSubmits(fileName) {
-        let submits = JSON.parse(localStorage.getItem("exam_submits")) || {};
-        return submits[fileName] || 0;
+        return (JSON.parse(localStorage.getItem("exam_submits"))||{})[fileName]||0;
     }
     function getToday() {
         let d = new Date();
         return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
     }
-
     function getExamStatus(exam, today) {
         if (exam.timeLimited === false) return "open";
         if (today >= exam.open && today <= exam.close) return "open";
@@ -149,180 +269,368 @@
         return "closed";
     }
 
+    /* =========================================================
+       MENU
+    ========================================================= */
     function renderMenus() {
         let desktopDiv = document.getElementById("desktopMenu");
-        let mobileDiv = document.getElementById("mobileMenuList");
-        let desktopHtml = `<a data-tab="de" class="${currentTab === 'de' ? 'active' : ''}">📝 Đề thi</a>
-                           <a data-tab="tailieu" class="${currentTab === 'tailieu' ? 'active' : ''}">📚 Tài liệu</a>`;
-        let mobileHtml = desktopHtml;
+        let mobileDiv  = document.getElementById("mobileMenuList");
+        let dh = `<a data-tab="de" class="${currentTab==='de'?'active':''}">📝 Đề thi</a>
+                  <a data-tab="tailieu" class="${currentTab==='tailieu'?'active':''}">📚 Tài liệu</a>`;
+        let mh = dh;
         activeCategories.forEach(cat => {
-            desktopHtml += `<a data-cat="${cat.id}" class="${currentTab === 'de' && currentCategory === cat.id ? 'active' : ''}">${cat.name}</a>`;
-            mobileHtml += `<a data-cat="${cat.id}" class="${currentTab === 'de' && currentCategory === cat.id ? 'active' : ''}">${cat.name}</a>`;
+            let cls = currentTab==='de' && currentCategory===cat.id ? 'active':'';
+            dh += `<a data-cat="${cat.id}" class="${cls}">${cat.name}</a>`;
+            mh += `<a data-cat="${cat.id}" class="${cls}">${cat.name}</a>`;
         });
-        desktopDiv.innerHTML = desktopHtml;
-        mobileDiv.innerHTML = mobileHtml;
+        desktopDiv.innerHTML = dh;
+        mobileDiv.innerHTML  = mh;
         document.querySelectorAll("[data-tab]").forEach(el => {
             el.onclick = () => {
                 currentTab = el.getAttribute("data-tab");
-                if (currentTab === "de") renderDeThi();
-                else renderTaiLieu();
+                searchQuery = ""; sortOrder = "default";
+                if (currentTab==="de") renderDeThi(); else renderTaiLieu();
                 renderMenus();
-                if (window.innerWidth <= 768) document.getElementById("mobileMenuList").style.display = "none";
+                if (window.innerWidth<=768) document.getElementById("mobileMenuList").style.display="none";
             };
         });
         document.querySelectorAll("[data-cat]").forEach(el => {
             el.onclick = () => {
-                if (currentTab !== "de") return;
+                if (currentTab!=="de") return;
                 currentCategory = el.getAttribute("data-cat");
-                renderDeThi();
-                renderMenus();
-                if (window.innerWidth <= 768) document.getElementById("mobileMenuList").style.display = "none";
+                searchQuery = ""; sortOrder = "default"; groupOpenState = {};
+                renderDeThi(); renderMenus();
+                if (window.innerWidth<=768) document.getElementById("mobileMenuList").style.display="none";
             };
         });
     }
 
-    let currentCategory = "11";
-
+    /* =========================================================
+       RENDER ĐỀ THI  (main rewrite)
+    ========================================================= */
     function renderDeThi() {
         let container = document.getElementById("content");
         let today = getToday();
         let exams = allExams.filter(ex => ex.grade === currentCategory);
-        if (exams.length === 0) {
-            container.innerHTML = `<div style="text-align:center; padding:40px;">📭 Chưa có đề thi cho lớp này.</div>`;
+        if (!exams.length) {
+            container.innerHTML = `<div class="no-result">📭 Chưa có đề thi cho lớp này.</div>`;
             return;
         }
-        let openList = [], futureList = [], closedList = [];
-        exams.forEach(ex => {
-            let status = getExamStatus(ex, today);
-            if (status === "open") openList.push(ex);
-            else if (status === "future") futureList.push(ex);
-            else closedList.push(ex);
+
+        // --- lọc tìm kiếm ---
+        let filtered = exams;
+        if (searchQuery.trim()) {
+            let q = searchQuery.trim().toLowerCase();
+            filtered = exams.filter(ex =>
+                (ex.title||'').toLowerCase().includes(q) ||
+                (ex.subject||'').toLowerCase().includes(q) ||
+                (ex.week||'').toLowerCase().includes(q)
+            );
+        }
+
+        // --- sắp xếp ---
+        filtered = [...filtered];
+        if (sortOrder === "name-asc")  filtered.sort((a,b)=>(a.title||'').localeCompare(b.title||''));
+        if (sortOrder === "name-desc") filtered.sort((a,b)=>(b.title||'').localeCompare(a.title||''));
+        if (sortOrder === "newest")    filtered.reverse();
+
+        // --- nhóm theo Bài + trạng thái ---
+        let groups = {};
+        filtered.forEach(ex => {
+            let g = getGroup(ex);
+            let st = getExamStatus(ex, today);
+            if (!groups[g]) groups[g] = { open:[], future:[], closed:[] };
+            groups[g][st].push(ex);
         });
-        let html = "";
-        if (openList.length) html += `<div class="category-title">🔥 Đang mở</div><div class="de-list">${renderExamCards(openList, "open")}</div>`;
-        if (futureList.length) html += `<div class="category-title">📅 Sắp mở</div><div class="de-list">${renderExamCards(futureList, "future")}</div>`;
-        if (closedList.length) html += `<div class="category-title">📚 Đã đóng</div><div class="de-list">${renderExamCards(closedList, "closed")}</div>`;
-        if (openList.length === 0 && futureList.length === 0 && closedList.length === 0) html = `<div style="text-align:center; padding:40px;">📭 Không có đề phù hợp.</div>`;
+
+        // Sắp xếp tên nhóm: Bài 1, Bài 2, ..., Chung
+        let groupKeys = Object.keys(groups).sort((a,b) => {
+            let na = parseInt(a.replace(/\D/g,'')||'9999');
+            let nb = parseInt(b.replace(/\D/g,'')||'9999');
+            return na - nb || a.localeCompare(b);
+        });
+
+        // --- đếm tổng ---
+        let totalOpen   = filtered.filter(ex=>getExamStatus(ex,today)==='open').length;
+        let totalFuture = filtered.filter(ex=>getExamStatus(ex,today)==='future').length;
+        let totalClosed = filtered.filter(ex=>getExamStatus(ex,today)==='closed').length;
+
+        let html = `
+        <div class="toolbar">
+            <div class="search-box">
+                <span>🔍</span>
+                <input id="searchInput" type="text" placeholder="Tìm đề, môn, tuần..." value="${escapeHtml(searchQuery)}">
+            </div>
+            <div class="toolbar-right">
+                <select id="sortSelect">
+                    <option value="default"  ${sortOrder==='default' ?'selected':''}>Mặc định</option>
+                    <option value="name-asc" ${sortOrder==='name-asc'?'selected':''}>Tên A→Z</option>
+                    <option value="name-desc"${sortOrder==='name-desc'?'selected':''}>Tên Z→A</option>
+                    <option value="newest"   ${sortOrder==='newest'  ?'selected':''}>Mới nhất</option>
+                </select>
+                <button class="view-btn ${viewMode==='grid'?'active':''}" id="btnGrid" title="Lưới">⊞</button>
+                <button class="view-btn ${viewMode==='list'?'active':''}" id="btnList" title="Danh sách">☰</button>
+                <button class="expand-all-btn" id="btnExpandAll">${allGroupsOpen?'🔼 Thu gọn':'🔽 Mở hết'}</button>
+            </div>
+        </div>
+        <div style="font-size:0.82rem;color:#888;margin-bottom:12px;padding-left:4px;">
+            ${filtered.length} đề &nbsp;·&nbsp; 🔥 ${totalOpen} đang mở &nbsp;·&nbsp; 📅 ${totalFuture} sắp mở &nbsp;·&nbsp; 🔒 ${totalClosed} đã đóng
+            ${searchQuery ? `&nbsp;·&nbsp; <span style="color:#e67e22;">Kết quả cho "<b>${escapeHtml(searchQuery)}</b>"</span>` : ''}
+        </div>`;
+
+        if (!filtered.length) {
+            html += `<div class="no-result">😕 Không tìm thấy đề phù hợp. <a href="#" onclick="clearSearch()" style="color:#1e3c72;">Xóa tìm kiếm</a></div>`;
+        } else {
+            groupKeys.forEach(gKey => {
+                let g = groups[gKey];
+                let total = g.open.length + g.future.length + g.closed.length;
+                let isOpen = groupOpenState[gKey] !== undefined ? groupOpenState[gKey] : allGroupsOpen;
+                let statusClass = g.open.length ? 'status-open' : (g.future.length ? 'status-future' : 'status-closed');
+                let badgeClass  = g.open.length ? 'open' : (g.future.length ? 'future' : 'closed');
+                let icon = g.open.length ? '🔥' : (g.future.length ? '📅' : '📚');
+
+                html += `
+                <div class="accordion" data-group="${escapeHtml(gKey)}">
+                    <div class="accordion-header ${statusClass}" onclick="toggleGroup('${escapeHtml(gKey)}')">
+                        <div class="acc-title">
+                            ${icon} ${escapeHtml(gKey)}
+                            <span class="acc-badge ${badgeClass}">${total} đề</span>
+                            ${g.open.length   ? `<span class="acc-badge open">${g.open.length} mở</span>` : ''}
+                            ${g.future.length ? `<span class="acc-badge future">${g.future.length} sắp</span>` : ''}
+                            ${g.closed.length ? `<span class="acc-badge closed">${g.closed.length} đóng</span>` : ''}
+                        </div>
+                        <span class="accordion-arrow ${isOpen?'open':''}">▼</span>
+                    </div>
+                    <div class="accordion-body ${isOpen?'open':''}">
+                        ${renderGroupBody(g, searchQuery)}
+                    </div>
+                </div>`;
+            });
+        }
+
         container.innerHTML = html;
+
+        // Bind toolbar events
+        document.getElementById("searchInput").oninput = e => {
+            searchQuery = e.target.value;
+            renderDeThi();
+        };
+        document.getElementById("sortSelect").onchange = e => {
+            sortOrder = e.target.value;
+            renderDeThi();
+        };
+        document.getElementById("btnGrid").onclick = () => { viewMode="grid"; renderDeThi(); };
+        document.getElementById("btnList").onclick = () => { viewMode="list"; renderDeThi(); };
+        document.getElementById("btnExpandAll").onclick = () => {
+            allGroupsOpen = !allGroupsOpen;
+            groupOpenState = {};
+            renderDeThi();
+        };
     }
 
-    function renderExamCards(exams, status) {
+    function toggleGroup(gKey) {
+        let cur = groupOpenState[gKey] !== undefined ? groupOpenState[gKey] : allGroupsOpen;
+        groupOpenState[gKey] = !cur;
+        // Update DOM without full re-render for snappiness
+        let acc = document.querySelector(`.accordion[data-group="${CSS.escape(gKey)}"]`);
+        if (!acc) { renderDeThi(); return; }
+        let body  = acc.querySelector(".accordion-body");
+        let arrow = acc.querySelector(".accordion-arrow");
+        if (!cur) { body.classList.add("open"); arrow.classList.add("open"); }
+        else       { body.classList.remove("open"); arrow.classList.remove("open"); }
+    }
+
+    function renderGroupBody(g, q) {
+        let html = "";
+        let lvCls = viewMode === 'list' ? 'list-view' : '';
+        if (g.open.length) {
+            if (g.future.length || g.closed.length) html += `<div class="status-label lbl-open">🔥 Đang mở (${g.open.length})</div>`;
+            html += `<div class="de-list ${lvCls}">${renderExamCards(g.open,'open',q)}</div>`;
+        }
+        if (g.future.length) {
+            html += `<div class="status-label lbl-future">📅 Sắp mở (${g.future.length})</div>`;
+            html += `<div class="de-list ${lvCls}">${renderExamCards(g.future,'future',q)}</div>`;
+        }
+        if (g.closed.length) {
+            html += `<div class="status-label lbl-closed">🔒 Đã đóng (${g.closed.length})</div>`;
+            html += `<div class="de-list ${lvCls}">${renderExamCards(g.closed,'closed',q)}</div>`;
+        }
+        return html;
+    }
+
+    function renderExamCards(exams, status, q) {
         return exams.map(ex => {
             let extraClass = "", btnText = "✍️ Làm bài", disabled = false;
-            if (status === "future") { extraClass = "future-card"; btnText = "⏳ Sắp mở"; disabled = true; }
-            if (status === "closed") { extraClass = "closed-card"; btnText = "🔒 Đã đóng"; disabled = true; }
+            if (status==="future") { extraClass="future-card"; btnText="⏳ Sắp mở"; disabled=true; }
+            if (status==="closed") { extraClass="closed-card"; btnText="🔒 Đã đóng"; disabled=true; }
             let btnClass = disabled ? "btn btn-disabled" : "btn";
-            let submits = getSubmits(ex.html);
-            let noLimitBadge = (ex.timeLimited === false) ? '<span class="no-time-badge">♾️ Không giới hạn</span>' : '';
-            let subjectDisplay = ex.subject ? ` | Môn: ${ex.subject}` : '';
+            let submits = ex.type!=='quiz' ? getSubmits(ex.html) : 0;
+            let noLimitBadge = ex.timeLimited===false ? '<span class="no-time-badge">♾️ Không giới hạn</span>' : '';
+            let subjectDisplay = ex.subject ? ` | ${ex.subject}` : '';
+            let typeBadge = ex.type==='quiz' ? '<span class="no-time-badge" style="background:#27ae60;">📝 TN</span>' : '';
+            let action = (ex.type==='quiz'&&!disabled)
+                ? `<button class="btn" onclick="startQuiz('${ex.id}')">${btnText}</button>`
+                : `<a href="${disabled?'#':ex.html}" class="${btnClass}">${btnText}</a>`;
             return `
-                <div class="de-card ${extraClass}">
-                    <h3>📄 ${ex.title} ${noLimitBadge}</h3>
-                    <div class="de-meta">${ex.timeLimited !== false ? `📅 ${ex.open} → ${ex.close}` : '⏰ Luôn mở'}</div>
-                    <div class="de-meta">🏫 ${ex.grade}${subjectDisplay} | Tuần ${ex.week || ''}</div>
-                    <div class="luot-lam">📊 Lượt nộp: ${submits}</div>
-                    <a href="${disabled ? "#" : ex.html}" class="${btnClass}">${btnText}</a>
-                </div>
-            `;
+            <div class="de-card ${extraClass}">
+                <h3>📄 ${highlight(ex.title,q)} ${noLimitBadge} ${typeBadge}</h3>
+                <div class="de-meta">${ex.timeLimited!==false?`📅 ${ex.open} → ${ex.close}`:'⏰ Luôn mở'}${subjectDisplay} | Tuần ${ex.week||''}</div>
+                <div class="luot-lam">📊 Lượt nộp: ${submits}</div>
+                <div class="card-actions">${action}</div>
+            </div>`;
         }).join("");
     }
 
-    function viewPdfWithGoogleDocs(fileUrl) {
-        let absoluteUrl = fileUrl;
-        if (!fileUrl.startsWith('http')) {
-            let base = window.location.href.substring(0, window.location.href.lastIndexOf('/') + 1);
-            absoluteUrl = base + fileUrl;
-        }
-        const viewerUrl = `https://docs.google.com/viewer?url=${encodeURIComponent(absoluteUrl)}&embedded=true`;
-        window.open(viewerUrl, '_blank');
+    function clearSearch() {
+        searchQuery = "";
+        renderDeThi();
+        return false;
     }
 
-    let currentDocGrade = "11";
-    let currentDocSubject = "Toán";
+    /* =========================================================
+       QUIZ
+    ========================================================= */
+    function startQuiz(examId) {
+        let exam = allExams.find(e=>e.id===examId);
+        if (!exam||exam.type!=='quiz') return;
+        currentQuiz = exam;
+        document.getElementById("quizTitle").innerHTML = exam.title;
+        let html = `<form id="quizForm">`;
+        exam.questions.forEach((q,idx) => {
+            html += `<div class="question"><strong>Câu ${idx+1}:</strong> ${escapeHtml(q.text)}<br>`;
+            q.options.forEach((opt,oi) => {
+                html += `<label class="quiz-option"><input type="radio" name="q${idx}" value="${oi}"> ${escapeHtml(opt)}</label><br>`;
+            });
+            html += `</div>`;
+        });
+        html += `</form>`;
+        document.getElementById("quizArea").innerHTML = html;
+        document.getElementById("quizResult").innerHTML = "";
+        document.getElementById("quizModal").style.display = "flex";
+    }
 
+    document.getElementById("submitQuizBtn").onclick = () => {
+        if (!currentQuiz) return;
+        let form  = document.getElementById("quizForm");
+        let total = currentQuiz.questions.length;
+        let correct = 0;
+        for (let i=0;i<total;i++) {
+            let sel = form.querySelector(`input[name="q${i}"]:checked`);
+            if (sel && parseInt(sel.value)===currentQuiz.questions[i].correct) correct++;
+        }
+        let score = (correct/total)*10;
+        document.getElementById("quizResult").innerHTML =
+            `Bạn trả lời đúng ${correct}/${total} câu. Điểm: ${score.toFixed(2)}/10.`;
+        let studentName = prompt("Nhập tên của bạn để lưu kết quả:","Học sinh");
+        if (studentName) {
+            let qr = JSON.parse(localStorage.getItem("quiz_results"))||[];
+            qr.push({ examId:currentQuiz.id, title:currentQuiz.title, student:studentName,
+                       score, correct, total, date:new Date().toISOString() });
+            localStorage.setItem("quiz_results", JSON.stringify(qr));
+            alert("Đã lưu kết quả!");
+        }
+    };
+    document.querySelector("#quizModal .close").onclick = () => {
+        document.getElementById("quizModal").style.display = "none";
+    };
+
+    /* =========================================================
+       MEDIA
+    ========================================================= */
+    function showMedia(url, type) {
+        let modal = document.getElementById("mediaModal");
+        let img   = document.getElementById("modalImage");
+        let video = document.getElementById("modalVideo");
+        if (type==="image") { img.src=url; img.style.display="block"; video.style.display="none"; video.pause(); }
+        else { video.src=url; video.style.display="block"; img.style.display="none"; video.play(); }
+        modal.style.display = "flex";
+    }
+    document.querySelectorAll("#mediaModal .close").forEach(el => {
+        el.onclick = () => {
+            document.getElementById("mediaModal").style.display = "none";
+            document.getElementById("modalVideo").pause();
+        };
+    });
+    window.onclick = e => {
+        if (e.target===document.getElementById("mediaModal")) {
+            document.getElementById("mediaModal").style.display="none";
+            document.getElementById("modalVideo").pause();
+        }
+        if (e.target===document.getElementById("quizModal"))
+            document.getElementById("quizModal").style.display="none";
+    };
+
+    /* =========================================================
+       TÀI LIỆU
+    ========================================================= */
     function renderTaiLieu() {
         let container = document.getElementById("content");
-        if (!allDocs.length) {
-            container.innerHTML = `<div style="text-align:center; padding:40px;">📭 Chưa có tài liệu nào.</div>`;
-            return;
-        }
+        if (!allDocs.length) { container.innerHTML=`<div class="no-result">📭 Chưa có tài liệu nào.</div>`; return; }
         let enabledGrades = loadGradeVisibility();
-        let docs = allDocs.filter(doc => {
-            if (!doc.grade) return false;
-            return enabledGrades[doc.grade] === true;
-        });
-        docs = docs.filter(doc => doc.grade === currentDocGrade && doc.subject === currentDocSubject);
-
-        if (docs.length === 0) {
-            container.innerHTML = `<div style="text-align:center; padding:40px;">📭 Không có tài liệu cho ${currentDocGrade} - ${currentDocSubject}.</div>`;
+        let docs = allDocs.filter(d => d.grade && enabledGrades[d.grade]===true);
+        docs = docs.filter(d => d.grade===currentDocGrade && d.subject===currentDocSubject);
+        if (!docs.length) {
+            container.innerHTML=`<div class="no-result">📭 Không có tài liệu cho ${currentDocGrade} - ${currentDocSubject}.</div>`;
             return;
         }
-
         let html = `<div class="category-title">📚 Tài liệu học tập</div>
                     <div class="filters">
                         <div class="filter-group"><label>📖 Lớp</label><select id="filterGrade"></select></div>
                         <div class="filter-group"><label>📚 Môn</label><select id="filterSubject"></select></div>
-                        <div class="filter-group"><button id="applyDocFilterBtn">🔍 Lọc tài liệu</button></div>
-                    </div>
-                    <div class="doc-list">`;
+                        <div class="filter-group"><button id="applyDocFilterBtn">🔍 Lọc</button></div>
+                    </div><div class="doc-list">`;
         docs.forEach(doc => {
-            let isPdf = (doc.type === 'pdf') || doc.file.toLowerCase().endsWith('.pdf');
-            let viewBtn = isPdf ? `<button class="btn btn-view" onclick="viewPdfWithGoogleDocs('${doc.file}')">📖 Xem</button>` : '';
-            html += `
-                <div class="doc-card">
-                    <h3>📘 ${escapeHtml(doc.title)}</h3>
-                    <p style="color:#555; margin:8px 0;">${escapeHtml(doc.description || '')}</p>
-                    <div class="de-meta">📁 ${doc.file} | ${doc.grade} | ${doc.subject}</div>
-                    <div class="doc-actions">
-                        <a href="${doc.file}" download class="btn btn-download">⬇️ Tải về</a>
-                        ${viewBtn}
-                    </div>
-                </div>
-            `;
+            let mediaHtml = "";
+            if (doc.mediaType==="image") {
+                mediaHtml = `<img src="${doc.file}" alt="${doc.title}" style="max-width:100%;max-height:200px;cursor:pointer;" onclick="showMedia('${doc.file}','image')">`;
+            } else if (doc.mediaType==="video") {
+                mediaHtml = `<video controls style="width:100%;max-height:200px;"><source src="${doc.file}" type="video/mp4"></video>`;
+            } else if (doc.mediaType==="pdf") {
+                mediaHtml = `<a href="${doc.file}" target="_blank" class="btn btn-view">📖 Xem PDF</a>`;
+            } else if (doc.mediaType==="docx") {
+                mediaHtml = `<a href="${doc.file}" download class="btn btn-download">⬇️ Tải DOCX</a>`;
+            } else if (doc.mediaType==="link") {
+                let isYT = doc.file.match(/youtube\.com|youtu\.be/i);
+                let ytEmbed = "";
+                if (isYT) {
+                    let vid = doc.file.match(/(?:v=|youtu\.be\/)([A-Za-z0-9_-]{11})/);
+                    if (vid) ytEmbed = `<div style="position:relative;padding-bottom:56.25%;height:0;margin-top:10px;overflow:hidden;border-radius:10px;">
+                        <iframe src="https://www.youtube.com/embed/${vid[1]}" style="position:absolute;top:0;left:0;width:100%;height:100%;" frameborder="0" allowfullscreen></iframe></div>`;
+                }
+                mediaHtml = `${ytEmbed}<div style="margin-top:8px;">
+                    <a href="${doc.file}" target="_blank" rel="noopener" class="btn btn-view">🔗 Mở link</a>
+                    <button class="btn" style="background:#8e44ad;" onclick="navigator.clipboard.writeText('${doc.file.replace(/'/g,"\\'")}').then(()=>alert('Đã sao chép link!'))">📋 Sao chép link</button></div>`;
+            }
+            html += `<div class="doc-card">
+                <h3>📘 ${escapeHtml(doc.title)}</h3>
+                <p>${escapeHtml(doc.description||'')}</p>
+                ${mediaHtml}
+                ${doc.mediaType!=='link'?`<div><a href="${doc.file}" download class="btn btn-download">⬇️ Tải về</a></div>`:''}
+            </div>`;
         });
         html += `</div>`;
         container.innerHTML = html;
 
         let gradeSelect = document.getElementById("filterGrade");
-        if (gradeSelect) {
-            gradeSelect.innerHTML = "";
-            let enabledList = Object.keys(enabledGrades).filter(g => enabledGrades[g] === true);
-            enabledList.forEach(g => {
-                let gradeName = ALL_CATEGORIES.find(c => c.id === g)?.name || g;
-                let selected = (g === currentDocGrade) ? "selected" : "";
-                gradeSelect.innerHTML += `<option value="${g}" ${selected}>${gradeName}</option>`;
-            });
-        }
-        let subjectSelect = document.getElementById("filterSubject");
-        if (subjectSelect) {
-            let subjects = [...new Set(allDocs.filter(d => enabledGrades[d.grade]).map(d => d.subject))];
-            if (subjects.length === 0) subjects = ["Toán", "Vật lý", "Hóa học", "Ngữ văn", "Tiếng Anh", "Lịch sử", "Địa lý", "GDCD", "Sinh học", "Tin học", "Công nghệ"];
-            subjectSelect.innerHTML = "";
-            subjects.forEach(sub => {
-                let selected = (sub === currentDocSubject) ? "selected" : "";
-                subjectSelect.innerHTML += `<option value="${sub}" ${selected}>${sub}</option>`;
-            });
-        }
-        let applyBtn = document.getElementById("applyDocFilterBtn");
-        if (applyBtn) {
-            applyBtn.onclick = () => {
-                currentDocGrade = document.getElementById("filterGrade").value;
-                currentDocSubject = document.getElementById("filterSubject").value;
-                renderTaiLieu();
-            };
-        }
-    }
-
-    function escapeHtml(str) {
-        if (!str) return '';
-        return str.replace(/[&<>]/g, function(m) {
-            if (m === '&') return '&amp;';
-            if (m === '<') return '&lt;';
-            if (m === '>') return '&gt;';
-            return m;
+        let enabled = loadGradeVisibility();
+        Object.keys(enabled).filter(g=>enabled[g]).forEach(g => {
+            let name = ALL_CATEGORIES.find(c=>c.id===g)?.name||g;
+            gradeSelect.innerHTML += `<option value="${g}" ${g===currentDocGrade?'selected':''}>${name}</option>`;
         });
+        let subjectSelect = document.getElementById("filterSubject");
+        let subjects = [...new Set(allDocs.filter(d=>enabledGrades[d.grade]).map(d=>d.subject))];
+        if (!subjects.length) subjects = ["Toán","Vật lý","Hóa học","Ngữ văn","Tiếng Anh","Lịch sử","Địa lý","GDCD","Sinh học","Tin học","Công nghệ"];
+        subjects.forEach(s => { subjectSelect.innerHTML += `<option value="${s}" ${s===currentDocSubject?'selected':''}>${s}</option>`; });
+        document.getElementById("applyDocFilterBtn").onclick = () => {
+            currentDocGrade   = document.getElementById("filterGrade").value;
+            currentDocSubject = document.getElementById("filterSubject").value;
+            renderTaiLieu();
+        };
     }
 
+    /* =========================================================
+       INIT
+    ========================================================= */
     async function init() {
         filterCategories();
         await Promise.all([loadExams(), loadDocs()]);
@@ -330,12 +638,10 @@
         renderMenus();
         renderDeThi();
     }
-
     document.getElementById("menuToggle").onclick = () => {
-        let menu = document.getElementById("mobileMenuList");
-        menu.style.display = menu.style.display === "flex" ? "none" : "flex";
+        let m = document.getElementById("mobileMenuList");
+        m.style.display = m.style.display==="flex" ? "none" : "flex";
     };
-
     init();
 </script>
 </body>
