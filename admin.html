@@ -93,6 +93,29 @@
         .extend-btn { padding: 3px 7px; font-size: 0.72rem; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; background: #e8f0fe; color: #1e3c72; white-space: nowrap; transition: 0.15s; }
         .extend-btn:hover { background: #1e3c72; color: white; }
 
+        /* ── BULK EDIT TOOLBAR ── */
+        .bulk-toolbar {
+            display: none; position: sticky; bottom: 14px; margin-top: 12px;
+            background: #1e3c72; color: white; border-radius: 12px; padding: 10px 14px;
+            gap: 10px; flex-wrap: wrap; align-items: center; box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+            z-index: 50; font-size: 0.85rem;
+        }
+        .bulk-toolbar.show { display: flex; }
+        .bulk-toolbar select, .bulk-toolbar input[type=date] { padding: 6px 8px; border-radius: 6px; border: none; font-size: 0.82rem; }
+        .row-checkbox, #selectAllExams { width: 16px; height: 16px; cursor: pointer; }
+        tr.row-selected td { background: #fff7e6 !important; }
+
+        /* ── TEMPLATE TUẦN ── */
+        .template-row {
+            display: grid; grid-template-columns: 90px 1fr 130px 130px 36px;
+            gap: 10px; align-items: center; padding: 8px 10px;
+            border-radius: 8px; background: #fafafa; margin-bottom: 6px;
+        }
+        .template-row input { padding: 6px 8px; border-radius: 6px; border: 1px solid #ddd; font-size: 0.85rem; }
+        .template-del { background: #fee; color: #e74c3c; border: none; border-radius: 6px; cursor: pointer; font-size: 0.9rem; padding: 4px; }
+        .template-del:hover { background: #e74c3c; color: white; }
+        .template-header-row { display: grid; grid-template-columns: 90px 1fr 130px 130px 36px; gap: 10px; padding: 0 10px 4px; font-size: 0.75rem; font-weight: bold; color: #888; }
+
         /* ── QUIZ BUILDER ── */
         .question-item { background: #f8f9fa; padding: 12px 14px; margin: 10px 0; border-radius: 10px; border-left: 4px solid #1e3c72; }
         .question-item .q-header { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
@@ -171,12 +194,13 @@
             <table id="examTable">
                 <thead>
                     <tr>
+                        <th><input type="checkbox" id="selectAllExams" title="Chọn tất cả"></th>
                         <th>#</th><th>Tiêu đề</th><th>Loại</th><th>Môn</th><th>Lớp</th>
                         <th>Ngày mở</th><th>Ngày đóng</th><th>Trạng thái</th>
-                        <th>Gia hạn nhanh (F)</th><th>Sửa (B)</th><th>Xóa</th>
+                        <th>Gia hạn nhanh</th><th>Sửa</th><th>Xóa</th>
                     </tr>
                 </thead>
-                <tbody id="examTbody"><tr><td colspan="11" class="empty">Đang tải...</td></tr></tbody>
+                <tbody id="examTbody"><tr><td colspan="12" class="empty">Đang tải...</td></tr></tbody>
             </table>
         </div>
         <div class="btn-group">
@@ -184,6 +208,24 @@
             <button class="btn btn-info" id="downloadCurrentBtn">💾 Tải exams.json</button>
             <label class="btn btn-warning" style="cursor:pointer;">📂 Nạp exams.json <input type="file" id="uploadExamsJson" accept=".json" style="display:none;"></label>
         </div>
+    </div>
+
+    <!-- ══ BULK-EDIT TOOLBAR (nổi cố định khi có đề được chọn) ══ -->
+    <div class="bulk-toolbar" id="bulkToolbar">
+        <span id="bulkCount" style="font-weight:bold;">0 đề được chọn</span>
+        <select id="bulkApplyTemplate" style="margin-left:auto;">
+            <option value="">-- Áp dụng template tuần --</option>
+        </select>
+        <button class="btn btn-success btn-sm" id="bulkApplyTemplateBtn">📋 Áp dụng template</button>
+        <span style="color:#ccc;">|</span>
+        <label style="display:flex;align-items:center;gap:6px;font-size:0.85rem;">
+            <input type="checkbox" id="bulkTimeLimited" checked> Có giới hạn
+        </label>
+        <input type="date" id="bulkOpen" title="Ngày mở">
+        <input type="date" id="bulkClose" title="Ngày đóng">
+        <button class="btn btn-primary btn-sm" id="bulkApplyDatesBtn">💾 Đặt ngày cho đề đã chọn</button>
+        <button class="btn btn-danger btn-sm" id="bulkDeleteBtn">🗑️ Xóa đề đã chọn</button>
+        <button class="btn btn-sm" style="background:#eee;color:#555;" id="bulkClearBtn">✕ Bỏ chọn</button>
     </div>
 
     <!-- Thêm đề mới -->
@@ -220,6 +262,12 @@
                 <label>Tuần (VD: 2026-W01)</label>
                 <input type="text" id="week" placeholder="2026-W01">
             </div>
+        </div>
+        <div class="form-group">
+            <label>📋 Áp dụng Template tuần (tự điền ngày mở/đóng)</label>
+            <select id="templateSelect">
+                <option value="">-- Không dùng template, nhập ngày tay --</option>
+            </select>
         </div>
         <div class="form-group">
             <label>Lớp (chọn nhiều)</label>
@@ -313,6 +361,25 @@
 <!-- ══════════════ TAB: CÀI ĐẶT ══════════════ -->
 <div class="tab-panel" id="tab-settings">
     <div class="card">
+        <div class="card-title">📅 Template lịch theo tuần <span class="cnt" id="templateCount">0 template</span></div>
+        <p style="font-size:0.85rem;color:#666;margin-bottom:12px;">
+            Đặt sẵn lịch mở/đóng cho mỗi tuần học. Khi thêm đề mới hoặc bulk-edit, chỉ cần chọn tên tuần → ngày tự điền, không cần nhập tay.
+        </p>
+        <div class="template-header-row">
+            <span>Tên tuần</span><span>Mô tả (tùy chọn)</span><span>Ngày mở</span><span>Ngày đóng</span><span></span>
+        </div>
+        <div id="templateList"></div>
+        <div class="btn-group">
+            <button class="btn btn-success btn-sm" id="addTemplateBtn">➕ Thêm tuần</button>
+            <button class="btn btn-info btn-sm" id="autoGenTemplateBtn">⚡ Tự sinh 10 tuần (Thứ 2 → Thứ 4)</button>
+            <button class="btn btn-warning btn-sm" id="saveTemplatesBtn">💾 Lưu template</button>
+        </div>
+        <div class="warning-box" style="margin-top:10px;">
+            💡 Template chỉ lưu trên trình duyệt này (localStorage) để hỗ trợ điền nhanh — không ảnh hưởng đến exams.json cho đến khi bạn áp dụng cho từng đề.
+        </div>
+    </div>
+
+    <div class="card">
         <div class="card-title">🔘 Bật / Tắt lớp hiển thị cho học sinh</div>
         <p style="font-size:0.85rem;color:#666;margin-bottom:12px;">Chỉ các lớp được bật mới xuất hiện trong menu của học sinh.</p>
         <div class="checkbox-group" id="gradeVisibilityGroup" style="max-height:none;"></div>
@@ -353,6 +420,8 @@
 let currentExams=[], currentDocs=[], quizQuestions=[], editingIdx=-1;
 let examSearch="", filterExamGrade="", filterExamSubject="", filterExamType="", filterExamStatus="";
 let docSearch="",  filterDocGrade="",  filterDocSubject="",  filterDocType="";
+let weekTemplates=[];      // [{name, desc, open, close}]
+let selectedExamIdxs=new Set();  // bulk-edit selection (lưu realIdx)
 
 const ALL_GRADES=[
     {id:"2",name:"Lớp 2"},{id:"3",name:"Lớp 3"},{id:"4",name:"Lớp 4"},
@@ -405,6 +474,63 @@ document.getElementById("saveGradeVisibilityBtn").onclick=()=>{
 };
 document.getElementById("selectAllGradesBtn").onclick=()=>document.querySelectorAll("#gradeVisibilityGroup input").forEach(cb=>cb.checked=true);
 document.getElementById("deselectAllGradesBtn").onclick=()=>document.querySelectorAll("#gradeVisibilityGroup input").forEach(cb=>cb.checked=false);
+
+/* ── WEEK TEMPLATES ── */
+function loadWeekTemplates(){
+    try{let t=localStorage.getItem("weekTemplates");weekTemplates=t?JSON.parse(t):[];}catch(e){weekTemplates=[];}
+}
+function saveWeekTemplatesToStorage(){
+    localStorage.setItem("weekTemplates",JSON.stringify(weekTemplates));
+}
+function renderTemplateList(){
+    document.getElementById("templateCount").textContent=weekTemplates.length+" template";
+    let c=document.getElementById("templateList");
+    if(!weekTemplates.length){c.innerHTML="<p style='color:#aaa;padding:8px;font-size:0.85rem;'>Chưa có template nào. Thêm tuần hoặc dùng 'Tự sinh 10 tuần'.</p>";return;}
+    c.innerHTML=weekTemplates.map((t,idx)=>`
+        <div class="template-row">
+            <input type="text" value="${escapeHtml(t.name)}" placeholder="Tuần 1" onchange="weekTemplates[${idx}].name=this.value">
+            <input type="text" value="${escapeHtml(t.desc||'')}" placeholder="VD: Ôn chương 1" onchange="weekTemplates[${idx}].desc=this.value">
+            <input type="date" value="${t.open||''}" onchange="weekTemplates[${idx}].open=this.value">
+            <input type="date" value="${t.close||''}" onchange="weekTemplates[${idx}].close=this.value">
+            <button class="template-del" data-idx="${idx}" title="Xóa tuần này">🗑️</button>
+        </div>`).join("");
+    document.querySelectorAll(".template-del").forEach(btn=>{
+        btn.onclick=()=>{weekTemplates.splice(parseInt(btn.dataset.idx),1);renderTemplateList();};
+    });
+}
+function populateTemplateSelects(){
+    let optsHtml=weekTemplates.map(t=>`<option value="${escapeHtml(t.name)}" data-open="${t.open||''}" data-close="${t.close||''}">${escapeHtml(t.name)}${t.desc?' — '+escapeHtml(t.desc):''} (${t.open||'?'} → ${t.close||'?'})</option>`).join("");
+    let ts=document.getElementById("templateSelect");
+    if(ts) ts.innerHTML='<option value="">-- Không dùng template, nhập ngày tay --</option>'+optsHtml;
+    let bts=document.getElementById("bulkApplyTemplate");
+    if(bts) bts.innerHTML='<option value="">-- Áp dụng template tuần --</option>'+optsHtml;
+}
+document.getElementById("addTemplateBtn").onclick=()=>{
+    let n=weekTemplates.length+1;
+    weekTemplates.push({name:"Tuần "+n,desc:"",open:"",close:""});
+    renderTemplateList();
+};
+document.getElementById("autoGenTemplateBtn").onclick=()=>{
+    if(weekTemplates.length&&!confirm("Sẽ thêm 10 tuần mới (Thứ 2 mở, Thứ 4 đóng) bắt đầu từ hôm nay. Tiếp tục?"))return;
+    let today=new Date();
+    // tìm thứ 2 gần nhất (nếu hôm nay là CN thì lùi về thứ 2 trước, nếu không thì tìm thứ 2 của tuần này)
+    let day=today.getDay(); // 0=CN,1=T2...
+    let diffToMonday=(day===0?-6:1-day);
+    let monday=new Date(today);monday.setDate(today.getDate()+diffToMonday);
+    for(let i=0;i<10;i++){
+        let openD=new Date(monday);openD.setDate(monday.getDate()+i*7);
+        let closeD=new Date(openD);closeD.setDate(openD.getDate()+2); // T2 -> T4
+        let fmt=d=>`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+        weekTemplates.push({name:`Tuần ${weekTemplates.length+1}`,desc:"",open:fmt(openD),close:fmt(closeD)});
+    }
+    renderTemplateList();
+    alert("✅ Đã sinh 10 tuần. Kiểm tra lại ngày rồi nhấn 'Lưu template'.");
+};
+document.getElementById("saveTemplatesBtn").onclick=()=>{
+    saveWeekTemplatesToStorage();
+    populateTemplateSelects();
+    alert("✅ Đã lưu "+weekTemplates.length+" template tuần!");
+};
 
 /* ── POPULATE SELECTS ── */
 function populateGradeSelects(){
@@ -468,7 +594,8 @@ function renderExamList(){
     document.getElementById("examFilterInfo").textContent=list.length!==currentExams.length?`Hiển thị ${list.length}/${currentExams.length}`:`${list.length} đề`;
 
     if(!list.length){
-        document.getElementById("examTbody").innerHTML=`<tr><td colspan="11" class="empty">${currentExams.length?'😕 Không tìm thấy.':'📭 Chưa có đề thi nào.'}</td></tr>`;
+        document.getElementById("examTbody").innerHTML=`<tr><td colspan="12" class="empty">${currentExams.length?'😕 Không tìm thấy.':'📭 Chưa có đề thi nào.'}</td></tr>`;
+        updateBulkToolbar();
         return;
     }
 
@@ -494,8 +621,11 @@ function renderExamList(){
                 <button class="extend-btn" data-idx="${realIdx}" data-days="7">+1 tuần</button>
             </div>`;
         }
+        let checked=selectedExamIdxs.has(realIdx)?'checked':'';
+        let rowSelClass=selectedExamIdxs.has(realIdx)?'row-selected':'';
 
-        return`<tr>
+        return`<tr class="${rowSelClass}" data-row-idx="${realIdx}">
+            <td><input type="checkbox" class="row-checkbox" data-idx="${realIdx}" ${checked}></td>
             <td style="color:#aaa;font-size:0.78rem;">${i+1}</td>
             <td><strong>${hl(ex.title,examSearch)}</strong><br><span style="font-size:0.75rem;color:#888;">${hl(ex.grade||'',examSearch)} · Tuần ${hl(ex.week||'',examSearch)}</span></td>
             <td>${typeLabel}</td>
@@ -509,6 +639,26 @@ function renderExamList(){
             <td><button class="btn btn-danger btn-sm delExamBtn" data-idx="${realIdx}">🗑️</button></td>
         </tr>`;
     }).join("");
+
+    // Bind row checkboxes (bulk-edit)
+    document.querySelectorAll(".row-checkbox").forEach(cb=>{
+        cb.onchange=()=>{
+            let idx=parseInt(cb.dataset.idx);
+            if(cb.checked)selectedExamIdxs.add(idx);else selectedExamIdxs.delete(idx);
+            cb.closest("tr").classList.toggle("row-selected",cb.checked);
+            updateBulkToolbar();
+        };
+    });
+    document.getElementById("selectAllExams").checked=false;
+    document.getElementById("selectAllExams").onchange=function(){
+        document.querySelectorAll(".row-checkbox").forEach(cb=>{
+            cb.checked=this.checked;
+            let idx=parseInt(cb.dataset.idx);
+            if(this.checked)selectedExamIdxs.add(idx);else selectedExamIdxs.delete(idx);
+            cb.closest("tr").classList.toggle("row-selected",this.checked);
+        });
+        updateBulkToolbar();
+    };
 
     // Bind extend buttons (F)
     document.querySelectorAll(".extend-btn").forEach(btn=>{
@@ -536,10 +686,76 @@ function renderExamList(){
     document.querySelectorAll(".delExamBtn").forEach(btn=>{
         btn.onclick=()=>{
             let ex=currentExams[parseInt(btn.dataset.idx)];
-            if(confirm(`Xóa đề "${ex?.title}"?`)){currentExams.splice(parseInt(btn.dataset.idx),1);renderExamList();}
+            if(confirm(`Xóa đề "${ex?.title}"?`)){
+                let idx=parseInt(btn.dataset.idx);
+                currentExams.splice(idx,1);
+                selectedExamIdxs.delete(idx);
+                renderExamList();
+            }
         };
     });
+
+    updateBulkToolbar();
 }
+
+/* ── BULK-EDIT TOOLBAR LOGIC ── */
+function updateBulkToolbar(){
+    let toolbar=document.getElementById("bulkToolbar");
+    let n=selectedExamIdxs.size;
+    if(n>0){
+        toolbar.classList.add("show");
+        document.getElementById("bulkCount").textContent=`✅ ${n} đề được chọn`;
+    } else {
+        toolbar.classList.remove("show");
+    }
+}
+document.getElementById("bulkClearBtn").onclick=()=>{
+    selectedExamIdxs.clear();
+    renderExamList();
+};
+document.getElementById("bulkDeleteBtn").onclick=()=>{
+    if(!selectedExamIdxs.size)return;
+    if(!confirm(`Xóa ${selectedExamIdxs.size} đề đã chọn? Không thể hoàn tác (trừ khi nạp lại exams.json cũ).`))return;
+    // Xóa theo index giảm dần để tránh lệch index
+    let idxs=[...selectedExamIdxs].sort((a,b)=>b-a);
+    idxs.forEach(idx=>currentExams.splice(idx,1));
+    selectedExamIdxs.clear();
+    renderExamList();
+    autoDownloadExams(`Đã xóa ${idxs.length} đề.`);
+};
+document.getElementById("bulkApplyDatesBtn").onclick=()=>{
+    if(!selectedExamIdxs.size){alert("Chưa chọn đề nào!");return;}
+    let tl=document.getElementById("bulkTimeLimited").checked;
+    let open=document.getElementById("bulkOpen").value;
+    let close=document.getElementById("bulkClose").value;
+    if(tl&&(!open||!close)){alert("Nhập đầy đủ ngày mở và đóng (hoặc bỏ tick 'Có giới hạn')");return;}
+    if(tl&&open>close){alert("Ngày mở phải trước ngày đóng!");return;}
+    selectedExamIdxs.forEach(idx=>{
+        currentExams[idx].timeLimited=tl;
+        currentExams[idx].open=tl?open:"";
+        currentExams[idx].close=tl?close:"";
+    });
+    let n=selectedExamIdxs.size;
+    renderExamList();
+    autoDownloadExams(`Đã đặt thời gian cho ${n} đề.`);
+};
+document.getElementById("bulkApplyTemplateBtn").onclick=()=>{
+    if(!selectedExamIdxs.size){alert("Chưa chọn đề nào!");return;}
+    let sel=document.getElementById("bulkApplyTemplate");
+    let opt=sel.options[sel.selectedIndex];
+    if(!opt.value){alert("Chọn một template trước!");return;}
+    let open=opt.dataset.open,close=opt.dataset.close;
+    if(!open||!close){alert("Template này chưa có đủ ngày mở/đóng. Vào tab Cài đặt để chỉnh.");return;}
+    selectedExamIdxs.forEach(idx=>{
+        currentExams[idx].timeLimited=true;
+        currentExams[idx].open=open;
+        currentExams[idx].close=close;
+        currentExams[idx].week=opt.value;
+    });
+    let n=selectedExamIdxs.size;
+    renderExamList();
+    autoDownloadExams(`Đã áp dụng template "${opt.value}" cho ${n} đề.`);
+};
 
 /* ── AUTO DOWNLOAD EXAMS JSON ── */
 function autoDownloadExams(msg){
@@ -685,6 +901,18 @@ document.getElementById("docMediaType").onchange=function(){
     document.getElementById("docFileArea").style.display=isLink?"none":"block";
     document.getElementById("docLinkArea").style.display=isLink?"block":"none";
 };
+document.getElementById("templateSelect").onchange=function(){
+    let opt=this.options[this.selectedIndex];
+    if(!opt.value)return;
+    let open=opt.dataset.open,close=opt.dataset.close;
+    if(open)document.getElementById("open").value=open;
+    if(close)document.getElementById("close").value=close;
+    document.getElementById("week").value=opt.value;
+    if(!document.getElementById("timeLimitedCheckbox").checked){
+        document.getElementById("timeLimitedCheckbox").checked=true;
+        document.getElementById("dateRangeArea").style.display="grid";
+    }
+};
 
 /* ── QUIZ BUILDER ── */
 function renderQuestionBuilder(){
@@ -733,11 +961,15 @@ document.getElementById("addMultipleBtn").onclick=async()=>{
             let content=await file.text();
             let script=`<script>(function(){const KEY="exam_submits";const FILE_NAME="${file.name.replace(/"/g,'\\"')}";function inc(){let s=JSON.parse(localStorage.getItem(KEY))||{};s[FILE_NAME]=(s[FILE_NAME]||0)+1;localStorage.setItem(KEY,JSON.stringify(s));alert("Đã ghi nhận lượt nộp bài!");}let btn=document.getElementById("submit-btn");if(btn)btn.addEventListener("click",inc);else document.querySelectorAll("button,input[type=submit]").forEach(b=>{if(b.innerText.includes("Nộp")||b.value.includes("Nộp"))b.addEventListener("click",inc);});})();<\/script>`;
             let injected=content.includes("</body>")?content.replace("</body>",script+"\n</body>"):content+script;
-            zip.file(file.name,injected);
             let title=file.name.replace(/\.html$/i,""),idPrefix=title.replace(/[^a-zA-Z0-9]/g,"_");
+            // Mỗi lớp có folder riêng: toan{grade}/file.html (hoặc ontn/, thithu9/, thithu12/ cho các mục đặc biệt)
+            // Nếu 1 file gắn nhiều lớp, file được copy vào từng folder lớp tương ứng (an toàn, độc lập)
             for(let grade of grades){
+                let folder=/^\d+$/.test(grade)?`toan${grade}`:grade;
+                let pathInZip=`${folder}/${file.name}`;
+                zip.file(pathInZip,injected);
                 let id=`${idPrefix}_${grade}_${Date.now()}_${Math.floor(Math.random()*1000)}`;
-                newExams.push({id,title,subject,grade,week,open,close,html:file.name,timeLimited,type:"html"});
+                newExams.push({id,title,subject,grade,week,open,close,html:pathInZip,timeLimited,type:"html"});
             }
         }
     } else {
@@ -753,7 +985,12 @@ document.getElementById("addMultipleBtn").onclick=async()=>{
     zip.file("exams.json",JSON.stringify(allExams,null,2));
     let blob=await zip.generateAsync({type:"blob"});
     let a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="de_thi_export.zip";a.click();URL.revokeObjectURL(a.href);
-    alert(`✅ Đã tạo ZIP với ${allExams.length} đề. Upload lên GitHub!`);
+    if(examType==="html"){
+        let folders=[...new Set(newExams.map(e=>e.grade))].map(g=>(/^\d+$/.test(g)?`toan${g}`:g)+"/").join(", ");
+        alert(`✅ Đã tạo ZIP với ${allExams.length} đề.\n\n📁 Giải nén ZIP, bạn sẽ thấy các thư mục: ${folders}\nKéo đúng thư mục đó lên GitHub (giữ cấu trúc thư mục khi upload), và đè exams.json ở root.`);
+    } else {
+        alert(`✅ Đã tạo ZIP với ${allExams.length} đề. Upload lên GitHub!`);
+    }
     currentExams=allExams;renderExamList();
     document.getElementById("htmlFiles").value="";
     document.getElementById("selectedFilesList").innerHTML="";document.getElementById("selectedFilesList").style.display="none";
@@ -810,6 +1047,9 @@ document.getElementById("addDocsBtn").onclick=async()=>{
 /* ── INIT ── */
 populateGradeSelects();
 renderGradeVisibilityCheckboxes();
+loadWeekTemplates();
+renderTemplateList();
+populateTemplateSelects();
 bindFilters();
 loadExams();
 loadDocs();
