@@ -1075,5 +1075,6 @@ function pushToGsheet(result){
 function pad(n){return String(Math.floor(n)).padStart(2,'0');}
 </script>
 <script>(function(){const KEY="exam_submits";const FILE_NAME="DE12TT_003.html";function increaseSubmit(){let s=JSON.parse(localStorage.getItem(KEY))||{};s[FILE_NAME]=(s[FILE_NAME]||0)+1;localStorage.setItem(KEY,JSON.stringify(s));alert("Đã ghi nhận lượt nộp bài!");}let btn=document.getElementById("submit-btn");if(btn)btn.addEventListener("click",increaseSubmit);else document.querySelectorAll("button,input[type=submit]").forEach(b=>{if(b.innerText.includes("Nộp")||b.value.includes("Nộp"))b.addEventListener("click",increaseSubmit);});})();</script>
+<script>(function(){const KEY="exam_submits";const FILE_NAME="DE12TT_003.html";function inc(){let s=JSON.parse(localStorage.getItem(KEY))||{};s[FILE_NAME]=(s[FILE_NAME]||0)+1;localStorage.setItem(KEY,JSON.stringify(s));alert("Đã ghi nhận lượt nộp bài!");}let btn=document.getElementById("submit-btn");if(btn)btn.addEventListener("click",inc);else document.querySelectorAll("button,input[type=submit]").forEach(b=>{if(b.innerText.includes("Nộp")||b.value.includes("Nộp"))b.addEventListener("click",inc);});})();</script>
 </body>
 </html>
