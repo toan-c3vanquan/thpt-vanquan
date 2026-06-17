@@ -1,89 +1,5 @@
 [
   {
-    "id": "de007_thithu_1781016873126_682",
-    "title": "de007",
-    "grade": "thithu",
-    "class": "thithu",
-    "week": "",
-    "open": "",
-    "close": "",
-    "html": "de007.html",
-    "timeLimited": false,
-    "_idx": 0
-  },
-  {
-    "id": "de006_thithu_1781016873130_39",
-    "title": "de006",
-    "grade": "thithu",
-    "class": "thithu",
-    "week": "",
-    "open": "",
-    "close": "",
-    "html": "de006.html",
-    "timeLimited": false,
-    "_idx": 1
-  },
-  {
-    "id": "de005_thithu_1781016873132_410",
-    "title": "de005",
-    "grade": "thithu",
-    "class": "thithu",
-    "week": "",
-    "open": "",
-    "close": "",
-    "html": "de005.html",
-    "timeLimited": false,
-    "_idx": 2
-  },
-  {
-    "id": "de004_thithu_1781016873134_543",
-    "title": "de004",
-    "grade": "thithu",
-    "class": "thithu",
-    "week": "",
-    "open": "",
-    "close": "",
-    "html": "de004.html",
-    "timeLimited": false,
-    "_idx": 3
-  },
-  {
-    "id": "de003_thithu_1781016873136_82",
-    "title": "de003",
-    "grade": "thithu",
-    "class": "thithu",
-    "week": "",
-    "open": "",
-    "close": "",
-    "html": "de003.html",
-    "timeLimited": false,
-    "_idx": 4
-  },
-  {
-    "id": "de002_thithu_1781016873138_730",
-    "title": "de002",
-    "grade": "thithu",
-    "class": "thithu",
-    "week": "",
-    "open": "",
-    "close": "",
-    "html": "de002.html",
-    "timeLimited": false,
-    "_idx": 5
-  },
-  {
-    "id": "de001_thithu_1781016873142_780",
-    "title": "de001",
-    "grade": "thithu",
-    "class": "thithu",
-    "week": "",
-    "open": "",
-    "close": "",
-    "html": "de001.html",
-    "timeLimited": false,
-    "_idx": 6
-  },
-  {
     "id": "DE12BAI1_003_12_1781519540974_186",
     "title": "DE12BAI1_003",
     "subject": "Toán",
@@ -124,48 +40,6 @@
     "timeLimited": false,
     "type": "html",
     "_idx": 9
-  },
-  {
-    "id": "DE12BAI1_006_12_1781569261253_544",
-    "title": "DE12BAI1_006",
-    "subject": "Toán",
-    "grade": "12",
-    "class": "12",
-    "week": "",
-    "open": "",
-    "close": "",
-    "html": "toan12/DE12BAI1_006.html",
-    "timeLimited": false,
-    "type": "html",
-    "_idx": 10
-  },
-  {
-    "id": "DE12BAI1_005_12_1781569261257_110",
-    "title": "DE12BAI1_005",
-    "subject": "Toán",
-    "grade": "12",
-    "class": "12",
-    "week": "",
-    "open": "",
-    "close": "",
-    "html": "toan12/DE12BAI1_005.html",
-    "timeLimited": false,
-    "type": "html",
-    "_idx": 11
-  },
-  {
-    "id": "DE12BAI1_004_12_1781569261261_168",
-    "title": "DE12BAI1_004",
-    "subject": "Toán",
-    "grade": "12",
-    "class": "12",
-    "week": "",
-    "open": "",
-    "close": "",
-    "html": "toan12/DE12BAI1_004.html",
-    "timeLimited": false,
-    "type": "html",
-    "_idx": 12
   },
   {
     "id": "DE12BAI4_003_12_1781573376328_11",
@@ -870,6 +744,19 @@
     "close": "",
     "html": "thithu12/DE12TT_001.html",
     "timeLimited": false,
+    "type": "html"
+  },
+  {
+    "id": "DE12TT_003_thithu12_1781692813247_430",
+    "title": "DE12TT_003",
+    "subject": "Toán",
+    "grade": "thithu12",
+    "week": "",
+    "open": "",
+    "close": "",
+    "html": "thithu12/DE12TT_003.html",
+    "timeLimited": false,
+    "allowGuest": true,
     "type": "html"
   }
 ]
