@@ -116,6 +116,14 @@
         .template-del:hover { background: #e74c3c; color: white; }
         .template-header-row { display: grid; grid-template-columns: 90px 1fr 130px 130px 36px; gap: 10px; padding: 0 10px 4px; font-size: 0.75rem; font-weight: bold; color: #888; }
 
+        /* ── ROSTER TABLE ── */
+        .roster-row { display: grid; grid-template-columns: 1fr 110px 36px; gap: 10px; align-items: center; padding: 6px 10px; border-radius: 8px; background: #fafafa; margin-bottom: 5px; }
+        .roster-row input { padding: 6px 8px; border-radius: 6px; border: 1px solid #ddd; font-size: 0.85rem; }
+        .roster-row input[type=text]:first-child { font-weight: bold; }
+        .roster-del { background: #fee; color: #e74c3c; border: none; border-radius: 6px; cursor: pointer; font-size: 0.85rem; padding: 4px; }
+        .roster-del:hover { background: #e74c3c; color: white; }
+        .roster-header-row { display: grid; grid-template-columns: 1fr 110px 36px; gap: 10px; padding: 0 10px 4px; font-size: 0.75rem; font-weight: bold; color: #888; }
+
         /* ── QUIZ BUILDER ── */
         .question-item { background: #f8f9fa; padding: 12px 14px; margin: 10px 0; border-radius: 10px; border-left: 4px solid #1e3c72; }
         .question-item .q-header { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
@@ -159,6 +167,7 @@
 <div class="tab-bar">
     <button class="tab-btn active" data-tab="exams">📋 Đề thi</button>
     <button class="tab-btn" data-tab="docs">📚 Tài liệu</button>
+    <button class="tab-btn" data-tab="rosters">👥 Danh sách lớp</button>
     <button class="tab-btn" data-tab="settings">⚙️ Cài đặt</button>
 </div>
 
@@ -196,11 +205,11 @@
                     <tr>
                         <th><input type="checkbox" id="selectAllExams" title="Chọn tất cả"></th>
                         <th>#</th><th>Tiêu đề</th><th>Loại</th><th>Môn</th><th>Lớp</th>
-                        <th>Ngày mở</th><th>Ngày đóng</th><th>Trạng thái</th>
+                        <th>Ngày mở</th><th>Ngày đóng</th><th>⏳%</th><th>Trạng thái</th>
                         <th>Gia hạn nhanh</th><th>Sửa</th><th>Xóa</th>
                     </tr>
                 </thead>
-                <tbody id="examTbody"><tr><td colspan="12" class="empty">Đang tải...</td></tr></tbody>
+                <tbody id="examTbody"><tr><td colspan="13" class="empty">Đang tải...</td></tr></tbody>
             </table>
         </div>
         <div class="btn-group">
@@ -224,6 +233,11 @@
         <input type="date" id="bulkOpen" title="Ngày mở">
         <input type="date" id="bulkClose" title="Ngày đóng">
         <button class="btn btn-primary btn-sm" id="bulkApplyDatesBtn">💾 Đặt ngày cho đề đã chọn</button>
+        <span style="color:#ccc;">|</span>
+        <label style="display:flex;align-items:center;gap:6px;font-size:0.85rem;">
+            ⏳ % tối thiểu: <input type="number" id="bulkMinTimePct" min="0" max="100" step="1" value="0" style="width:60px;">
+        </label>
+        <button class="btn btn-purple btn-sm" id="bulkApplyMinPctBtn">💾 Áp dụng %</button>
         <button class="btn btn-danger btn-sm" id="bulkDeleteBtn">🗑️ Xóa đề đã chọn</button>
         <button class="btn btn-sm" style="background:#eee;color:#555;" id="bulkClearBtn">✕ Bỏ chọn</button>
     </div>
@@ -285,6 +299,11 @@
             <div class="warning-box" style="margin-top:6px;">
                 💡 Nếu tắt, học sinh phải chọn đúng tên trong danh sách lớp (STU_LIST trong file đề) mới làm bài được — tab "Khách" sẽ ẩn hoàn toàn.
             </div>
+            <label style="margin-top:10px;display:block;">👥 Áp dụng danh sách lớp (tiêm STU_LIST vào đề — chọn nhiều lớp sẽ gộp chung)</label>
+            <div class="checkbox-group" id="rosterApplyCheckboxes" style="margin-top:6px;"><span style="color:#aaa;font-size:0.85rem;">Chưa có danh sách lớp nào. Vào tab "👥 Danh sách lớp" để tạo.</span></div>
+            <label style="margin-top:10px;display:block;">⏳ % thời gian tối thiểu trước khi được nộp bài (0 = nộp ngay được)</label>
+            <input type="number" id="minTimePctInput" min="0" max="100" step="1" value="0" style="width:120px;margin-top:6px;">
+            <div class="warning-box" style="margin-top:6px;">💡 VD: đặt 30 → học sinh phải làm tối thiểu 30% thời gian quy định mới bấm "Nộp bài" được. Có thể đổi % này sau qua bảng đề thi, KHÔNG cần tải lại file .html.</div>
         </div>
         <div id="dateRangeArea" class="form-row">
             <div class="form-group"><label>📅 Ngày mở</label><input type="date" id="open"></div>
@@ -366,6 +385,39 @@
     </div>
 </div>
 
+<!-- ══════════════ TAB: DANH SÁCH LỚP ══════════════ -->
+<div class="tab-panel" id="tab-rosters">
+    <div class="card">
+        <div class="card-title">👥 Danh sách lớp học sinh <span class="cnt" id="rosterCount">0 lớp</span></div>
+        <p style="font-size:0.85rem;color:#666;margin-bottom:12px;">
+            Tạo danh sách học sinh theo lớp (VD: 12A4, 12A5...). Khi thêm đề mới ở tab "Đề thi", chọn danh sách này để tự động tiêm vào file đề — học sinh phải chọn đúng tên + mật khẩu mới làm bài được.
+        </p>
+        <div class="form-row">
+            <div class="form-group">
+                <label>Tên lớp (hiển thị trong đề, VD: 12A4)</label>
+                <input type="text" id="rosterClassName" placeholder="12A4">
+            </div>
+            <div class="form-group">
+                <label>Chọn danh sách lớp đã lưu để sửa</label>
+                <select id="rosterSelect"><option value="">-- Tạo lớp mới --</option></select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Dán danh sách họ tên học sinh (mỗi dòng 1 tên, copy từ Excel)</label>
+            <textarea id="rosterNamesInput" rows="6" style="width:100%;padding:8px 10px;border-radius:8px;border:1px solid #ddd;font-size:0.88rem;font-family:inherit;" placeholder="Nguyễn Văn A&#10;Trần Thị B&#10;..."></textarea>
+        </div>
+        <div class="btn-group">
+            <button class="btn btn-success btn-sm" id="genRosterBtn">⚡ Sinh mật khẩu cho danh sách trên</button>
+            <button class="btn btn-warning btn-sm" id="saveRosterBtn">💾 Lưu lớp này</button>
+            <button class="btn btn-danger btn-sm" id="deleteRosterBtn">🗑️ Xóa lớp này</button>
+        </div>
+        <div id="rosterPreviewArea" style="margin-top:14px;"></div>
+        <div class="warning-box" style="margin-top:10px;">
+            💡 Mật khẩu được sinh ngẫu nhiên 5 ký tự. Có thể sửa tay từng ô trong bảng trước khi lưu. Danh sách lưu trên trình duyệt này (localStorage) — khi tiêm vào đề, chọn nhiều lớp sẽ gộp tất cả học sinh các lớp đó vào 1 danh sách chung trong file đề.
+        </div>
+    </div>
+</div>
+
 <!-- ══════════════ TAB: CÀI ĐẶT ══════════════ -->
 <div class="tab-panel" id="tab-settings">
     <div class="card">
@@ -402,7 +454,7 @@
 <!-- ══ EDIT MODAL (B) ══ -->
 <div class="modal-bg" id="editModal">
     <div class="modal-box">
-        <h3>✏️ Chỉnh sửa thời gian đề thi</h3>
+        <h3>✏️ Chỉnh sửa đề thi</h3>
         <div id="editExamTitle" style="font-weight:bold;color:#1e3c72;margin-bottom:4px;font-size:0.95rem;"></div>
         <div class="form-group">
             <label style="display:inline-flex;align-items:center;gap:6px;cursor:pointer;">
@@ -412,6 +464,11 @@
         <div id="editDateArea" class="form-row">
             <div class="form-group"><label>📅 Ngày mở</label><input type="date" id="editOpen"></div>
             <div class="form-group"><label>📅 Ngày đóng</label><input type="date" id="editClose"></div>
+        </div>
+        <div class="form-group">
+            <label>⏳ % thời gian tối thiểu trước khi nộp bài</label>
+            <input type="number" id="editMinTimePct" min="0" max="100" step="1" style="width:120px;">
+            <div class="warning-box" style="margin-top:6px;" id="editMinTimePctWarning"></div>
         </div>
         <div style="font-size:0.82rem;color:#888;margin-top:8px;">
             💡 Sau khi lưu, tải lại <b>exams.json</b> và upload lên GitHub để áp dụng.
@@ -430,6 +487,8 @@ let examSearch="", filterExamGrade="", filterExamSubject="", filterExamType="", 
 let docSearch="",  filterDocGrade="",  filterDocSubject="",  filterDocType="";
 let weekTemplates=[];      // [{name, desc, open, close}]
 let selectedExamIdxs=new Set();  // bulk-edit selection (lưu realIdx)
+let classRosters={};       // { "12A4": [{name, pw}], "12A5": [...] }
+let currentRosterKey="";   // tên lớp đang sửa trong tab Danh sách lớp
 
 const ALL_GRADES=[
     {id:"2",name:"Lớp 2"},{id:"3",name:"Lớp 3"},{id:"4",name:"Lớp 4"},
@@ -540,6 +599,101 @@ document.getElementById("saveTemplatesBtn").onclick=()=>{
     alert("✅ Đã lưu "+weekTemplates.length+" template tuần!");
 };
 
+/* ── CLASS ROSTERS (Danh sách lớp) ── */
+function loadClassRosters(){
+    try{let r=localStorage.getItem("classRosters");classRosters=r?JSON.parse(r):{};}catch(e){classRosters={};}
+}
+function saveClassRostersToStorage(){
+    localStorage.setItem("classRosters",JSON.stringify(classRosters));
+}
+function genPassword(len){
+    let chars="ABCDEFGHJKLMNPQRSTUVWXYZ23456789",pw="";
+    for(let i=0;i<(len||5);i++) pw+=chars[Math.floor(Math.random()*chars.length)];
+    return pw;
+}
+function populateRosterSelect(){
+    let sel=document.getElementById("rosterSelect");
+    let keys=Object.keys(classRosters).sort();
+    sel.innerHTML='<option value="">-- Tạo lớp mới --</option>'+keys.map(k=>`<option value="${escapeHtml(k)}">${escapeHtml(k)} (${classRosters[k].length} HS)</option>`).join("");
+    document.getElementById("rosterCount").textContent=keys.length+" lớp";
+}
+function populateRosterApplyCheckboxes(){
+    let c=document.getElementById("rosterApplyCheckboxes");
+    let keys=Object.keys(classRosters).sort();
+    if(!keys.length){c.innerHTML='<span style="color:#aaa;font-size:0.85rem;">Chưa có danh sách lớp nào. Vào tab "👥 Danh sách lớp" để tạo.</span>';return;}
+    c.innerHTML=keys.map(k=>`<label><input type="checkbox" class="rosterApplyCb" value="${escapeHtml(k)}"> ${escapeHtml(k)} (${classRosters[k].length})</label>`).join("");
+}
+function renderRosterPreview(students){
+    let area=document.getElementById("rosterPreviewArea");
+    if(!students||!students.length){area.innerHTML="";return;}
+    let html=`<div class="roster-header-row"><span>Họ tên</span><span>Mật khẩu</span><span></span></div>`;
+    html+=students.map((s,idx)=>`
+        <div class="roster-row">
+            <input type="text" value="${escapeHtml(s.name)}" onchange="window._rosterStudents[${idx}].name=this.value">
+            <input type="text" value="${escapeHtml(s.pw)}" onchange="window._rosterStudents[${idx}].pw=this.value.toUpperCase()">
+            <button class="roster-del" data-idx="${idx}" title="Xóa">🗑️</button>
+        </div>`).join("");
+    area.innerHTML=html;
+    document.querySelectorAll(".roster-del").forEach(btn=>{
+        btn.onclick=()=>{
+            window._rosterStudents.splice(parseInt(btn.dataset.idx),1);
+            renderRosterPreview(window._rosterStudents);
+        };
+    });
+}
+window._rosterStudents=[];
+document.getElementById("rosterSelect").onchange=function(){
+    currentRosterKey=this.value;
+    if(!currentRosterKey){
+        document.getElementById("rosterClassName").value="";
+        document.getElementById("rosterNamesInput").value="";
+        window._rosterStudents=[];
+        renderRosterPreview([]);
+        return;
+    }
+    document.getElementById("rosterClassName").value=currentRosterKey;
+    window._rosterStudents=JSON.parse(JSON.stringify(classRosters[currentRosterKey]||[]));
+    document.getElementById("rosterNamesInput").value=window._rosterStudents.map(s=>s.name).join("\n");
+    renderRosterPreview(window._rosterStudents);
+};
+document.getElementById("genRosterBtn").onclick=()=>{
+    let names=document.getElementById("rosterNamesInput").value.split("\n").map(n=>n.trim()).filter(n=>n);
+    if(!names.length){alert("Dán danh sách tên học sinh trước (mỗi dòng 1 tên)");return;}
+    // Giữ mật khẩu cũ nếu tên đã tồn tại trong danh sách hiện tại, chỉ sinh mới cho tên mới
+    let oldMap={};
+    (window._rosterStudents||[]).forEach(s=>{oldMap[s.name]=s.pw;});
+    window._rosterStudents=names.map(n=>({name:n,pw:oldMap[n]||genPassword(5)}));
+    renderRosterPreview(window._rosterStudents);
+};
+document.getElementById("saveRosterBtn").onclick=()=>{
+    let className=document.getElementById("rosterClassName").value.trim();
+    if(!className){alert("Nhập tên lớp (VD: 12A4)");return;}
+    if(!window._rosterStudents||!window._rosterStudents.length){alert("Chưa có học sinh nào. Dán danh sách và bấm 'Sinh mật khẩu' trước.");return;}
+    // Nếu đổi tên lớp khi đang sửa lớp cũ, xóa key cũ
+    if(currentRosterKey&&currentRosterKey!==className) delete classRosters[currentRosterKey];
+    classRosters[className]=window._rosterStudents.map(s=>({name:s.name,pw:(s.pw||"").toUpperCase()}));
+    saveClassRostersToStorage();
+    currentRosterKey=className;
+    populateRosterSelect();
+    populateRosterApplyCheckboxes();
+    document.getElementById("rosterSelect").value=className;
+    alert(`✅ Đã lưu lớp "${className}" với ${classRosters[className].length} học sinh.`);
+};
+document.getElementById("deleteRosterBtn").onclick=()=>{
+    if(!currentRosterKey){alert("Chưa chọn lớp nào để xóa");return;}
+    if(!confirm(`Xóa danh sách lớp "${currentRosterKey}"? Không ảnh hưởng đến các đề đã tạo trước đó.`))return;
+    delete classRosters[currentRosterKey];
+    saveClassRostersToStorage();
+    currentRosterKey="";
+    document.getElementById("rosterClassName").value="";
+    document.getElementById("rosterNamesInput").value="";
+    window._rosterStudents=[];
+    renderRosterPreview([]);
+    populateRosterSelect();
+    populateRosterApplyCheckboxes();
+    document.getElementById("rosterSelect").value="";
+};
+
 /* ── POPULATE SELECTS ── */
 function populateGradeSelects(){
     ["filterExamGrade","filterDocGrade"].forEach(id=>{
@@ -602,7 +756,7 @@ function renderExamList(){
     document.getElementById("examFilterInfo").textContent=list.length!==currentExams.length?`Hiển thị ${list.length}/${currentExams.length}`:`${list.length} đề`;
 
     if(!list.length){
-        document.getElementById("examTbody").innerHTML=`<tr><td colspan="12" class="empty">${currentExams.length?'😕 Không tìm thấy.':'📭 Chưa có đề thi nào.'}</td></tr>`;
+        document.getElementById("examTbody").innerHTML=`<tr><td colspan="13" class="empty">${currentExams.length?'😕 Không tìm thấy.':'📭 Chưa có đề thi nào.'}</td></tr>`;
         updateBulkToolbar();
         return;
     }
@@ -619,6 +773,7 @@ function renderExamList(){
         // highlight closing-today
         if(ex.close===today&&ex.timeLimited!==false) closeDisp=`<span style="color:#e74c3c;font-weight:bold;">⚠️ ${closeDisp}</span>`;
         if(ex.open===today&&ex.timeLimited!==false)  openDisp=`<span style="color:#27ae60;font-weight:bold;">✨ ${openDisp}</span>`;
+        let minPctDisp=ex.type==='quiz'?'–':((typeof ex.minTimePct==='number'&&ex.minTimePct>0)?`<span style="color:#8e44ad;font-weight:bold;">${ex.minTimePct}%</span>`:'0%');
 
         // Gia hạn nhanh (F) — chỉ hiện khi có timeLimited
         let extendHtml='–';
@@ -641,6 +796,7 @@ function renderExamList(){
             <td>${hl(ex.grade||'',examSearch)}</td>
             <td>${openDisp}</td>
             <td>${closeDisp}</td>
+            <td>${minPctDisp}</td>
             <td>${stLabel}</td>
             <td>${extendHtml}</td>
             <td><button class="btn btn-info btn-sm editExamBtn" data-idx="${realIdx}">✏️ Sửa</button></td>
@@ -747,6 +903,22 @@ document.getElementById("bulkApplyDatesBtn").onclick=()=>{
     renderExamList();
     autoDownloadExams(`Đã đặt thời gian cho ${n} đề.`);
 };
+document.getElementById("bulkApplyMinPctBtn").onclick=()=>{
+    if(!selectedExamIdxs.size){alert("Chưa chọn đề nào!");return;}
+    let pct=parseInt(document.getElementById("bulkMinTimePct").value,10);
+    if(isNaN(pct)||pct<0) pct=0;
+    if(pct>100) pct=100;
+    let appliedCount=0, skippedQuiz=0;
+    selectedExamIdxs.forEach(idx=>{
+        if(currentExams[idx].type==='quiz'){ skippedQuiz++; return; }
+        currentExams[idx].minTimePct=pct;
+        appliedCount++;
+    });
+    renderExamList();
+    let msg=`Đã đặt % thời gian tối thiểu = ${pct}% cho ${appliedCount} đề.`;
+    if(skippedQuiz) msg+=` (Bỏ qua ${skippedQuiz} đề trắc nghiệm — không hỗ trợ tính năng này.)`;
+    autoDownloadExams(msg);
+};
 document.getElementById("bulkApplyTemplateBtn").onclick=()=>{
     if(!selectedExamIdxs.size){alert("Chưa chọn đề nào!");return;}
     let sel=document.getElementById("bulkApplyTemplate");
@@ -783,6 +955,15 @@ function openEditModal(idx){
     document.getElementById("editDateArea").style.display=tl?"grid":"none";
     document.getElementById("editOpen").value=ex.open||"";
     document.getElementById("editClose").value=ex.close||"";
+    document.getElementById("editMinTimePct").value=(typeof ex.minTimePct==='number')?ex.minTimePct:0;
+    let warnEl=document.getElementById("editMinTimePctWarning");
+    if(ex.type==='quiz'){
+        warnEl.textContent='ℹ️ Trắc nghiệm trực tiếp không hỗ trợ % thời gian tối thiểu (chỉ áp dụng cho đề HTML).';
+        document.getElementById("editMinTimePct").disabled=true;
+    } else {
+        warnEl.textContent='💡 Đề này đọc % này TỰ ĐỘNG từ exams.json mỗi lần học sinh mở bài — chỉ cần lưu & upload exams.json, KHÔNG cần tải lại file .html (nếu đề đã được tạo qua admin có tính năng này).';
+        document.getElementById("editMinTimePct").disabled=false;
+    }
     document.getElementById("editModal").classList.add("show");
 }
 document.getElementById("editTimeLimited").onchange=function(){
@@ -798,12 +979,16 @@ document.getElementById("saveEditBtn").onclick=()=>{
     let close=document.getElementById("editClose").value;
     if(tl&&(!open||!close)){alert("Nhập đầy đủ ngày mở và ngày đóng!");return;}
     if(tl&&open>close){alert("Ngày mở phải trước ngày đóng!");return;}
+    let minPct=parseInt(document.getElementById("editMinTimePct").value,10);
+    if(isNaN(minPct)||minPct<0) minPct=0;
+    if(minPct>100) minPct=100;
     currentExams[editingIdx].timeLimited=tl;
     currentExams[editingIdx].open=tl?open:"";
     currentExams[editingIdx].close=tl?close:"";
+    if(currentExams[editingIdx].type!=='quiz') currentExams[editingIdx].minTimePct=minPct;
     document.getElementById("editModal").classList.remove("show");
     renderExamList();
-    autoDownloadExams(`Đã cập nhật thời gian cho "${currentExams[editingIdx].title}"`);
+    autoDownloadExams(`Đã cập nhật đề "${currentExams[editingIdx].title}"`);
     editingIdx=-1;
 };
 // Close modal on backdrop click
@@ -956,6 +1141,9 @@ document.getElementById("addMultipleBtn").onclick=async()=>{
     let week=document.getElementById("week").value.trim();
     let timeLimited=document.getElementById("timeLimitedCheckbox").checked;
     let allowGuest=document.getElementById("allowGuestCheckbox").checked;
+    let minTimePct=parseInt(document.getElementById("minTimePctInput").value,10);
+    if(isNaN(minTimePct)||minTimePct<0) minTimePct=0;
+    if(minTimePct>100) minTimePct=100;
     let open=timeLimited?document.getElementById("open").value:"";
     let close=timeLimited?document.getElementById("close").value:"";
     if(timeLimited&&(!open||!close)){alert("Nhập ngày mở và đóng");return;}
@@ -967,7 +1155,20 @@ document.getElementById("addMultipleBtn").onclick=async()=>{
         if(!files.length){alert("Chọn file HTML");return;}
         let grades=Array.from(document.querySelectorAll('#classCheckboxes input:checked')).map(cb=>cb.value);
         if(!grades.length){alert("Chọn ít nhất một lớp");return;}
+
+        // ── Gộp danh sách HS từ các lớp được chọn để tiêm STU_LIST ──
+        let selectedRosterKeys=Array.from(document.querySelectorAll('.rosterApplyCb:checked')).map(cb=>cb.value);
+        let mergedStudents=[];
+        selectedRosterKeys.forEach(key=>{
+            (classRosters[key]||[]).forEach(s=>{
+                mergedStudents.push({name:s.name,pw:s.pw,lop:key});
+            });
+        });
+        let stuListJson=JSON.stringify(mergedStudents);
+
         let guestFlagMissingFiles=[];
+        let stuListMissingFiles=[];
+        let minPctMissingFiles=[];
         for(let file of files){
             let content=await file.text();
             // ── Tiêm cờ ALLOW_GUEST (cho phép/không cho phép "Khách" vào làm bài) ──
@@ -977,8 +1178,28 @@ document.getElementById("addMultipleBtn").onclick=async()=>{
             } else {
                 guestFlagMissingFiles.push(file.name); // file này không có biến ALLOW_GUEST, không tiêm được
             }
+            // ── Tiêm STU_LIST (danh sách lớp được chọn để áp dụng) — chỉ tiêm khi có chọn ít nhất 1 lớp ──
+            if(selectedRosterKeys.length){
+                let stuListRegex=/var\s+STU_LIST\s*=\s*(\[[\s\S]*?\])\s*;/;
+                if(stuListRegex.test(content)){
+                    content=content.replace(stuListRegex,`var STU_LIST    = ${stuListJson};`);
+                } else {
+                    stuListMissingFiles.push(file.name); // file này không có biến STU_LIST, không tiêm được
+                }
+            }
+            // ── Tiêm % thời gian tối thiểu trước khi nộp bài (giá trị khởi tạo) ──
+            let minPctRegex=/var\s+MIN_TIME_PCT\s*=\s*[\d.]+\s*;/;
+            let hasMinPctVar=minPctRegex.test(content);
+            if(hasMinPctVar){
+                content=content.replace(minPctRegex,`var MIN_TIME_PCT = ${minTimePct};`);
+            } else {
+                minPctMissingFiles.push(file.name); // file này không có biến MIN_TIME_PCT, không tiêm được
+            }
             let script=`<script>(function(){const KEY="exam_submits";const FILE_NAME="${file.name.replace(/"/g,'\\"')}";function inc(){let s=JSON.parse(localStorage.getItem(KEY))||{};s[FILE_NAME]=(s[FILE_NAME]||0)+1;localStorage.setItem(KEY,JSON.stringify(s));alert("Đã ghi nhận lượt nộp bài!");}let btn=document.getElementById("submit-btn");if(btn)btn.addEventListener("click",inc);else document.querySelectorAll("button,input[type=submit]").forEach(b=>{if(b.innerText.includes("Nộp")||b.value.includes("Nộp"))b.addEventListener("click",inc);});})();<\/script>`;
-            let injected=content.includes("</body>")?content.replace("</body>",script+"\n</body>"):content+script;
+            // ── Script đọc % thời gian tối thiểu ĐỘNG từ exams.json mỗi lần mở đề ──
+            // Nhờ đoạn này, sau khi đề đã lên GitHub, đổi % chỉ cần sửa exams.json — KHÔNG cần tải lại file .html.
+            let dynamicMinPctScript=hasMinPctVar?`<script>(function(){try{var thisFile=location.pathname.split('/').pop();fetch('../exams.json?v='+Date.now()).then(function(r){return r.ok?r.json():null;}).then(function(list){if(!list)return;for(var i=0;i<list.length;i++){var ex=list[i];if(!ex.html)continue;var examFile=ex.html.split('/').pop();if(examFile===thisFile&&typeof ex.minTimePct==='number'){MIN_TIME_PCT=ex.minTimePct;break;}}}).catch(function(){});}catch(e){}})();<\/script>`:'';
+            let injected=content.includes("</body>")?content.replace("</body>",script+dynamicMinPctScript+"\n</body>"):content+script+dynamicMinPctScript;
             let title=file.name.replace(/\.html$/i,""),idPrefix=title.replace(/[^a-zA-Z0-9]/g,"_");
             // Mỗi lớp có folder riêng: toan{grade}/file.html (hoặc ontn/, thithu9/, thithu12/ cho các mục đặc biệt)
             // Nếu 1 file gắn nhiều lớp, file được copy vào từng folder lớp tương ứng (an toàn, độc lập)
@@ -987,11 +1208,17 @@ document.getElementById("addMultipleBtn").onclick=async()=>{
                 let pathInZip=`${folder}/${file.name}`;
                 zip.file(pathInZip,injected);
                 let id=`${idPrefix}_${grade}_${Date.now()}_${Math.floor(Math.random()*1000)}`;
-                newExams.push({id,title,subject,grade,week,open,close,html:pathInZip,timeLimited,allowGuest,type:"html"});
+                newExams.push({id,title,subject,grade,week,open,close,html:pathInZip,timeLimited,allowGuest,rosterClasses:selectedRosterKeys,minTimePct,type:"html"});
             }
         }
         if(guestFlagMissingFiles.length){
             alert(`⚠️ Lưu ý: ${guestFlagMissingFiles.length} file không có biến "ALLOW_GUEST" trong code (VD: ${guestFlagMissingFiles[0]}), nên không tự bật/tắt được tab Khách cho file này. Tùy chọn "Cho phép khách" chỉ áp dụng được với file có sẵn dòng "var ALLOW_GUEST = true/false;".`);
+        }
+        if(stuListMissingFiles.length){
+            alert(`⚠️ Lưu ý: ${stuListMissingFiles.length} file không có biến "STU_LIST" trong code (VD: ${stuListMissingFiles[0]}), nên không tiêm được danh sách lớp. Cần file có sẵn dòng "var STU_LIST = [...];".`);
+        }
+        if(minPctMissingFiles.length){
+            alert(`⚠️ Lưu ý: ${minPctMissingFiles.length} file không có biến "MIN_TIME_PCT" trong code (VD: ${minPctMissingFiles[0]}), nên không áp dụng được % thời gian tối thiểu. Cần file có sẵn dòng "var MIN_TIME_PCT = 0;".`);
         }
     } else {
         if(!quizQuestions.length){alert("Chưa có câu hỏi");return;}
@@ -1071,6 +1298,9 @@ renderGradeVisibilityCheckboxes();
 loadWeekTemplates();
 renderTemplateList();
 populateTemplateSelects();
+loadClassRosters();
+populateRosterSelect();
+populateRosterApplyCheckboxes();
 bindFilters();
 loadExams();
 loadDocs();
