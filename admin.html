@@ -124,6 +124,17 @@
         .roster-del:hover { background: #e74c3c; color: white; }
         .roster-header-row { display: grid; grid-template-columns: 1fr 110px 36px; gap: 10px; padding: 0 10px 4px; font-size: 0.75rem; font-weight: bold; color: #888; }
 
+        /* ── GROUP RULES TABLE ── */
+        .grouprule-row { display: grid; grid-template-columns: 36px 1fr 1fr 70px; gap: 10px; align-items: center; padding: 6px 10px; border-radius: 8px; background: #fafafa; margin-bottom: 5px; }
+        .grouprule-row input { padding: 6px 8px; border-radius: 6px; border: 1px solid #ddd; font-size: 0.85rem; font-family: 'Courier New', monospace; }
+        .grouprule-move { display: flex; flex-direction: column; gap: 2px; }
+        .grouprule-move button { background: #e8f0fe; color: #1e3c72; border: none; border-radius: 4px; cursor: pointer; font-size: 0.7rem; padding: 2px 5px; line-height: 1; }
+        .grouprule-move button:hover { background: #1e3c72; color: white; }
+        .grouprule-move button:disabled { opacity: 0.3; cursor: not-allowed; }
+        .grouprule-actions { display: flex; gap: 4px; }
+        .grouprule-del { background: #fee; color: #e74c3c; border: none; border-radius: 6px; cursor: pointer; font-size: 0.85rem; padding: 4px 8px; }
+        .grouprule-del:hover { background: #e74c3c; color: white; }
+
         /* ── QUIZ BUILDER ── */
         .question-item { background: #f8f9fa; padding: 12px 14px; margin: 10px 0; border-radius: 10px; border-left: 4px solid #1e3c72; }
         .question-item .q-header { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
@@ -421,6 +432,26 @@
 <!-- ══════════════ TAB: CÀI ĐẶT ══════════════ -->
 <div class="tab-panel" id="tab-settings">
     <div class="card">
+        <div class="card-title">🏷️ Quy tắc gom nhóm đề thi (trang học sinh) <span class="cnt" id="groupRuleCount">0 quy tắc</span></div>
+        <p style="font-size:0.85rem;color:#666;margin-bottom:12px;">
+            Trang học sinh tự gom các đề có tên trùng mẫu vào 1 nhóm (accordion). Ví dụ: <code>BAI1</code> trong tên đề → nhóm "Bài 1". Dùng <code>{n}</code> để bắt số. Thứ tự các dòng dưới đây quyết định thứ tự ưu tiên kiểm tra (và thứ tự hiển thị nhóm) — kéo dòng lên/xuống bằng nút ↑↓.
+        </p>
+        <div class="template-header-row" style="grid-template-columns: 36px 1fr 1fr 70px;">
+            <span></span><span>Mẫu tên (pattern)</span><span>Tên nhóm hiển thị (label)</span><span></span>
+        </div>
+        <div id="groupRulesList"></div>
+        <div class="btn-group">
+            <button class="btn btn-success btn-sm" id="addGroupRuleBtn">➕ Thêm quy tắc</button>
+            <button class="btn btn-info btn-sm" id="resetGroupRulesBtn">↩️ Khôi phục mặc định (Bài/GHK/HK/OTN)</button>
+            <button class="btn btn-warning btn-sm" id="saveGroupRulesBtn">💾 Lưu quy tắc & tải exams.json</button>
+        </div>
+        <div class="warning-box" style="margin-top:10px;">
+            💡 VD thêm nhóm mới: pattern <code>KT15P{n}</code> → label <code>KT 15 phút {n}</code>. Đề có tên chứa "KT15P3" sẽ tự vào nhóm "KT 15 phút 3". Lưu ý: nếu 1 mẫu là chuỗi con của mẫu khác (VD "HK" nằm trong "GHK"), hãy đặt mẫu dài/cụ thể hơn (GHK) lên TRƯỚC.<br>
+            Sau khi lưu, file <b>exams.json</b> sẽ tự tải về — upload lên GitHub để học sinh thấy nhóm mới.
+        </div>
+    </div>
+
+    <div class="card">
         <div class="card-title">📅 Template lịch theo tuần <span class="cnt" id="templateCount">0 template</span></div>
         <p style="font-size:0.85rem;color:#666;margin-bottom:12px;">
             Đặt sẵn lịch mở/đóng cho mỗi tuần học. Khi thêm đề mới hoặc bulk-edit, chỉ cần chọn tên tuần → ngày tự điền, không cần nhập tay.
@@ -489,6 +520,13 @@ let weekTemplates=[];      // [{name, desc, open, close}]
 let selectedExamIdxs=new Set();  // bulk-edit selection (lưu realIdx)
 let classRosters={};       // { "12A4": [{name, pw}], "12A5": [...] }
 let currentRosterKey="";   // tên lớp đang sửa trong tab Danh sách lớp
+let groupRules=[];         // [{pattern:"BAI{n}", label:"Bài {n}"}, ...] — quy tắc gom nhóm đề trên trang học sinh
+const DEFAULT_GROUP_RULES=[
+    {pattern:"BAI{n}",  label:"Bài {n}"},
+    {pattern:"GHK{n}",  label:"Đề GHK{n}"},
+    {pattern:"HK{n}",   label:"Đề HK{n}"},
+    {pattern:"OTN",     label:"Đề OTN"}
+];
 
 const ALL_GRADES=[
     {id:"2",name:"Lớp 2"},{id:"3",name:"Lớp 3"},{id:"4",name:"Lớp 4"},
@@ -541,6 +579,55 @@ document.getElementById("saveGradeVisibilityBtn").onclick=()=>{
 };
 document.getElementById("selectAllGradesBtn").onclick=()=>document.querySelectorAll("#gradeVisibilityGroup input").forEach(cb=>cb.checked=true);
 document.getElementById("deselectAllGradesBtn").onclick=()=>document.querySelectorAll("#gradeVisibilityGroup input").forEach(cb=>cb.checked=false);
+
+/* ── GROUP RULES (Quy tắc gom nhóm đề) ── */
+function renderGroupRulesList(){
+    if(!groupRules||!groupRules.length) groupRules=JSON.parse(JSON.stringify(DEFAULT_GROUP_RULES));
+    document.getElementById("groupRuleCount").textContent=groupRules.length+" quy tắc";
+    let c=document.getElementById("groupRulesList");
+    c.innerHTML=groupRules.map((r,idx)=>`
+        <div class="grouprule-row">
+            <div class="grouprule-move">
+                <button data-idx="${idx}" data-dir="up" ${idx===0?'disabled':''} title="Lên">▲</button>
+                <button data-idx="${idx}" data-dir="down" ${idx===groupRules.length-1?'disabled':''} title="Xuống">▼</button>
+            </div>
+            <input type="text" value="${escapeHtml(r.pattern)}" placeholder="BAI{n}" onchange="groupRules[${idx}].pattern=this.value">
+            <input type="text" value="${escapeHtml(r.label)}" placeholder="Bài {n}" onchange="groupRules[${idx}].label=this.value">
+            <div class="grouprule-actions"><button class="grouprule-del" data-idx="${idx}" title="Xóa quy tắc">🗑️</button></div>
+        </div>`).join("");
+    document.querySelectorAll(".grouprule-move button").forEach(btn=>{
+        btn.onclick=()=>{
+            let idx=parseInt(btn.dataset.idx),dir=btn.dataset.dir;
+            let swapWith=dir==='up'?idx-1:idx+1;
+            if(swapWith<0||swapWith>=groupRules.length)return;
+            [groupRules[idx],groupRules[swapWith]]=[groupRules[swapWith],groupRules[idx]];
+            renderGroupRulesList();
+        };
+    });
+    document.querySelectorAll(".grouprule-del").forEach(btn=>{
+        btn.onclick=()=>{
+            groupRules.splice(parseInt(btn.dataset.idx),1);
+            renderGroupRulesList();
+        };
+    });
+}
+document.getElementById("addGroupRuleBtn").onclick=()=>{
+    groupRules.push({pattern:"",label:""});
+    renderGroupRulesList();
+};
+document.getElementById("resetGroupRulesBtn").onclick=()=>{
+    if(!confirm("Khôi phục về 4 quy tắc mặc định (Bài/GHK/HK/OTN)? Các quy tắc tự thêm sẽ mất nếu chưa lưu."))return;
+    groupRules=JSON.parse(JSON.stringify(DEFAULT_GROUP_RULES));
+    renderGroupRulesList();
+};
+document.getElementById("saveGroupRulesBtn").onclick=()=>{
+    // Loại bỏ các dòng trống (pattern hoặc label rỗng) trước khi lưu
+    let cleaned=groupRules.filter(r=>r.pattern&&r.pattern.trim()&&r.label&&r.label.trim());
+    if(!cleaned.length){alert("Cần ít nhất 1 quy tắc hợp lệ (có cả pattern và label).");return;}
+    groupRules=cleaned;
+    renderGroupRulesList();
+    autoDownloadExams(`Đã lưu ${groupRules.length} quy tắc gom nhóm.`);
+};
 
 /* ── WEEK TEMPLATES ── */
 function loadWeekTemplates(){
@@ -705,7 +792,21 @@ function populateGradeSelects(){
 
 /* ── LOAD DATA ── */
 async function loadExams(){
-    try{let r=await fetch("exams.json?v="+Date.now());if(r.ok){currentExams=await r.json();renderExamList();}}catch(e){console.error(e);}
+    try{
+        let r=await fetch("exams.json?v="+Date.now());
+        if(!r.ok) return;
+        let data=await r.json();
+        if(Array.isArray(data)){
+            // Định dạng cũ (legacy): file là mảng đề thi thuần, chưa có groupRules
+            currentExams=data;
+            groupRules=JSON.parse(JSON.stringify(DEFAULT_GROUP_RULES));
+        } else if(data&&typeof data==='object'){
+            currentExams=Array.isArray(data.exams)?data.exams:[];
+            groupRules=(Array.isArray(data.groupRules)&&data.groupRules.length)?data.groupRules:JSON.parse(JSON.stringify(DEFAULT_GROUP_RULES));
+        }
+        renderExamList();
+        renderGroupRulesList();
+    }catch(e){console.error(e);}
 }
 async function loadDocs(){
     try{let r=await fetch("docs.json?v="+Date.now());if(r.ok){currentDocs=await r.json();renderDocList();}}catch(e){console.error(e);}
@@ -938,9 +1039,16 @@ document.getElementById("bulkApplyTemplateBtn").onclick=()=>{
 };
 
 /* ── AUTO DOWNLOAD EXAMS JSON ── */
+function buildExamsExport(examsArray){
+    // Cấu trúc xuất file chuẩn: { groupRules: [...], exams: [...] }
+    return {
+        groupRules: (groupRules&&groupRules.length)?groupRules:DEFAULT_GROUP_RULES,
+        exams: examsArray
+    };
+}
 function autoDownloadExams(msg){
     let a=document.createElement("a");
-    a.href=URL.createObjectURL(new Blob([JSON.stringify(currentExams,null,2)],{type:"application/json"}));
+    a.href=URL.createObjectURL(new Blob([JSON.stringify(buildExamsExport(currentExams),null,2)],{type:"application/json"}));
     a.download="exams.json";a.click();URL.revokeObjectURL(a.href);
     if(msg)setTimeout(()=>alert(msg+"\n\n📥 exams.json đã tải về. Hãy upload lên GitHub!"),100);
 }
@@ -1045,7 +1153,23 @@ function bindFilters(){
 document.getElementById("uploadExamsJson").onchange=e=>{
     let file=e.target.files[0];if(!file)return;
     let reader=new FileReader();
-    reader.onload=ev=>{try{let d=JSON.parse(ev.target.result);if(!Array.isArray(d))throw 0;currentExams=d;renderExamList();alert(`Đã nạp ${d.length} đề.`);}catch{alert("File JSON không hợp lệ");}};
+    reader.onload=ev=>{
+        try{
+            let d=JSON.parse(ev.target.result);
+            if(Array.isArray(d)){
+                // Định dạng cũ: file là mảng đề thi thuần
+                currentExams=d;
+                groupRules=JSON.parse(JSON.stringify(DEFAULT_GROUP_RULES));
+            } else if(d&&typeof d==='object'&&Array.isArray(d.exams)){
+                // Định dạng mới: { groupRules, exams }
+                currentExams=d.exams;
+                groupRules=(Array.isArray(d.groupRules)&&d.groupRules.length)?d.groupRules:JSON.parse(JSON.stringify(DEFAULT_GROUP_RULES));
+            } else { throw 0; }
+            renderExamList();
+            renderGroupRulesList();
+            alert(`Đã nạp ${currentExams.length} đề.`);
+        }catch{alert("File JSON không hợp lệ");}
+    };
     reader.readAsText(file);e.target.value="";
 };
 document.getElementById("uploadDocsJson").onchange=e=>{
@@ -1198,7 +1322,7 @@ document.getElementById("addMultipleBtn").onclick=async()=>{
             let script=`<script>(function(){const KEY="exam_submits";const FILE_NAME="${file.name.replace(/"/g,'\\"')}";function inc(){let s=JSON.parse(localStorage.getItem(KEY))||{};s[FILE_NAME]=(s[FILE_NAME]||0)+1;localStorage.setItem(KEY,JSON.stringify(s));alert("Đã ghi nhận lượt nộp bài!");}let btn=document.getElementById("submit-btn");if(btn)btn.addEventListener("click",inc);else document.querySelectorAll("button,input[type=submit]").forEach(b=>{if(b.innerText.includes("Nộp")||b.value.includes("Nộp"))b.addEventListener("click",inc);});})();<\/script>`;
             // ── Script đọc % thời gian tối thiểu ĐỘNG từ exams.json mỗi lần mở đề ──
             // Nhờ đoạn này, sau khi đề đã lên GitHub, đổi % chỉ cần sửa exams.json — KHÔNG cần tải lại file .html.
-            let dynamicMinPctScript=hasMinPctVar?`<script>(function(){try{var thisFile=location.pathname.split('/').pop();fetch('../exams.json?v='+Date.now()).then(function(r){return r.ok?r.json():null;}).then(function(list){if(!list)return;for(var i=0;i<list.length;i++){var ex=list[i];if(!ex.html)continue;var examFile=ex.html.split('/').pop();if(examFile===thisFile&&typeof ex.minTimePct==='number'){MIN_TIME_PCT=ex.minTimePct;break;}}}).catch(function(){});}catch(e){}})();<\/script>`:'';
+            let dynamicMinPctScript=hasMinPctVar?`<script>(function(){try{var thisFile=location.pathname.split('/').pop();fetch('../exams.json?v='+Date.now()).then(function(r){return r.ok?r.json():null;}).then(function(data){if(!data)return;var list=Array.isArray(data)?data:(data.exams||[]);for(var i=0;i<list.length;i++){var ex=list[i];if(!ex.html)continue;var examFile=ex.html.split('/').pop();if(examFile===thisFile&&typeof ex.minTimePct==='number'){MIN_TIME_PCT=ex.minTimePct;break;}}}).catch(function(){});}catch(e){}})();<\/script>`:'';
             let injected=content.includes("</body>")?content.replace("</body>",script+dynamicMinPctScript+"\n</body>"):content+script+dynamicMinPctScript;
             let title=file.name.replace(/\.html$/i,""),idPrefix=title.replace(/[^a-zA-Z0-9]/g,"_");
             // Mỗi lớp có folder riêng: toan{grade}/file.html (hoặc ontn/, thithu9/, thithu12/ cho các mục đặc biệt)
@@ -1230,7 +1354,7 @@ document.getElementById("addMultipleBtn").onclick=async()=>{
     }
 
     let allExams=[...currentExams,...newExams];
-    zip.file("exams.json",JSON.stringify(allExams,null,2));
+    zip.file("exams.json",JSON.stringify(buildExamsExport(allExams),null,2));
     let blob=await zip.generateAsync({type:"blob"});
     let a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="de_thi_export.zip";a.click();URL.revokeObjectURL(a.href);
     if(examType==="html"){
@@ -1295,6 +1419,8 @@ document.getElementById("addDocsBtn").onclick=async()=>{
 /* ── INIT ── */
 populateGradeSelects();
 renderGradeVisibilityCheckboxes();
+groupRules=JSON.parse(JSON.stringify(DEFAULT_GROUP_RULES));
+renderGroupRulesList();
 loadWeekTemplates();
 renderTemplateList();
 populateTemplateSelects();

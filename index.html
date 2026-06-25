@@ -144,7 +144,13 @@ const ALL_CATEGORIES = [
     {id:"11",name:"Lớp 11"},{id:"12",name:"Lớp 12"},
     {id:"ontn",name:"Ôn TN"},{id:"thithu9",name:"Thi thử lớp 9"},{id:"thithu12",name:"Thi thử lớp 12"}
 ];
-let activeCategories=[], allExams=[], allDocs=[];
+let activeCategories=[], allExams=[], allDocs=[], groupRules=[];
+const DEFAULT_GROUP_RULES=[
+    {pattern:"BAI{n}",  label:"Bài {n}"},
+    {pattern:"GHK{n}",  label:"Đề GHK{n}"},
+    {pattern:"HK{n}",   label:"Đề HK{n}"},
+    {pattern:"OTN",     label:"Đề OTN"}
+];
 let currentTab="de", currentCategory="11", currentDocGrade="11", currentDocSubject="Toán", currentQuiz=null;
 let searchQuery="", sortOrder="default", viewMode="grid", allGroupsOpen=true, groupOpenState={};
 let countdownTimer=null;
@@ -155,13 +161,20 @@ function highlight(s,q){if(!q)return escapeHtml(s);let re=new RegExp(q.replace(/
 function getGroup(ex){
     if(ex.group)return ex.group;
     let src=(ex.title||ex.html||'');
-    let m;
-    // Ưu tiên kiểm tra GHK trước HK (vì "GHK1" chứa chuỗi con "HK1")
-    m=src.match(/BAI\s*(\d+)/i);          if(m) return 'Bài '+parseInt(m[1]);
-    m=src.match(/BÀI\s*(\d+)/i);          if(m) return 'Bài '+parseInt(m[1]);
-    m=src.match(/GHK\s*(\d+)/i);          if(m) return 'Đề GHK'+parseInt(m[1]);
-    m=src.match(/HK\s*(\d+)/i);           if(m) return 'Đề HK'+parseInt(m[1]);
-    m=src.match(/OTN/i);                  if(m) return 'Đề OTN';
+    let rules=(groupRules&&groupRules.length)?groupRules:DEFAULT_GROUP_RULES;
+    for(let rule of rules){
+        if(!rule.pattern)continue;
+        let pat=rule.pattern;
+        let hasNum=pat.includes('{n}');
+        // Chuyển pattern dạng "GHK{n}" thành regex /GHK\s*(\d+)/i, hoặc "OTN" thành /OTN/i nếu không có {n}
+        let escaped=pat.replace(/[.*+?^${}()|[\]\\]/g,'\\$&').replace(/\\\{n\\\}/,'\\s*(\\d+)');
+        let re=new RegExp(escaped,'i');
+        let m=src.match(re);
+        if(m){
+            if(hasNum&&m[1]!==undefined) return rule.label.replace('{n}',parseInt(m[1]));
+            return rule.label.replace('{n}','').trim();
+        }
+    }
     return'Chung';
 }
 
@@ -259,7 +272,22 @@ function loadGradeVisibility(){
     }catch(e){localStorage.setItem("gradeVisibility",JSON.stringify(def));return def;}
 }
 function filterCategories(){let e=loadGradeVisibility();activeCategories=ALL_CATEGORIES.filter(c=>e[c.id]===true);if(!activeCategories.length)activeCategories=[...ALL_CATEGORIES];}
-async function loadExams(){try{let r=await fetch("exams.json?v="+Date.now());if(r.ok)allExams=await r.json();}catch(e){}}
+async function loadExams(){
+    try{
+        let r=await fetch("exams.json?v="+Date.now());
+        if(!r.ok) return;
+        let data=await r.json();
+        if(Array.isArray(data)){
+            // Định dạng cũ (legacy): file là mảng đề thi thuần, chưa có groupRules
+            allExams=data;
+            groupRules=DEFAULT_GROUP_RULES;
+        } else if(data&&typeof data==='object'){
+            // Định dạng mới: { groupRules: [...], exams: [...] }
+            allExams=Array.isArray(data.exams)?data.exams:[];
+            groupRules=(Array.isArray(data.groupRules)&&data.groupRules.length)?data.groupRules:DEFAULT_GROUP_RULES;
+        }
+    }catch(e){}
+}
 async function loadDocs(){try{let r=await fetch("docs.json?v="+Date.now());if(r.ok)allDocs=await r.json();}catch(e){}}
 function getSubmits(fn){return(JSON.parse(localStorage.getItem("exam_submits"))||{})[fn]||0;}
 
@@ -290,13 +318,18 @@ function renderDeThi(){
     let groups={};
     filtered.forEach(ex=>{let g=getGroup(ex),st=getExamStatus(ex,today);if(!groups[g])groups[g]={open:[],future:[],closed:[]};groups[g][st].push(ex);});
     let groupKeys=Object.keys(groups).sort((a,b)=>{
+        let rules=(groupRules&&groupRules.length)?groupRules:DEFAULT_GROUP_RULES;
         function rank(key){
-            let m;
-            if(m=key.match(/^Bài (\d+)$/))      return [0, parseInt(m[1])];
-            if(m=key.match(/^Đề GHK(\d+)$/))     return [1, parseInt(m[1])];
-            if(m=key.match(/^Đề HK(\d+)$/))      return [2, parseInt(m[1])];
-            if(key==='Đề OTN')                   return [3, 0];
-            return [4, 0]; // 'Chung' và các nhóm khác xếp cuối
+            // Hạng chính = vị trí của rule khớp trong groupRules (thứ tự bạn sắp xếp ở admin)
+            // Hạng phụ = số tìm thấy trong tên nhóm (để Bài 1 < Bài 2 < Bài 17...)
+            for(let i=0;i<rules.length;i++){
+                let lbl=rules[i].label.replace('{n}','').trim();
+                if(key===lbl || key.indexOf(lbl)===0){
+                    let numMatch=key.match(/(\d+)/);
+                    return [i, numMatch?parseInt(numMatch[1]):0];
+                }
+            }
+            return [rules.length, 0]; // 'Chung' và nhóm không khớp rule nào → xếp cuối
         }
         let [ca,na]=rank(a),[cb,nb]=rank(b);
         return ca-cb || na-nb || a.localeCompare(b);
