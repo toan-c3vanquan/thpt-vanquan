@@ -35,7 +35,8 @@
       "timeLimited": false,
       "type": "html",
       "_idx": 7,
-      "minTimePct": 10
+      "minTimePct": 10,
+      "allowGuest": false
     },
     {
       "id": "DE12BAI1_002_12_1781519540976_286",
@@ -50,7 +51,8 @@
       "timeLimited": false,
       "type": "html",
       "_idx": 8,
-      "minTimePct": 20
+      "minTimePct": 20,
+      "allowGuest": false
     },
     {
       "id": "DE12BAI1_001_12_1781519540978_843",
@@ -64,7 +66,8 @@
       "html": "toan12/DE12BAI1_001.html",
       "timeLimited": false,
       "type": "html",
-      "_idx": 9
+      "_idx": 9,
+      "allowGuest": false
     },
     {
       "id": "DE12BAI4_003_12_1781573376328_11",
@@ -78,7 +81,8 @@
       "html": "toan12/DE12BAI4_003.html",
       "timeLimited": false,
       "type": "html",
-      "_idx": 13
+      "_idx": 13,
+      "allowGuest": false
     },
     {
       "id": "DE12BAI4_002_12_1781573376331_901",
@@ -92,7 +96,8 @@
       "html": "toan12/DE12BAI4_002.html",
       "timeLimited": false,
       "type": "html",
-      "_idx": 14
+      "_idx": 14,
+      "allowGuest": false
     },
     {
       "id": "DE12BAI4_001_12_1781573376333_134",
@@ -106,7 +111,8 @@
       "html": "toan12/DE12BAI4_001.html",
       "timeLimited": false,
       "type": "html",
-      "_idx": 15
+      "_idx": 15,
+      "allowGuest": false
     },
     {
       "id": "DE12BAI3_003_12_1781573376336_72",
@@ -120,7 +126,8 @@
       "html": "toan12/DE12BAI3_003.html",
       "timeLimited": false,
       "type": "html",
-      "_idx": 16
+      "_idx": 16,
+      "allowGuest": false
     },
     {
       "id": "DE12BAI3_002_12_1781573376338_524",
@@ -134,7 +141,8 @@
       "html": "toan12/DE12BAI3_002.html",
       "timeLimited": false,
       "type": "html",
-      "_idx": 17
+      "_idx": 17,
+      "allowGuest": false
     },
     {
       "id": "DE12BAI3_001_12_1781573376340_258",
@@ -148,7 +156,8 @@
       "html": "toan12/DE12BAI3_001.html",
       "timeLimited": false,
       "type": "html",
-      "_idx": 18
+      "_idx": 18,
+      "allowGuest": false
     },
     {
       "id": "DE12BAI2_003_12_1781573376346_995",
@@ -162,7 +171,8 @@
       "html": "toan12/DE12BAI2_003.html",
       "timeLimited": false,
       "type": "html",
-      "_idx": 19
+      "_idx": 19,
+      "allowGuest": false
     },
     {
       "id": "DE12BAI2_002_12_1781573376350_691",
@@ -176,7 +186,8 @@
       "html": "toan12/DE12BAI2_002.html",
       "timeLimited": false,
       "type": "html",
-      "_idx": 20
+      "_idx": 20,
+      "allowGuest": false
     },
     {
       "id": "DE12BAI2_001_12_1781573376353_743",
@@ -190,7 +201,8 @@
       "html": "toan12/DE12BAI2_001.html",
       "timeLimited": false,
       "type": "html",
-      "_idx": 21
+      "_idx": 21,
+      "allowGuest": false
     },
     {
       "id": "DE12BAI5_003_12_1781577035599_839",
@@ -204,7 +216,8 @@
       "html": "toan12/DE12BAI5_003.html",
       "timeLimited": false,
       "type": "html",
-      "_idx": 22
+      "_idx": 22,
+      "allowGuest": false
     },
     {
       "id": "DE12BAI5_002_12_1781577035602_536",
@@ -218,7 +231,8 @@
       "html": "toan12/DE12BAI5_002.html",
       "timeLimited": false,
       "type": "html",
-      "_idx": 23
+      "_idx": 23,
+      "allowGuest": false
     },
     {
       "id": "DE12BAI5_001_12_1781577035604_608",
@@ -232,7 +246,8 @@
       "html": "toan12/DE12BAI5_001.html",
       "timeLimited": false,
       "type": "html",
-      "_idx": 24
+      "_idx": 24,
+      "allowGuest": false
     },
     {
       "id": "DE12BAI6_003_12_1781580383430_888",
@@ -246,7 +261,8 @@
       "html": "toan12/DE12BAI6_003.html",
       "timeLimited": false,
       "type": "html",
-      "_idx": 25
+      "_idx": 25,
+      "allowGuest": false
     },
     {
       "id": "DE12BAI6_002_12_1781580383433_273",
@@ -260,7 +276,8 @@
       "html": "toan12/DE12BAI6_002.html",
       "timeLimited": false,
       "type": "html",
-      "_idx": 26
+      "_idx": 26,
+      "allowGuest": false
     },
     {
       "id": "DE12BAI6_001_12_1781580383436_695",
@@ -274,7 +291,8 @@
       "html": "toan12/DE12BAI6_001.html",
       "timeLimited": false,
       "type": "html",
-      "_idx": 27
+      "_idx": 27,
+      "allowGuest": false
     },
     {
       "id": "DE12BAI10_003_12_1781601061317_82",
@@ -288,7 +306,8 @@
       "html": "toan12/DE12BAI10_003.html",
       "timeLimited": false,
       "type": "html",
-      "_idx": 28
+      "_idx": 28,
+      "allowGuest": false
     },
     {
       "id": "DE12BAI10_002_12_1781601061320_919",
@@ -302,7 +321,8 @@
       "html": "toan12/DE12BAI10_002.html",
       "timeLimited": false,
       "type": "html",
-      "_idx": 29
+      "_idx": 29,
+      "allowGuest": false
     },
     {
       "id": "DE12BAI10_001_12_1781601061321_243",
@@ -316,7 +336,8 @@
       "html": "toan12/DE12BAI10_001.html",
       "timeLimited": false,
       "type": "html",
-      "_idx": 30
+      "_idx": 30,
+      "allowGuest": false
     },
     {
       "id": "DE12BAI9_003_12_1781601061323_998",
@@ -330,7 +351,8 @@
       "html": "toan12/DE12BAI9_003.html",
       "timeLimited": false,
       "type": "html",
-      "_idx": 31
+      "_idx": 31,
+      "allowGuest": false
     },
     {
       "id": "DE12BAI9_002_12_1781601061325_590",
@@ -344,7 +366,8 @@
       "html": "toan12/DE12BAI9_002.html",
       "timeLimited": false,
       "type": "html",
-      "_idx": 32
+      "_idx": 32,
+      "allowGuest": false
     },
     {
       "id": "DE12BAI9_001_12_1781601061327_647",
@@ -358,7 +381,8 @@
       "html": "toan12/DE12BAI9_001.html",
       "timeLimited": false,
       "type": "html",
-      "_idx": 33
+      "_idx": 33,
+      "allowGuest": false
     },
     {
       "id": "DE12BAI7_003_12_1781601061328_788",
@@ -372,7 +396,8 @@
       "html": "toan12/DE12BAI7_003.html",
       "timeLimited": false,
       "type": "html",
-      "_idx": 34
+      "_idx": 34,
+      "allowGuest": false
     },
     {
       "id": "DE12BAI7_002_12_1781601061330_538",
@@ -386,7 +411,8 @@
       "html": "toan12/DE12BAI7_002.html",
       "timeLimited": false,
       "type": "html",
-      "_idx": 35
+      "_idx": 35,
+      "allowGuest": false
     },
     {
       "id": "DE12BAI7_001_12_1781601061332_983",
@@ -400,7 +426,8 @@
       "html": "toan12/DE12BAI7_001.html",
       "timeLimited": false,
       "type": "html",
-      "_idx": 36
+      "_idx": 36,
+      "allowGuest": false
     },
     {
       "id": "DE12BAI13_003_12_1781605640892_666",
@@ -413,7 +440,8 @@
       "close": "",
       "html": "toan12/DE12BAI13_003.html",
       "timeLimited": false,
-      "type": "html"
+      "type": "html",
+      "allowGuest": false
     },
     {
       "id": "DE12BAI13_002_12_1781605640897_429",
@@ -426,7 +454,8 @@
       "close": "",
       "html": "toan12/DE12BAI13_002.html",
       "timeLimited": false,
-      "type": "html"
+      "type": "html",
+      "allowGuest": false
     },
     {
       "id": "DE12BAI13_001_12_1781605640903_409",
@@ -439,7 +468,8 @@
       "close": "",
       "html": "toan12/DE12BAI13_001.html",
       "timeLimited": false,
-      "type": "html"
+      "type": "html",
+      "allowGuest": false
     },
     {
       "id": "DE12BAI12_003_12_1781605640905_616",
@@ -452,7 +482,8 @@
       "close": "",
       "html": "toan12/DE12BAI12_003.html",
       "timeLimited": false,
-      "type": "html"
+      "type": "html",
+      "allowGuest": false
     },
     {
       "id": "DE12BAI12_002_12_1781605640907_92",
@@ -465,7 +496,8 @@
       "close": "",
       "html": "toan12/DE12BAI12_002.html",
       "timeLimited": false,
-      "type": "html"
+      "type": "html",
+      "allowGuest": false
     },
     {
       "id": "DE12BAI12_001_12_1781605640909_724",
@@ -478,7 +510,8 @@
       "close": "",
       "html": "toan12/DE12BAI12_001.html",
       "timeLimited": false,
-      "type": "html"
+      "type": "html",
+      "allowGuest": false
     },
     {
       "id": "DE12BAI11_003_12_1781605640910_657",
@@ -491,7 +524,8 @@
       "close": "",
       "html": "toan12/DE12BAI11_003.html",
       "timeLimited": false,
-      "type": "html"
+      "type": "html",
+      "allowGuest": false
     },
     {
       "id": "DE12BAI11_002_12_1781605640912_932",
@@ -504,7 +538,8 @@
       "close": "",
       "html": "toan12/DE12BAI11_002.html",
       "timeLimited": false,
-      "type": "html"
+      "type": "html",
+      "allowGuest": false
     },
     {
       "id": "DE12BAI11_001_12_1781605640913_634",
@@ -517,7 +552,8 @@
       "close": "",
       "html": "toan12/DE12BAI11_001.html",
       "timeLimited": false,
-      "type": "html"
+      "type": "html",
+      "allowGuest": false
     },
     {
       "id": "DE12BAI19_003_12_1781660503713_232",
@@ -529,7 +565,8 @@
       "close": "",
       "html": "toan12/DE12BAI19_003.html",
       "timeLimited": false,
-      "type": "html"
+      "type": "html",
+      "allowGuest": false
     },
     {
       "id": "DE12BAI19_002_12_1781660503715_583",
@@ -541,7 +578,8 @@
       "close": "",
       "html": "toan12/DE12BAI19_002.html",
       "timeLimited": false,
-      "type": "html"
+      "type": "html",
+      "allowGuest": false
     },
     {
       "id": "DE12BAI19_001_12_1781660503717_257",
@@ -553,7 +591,8 @@
       "close": "",
       "html": "toan12/DE12BAI19_001.html",
       "timeLimited": false,
-      "type": "html"
+      "type": "html",
+      "allowGuest": false
     },
     {
       "id": "DE12BAI18_003_12_1781660503719_500",
@@ -565,7 +604,8 @@
       "close": "",
       "html": "toan12/DE12BAI18_003.html",
       "timeLimited": false,
-      "type": "html"
+      "type": "html",
+      "allowGuest": false
     },
     {
       "id": "DE12BAI18_002_12_1781660503720_2",
@@ -577,7 +617,8 @@
       "close": "",
       "html": "toan12/DE12BAI18_002.html",
       "timeLimited": false,
-      "type": "html"
+      "type": "html",
+      "allowGuest": false
     },
     {
       "id": "DE12BAI18_001_12_1781660503722_640",
@@ -589,7 +630,8 @@
       "close": "",
       "html": "toan12/DE12BAI18_001.html",
       "timeLimited": false,
-      "type": "html"
+      "type": "html",
+      "allowGuest": false
     },
     {
       "id": "DE12BAI15_003_12_1781660503723_814",
@@ -601,7 +643,8 @@
       "close": "",
       "html": "toan12/DE12BAI15_003.html",
       "timeLimited": false,
-      "type": "html"
+      "type": "html",
+      "allowGuest": false
     },
     {
       "id": "DE12BAI15_002_12_1781660503725_941",
@@ -613,7 +656,8 @@
       "close": "",
       "html": "toan12/DE12BAI15_002.html",
       "timeLimited": false,
-      "type": "html"
+      "type": "html",
+      "allowGuest": false
     },
     {
       "id": "DE12BAI15_001_12_1781660503726_552",
@@ -625,7 +669,8 @@
       "close": "",
       "html": "toan12/DE12BAI15_001.html",
       "timeLimited": false,
-      "type": "html"
+      "type": "html",
+      "allowGuest": false
     },
     {
       "id": "DE12BAI17_003_12_1781660503733_985",
@@ -637,7 +682,8 @@
       "close": "",
       "html": "toan12/DE12BAI17_003.html",
       "timeLimited": false,
-      "type": "html"
+      "type": "html",
+      "allowGuest": false
     },
     {
       "id": "DE12BAI17_002_12_1781660503737_252",
@@ -649,7 +695,8 @@
       "close": "",
       "html": "toan12/DE12BAI17_002.html",
       "timeLimited": false,
-      "type": "html"
+      "type": "html",
+      "allowGuest": false
     },
     {
       "id": "DE12BAI17_001_12_1781660503739_326",
@@ -661,7 +708,8 @@
       "close": "",
       "html": "toan12/DE12BAI17_001.html",
       "timeLimited": false,
-      "type": "html"
+      "type": "html",
+      "allowGuest": false
     },
     {
       "id": "DE12BAI16_003_12_1781660503742_391",
@@ -673,7 +721,8 @@
       "close": "",
       "html": "toan12/DE12BAI16_003.html",
       "timeLimited": false,
-      "type": "html"
+      "type": "html",
+      "allowGuest": false
     },
     {
       "id": "DE12BAI16_002_12_1781660503746_465",
@@ -685,7 +734,8 @@
       "close": "",
       "html": "toan12/DE12BAI16_002.html",
       "timeLimited": false,
-      "type": "html"
+      "type": "html",
+      "allowGuest": false
     },
     {
       "id": "DE12BAI16_001_12_1781660503749_52",
@@ -697,7 +747,8 @@
       "close": "",
       "html": "toan12/DE12BAI16_001.html",
       "timeLimited": false,
-      "type": "html"
+      "type": "html",
+      "allowGuest": false
     },
     {
       "id": "DE12BAI14_003_12_1781660503751_661",
@@ -709,7 +760,8 @@
       "close": "",
       "html": "toan12/DE12BAI14_003.html",
       "timeLimited": false,
-      "type": "html"
+      "type": "html",
+      "allowGuest": false
     },
     {
       "id": "DE12BAI14_002_12_1781660503755_793",
@@ -721,7 +773,8 @@
       "close": "",
       "html": "toan12/DE12BAI14_002.html",
       "timeLimited": false,
-      "type": "html"
+      "type": "html",
+      "allowGuest": false
     },
     {
       "id": "DE12BAI14_001_12_1781660503756_12",
@@ -733,7 +786,8 @@
       "close": "",
       "html": "toan12/DE12BAI14_001.html",
       "timeLimited": false,
-      "type": "html"
+      "type": "html",
+      "allowGuest": false
     },
     {
       "id": "DE12TT_003_thithu12_1781690194232_203",
@@ -745,7 +799,8 @@
       "close": "",
       "html": "thithu12/DE12TT_003.html",
       "timeLimited": false,
-      "type": "html"
+      "type": "html",
+      "allowGuest": false
     },
     {
       "id": "DE12TT_002_thithu12_1781690194234_654",
@@ -757,7 +812,8 @@
       "close": "",
       "html": "thithu12/DE12TT_002.html",
       "timeLimited": false,
-      "type": "html"
+      "type": "html",
+      "allowGuest": false
     },
     {
       "id": "DE12TT_001_thithu12_1781690194236_65",
@@ -769,7 +825,8 @@
       "close": "",
       "html": "thithu12/DE12TT_001.html",
       "timeLimited": false,
-      "type": "html"
+      "type": "html",
+      "allowGuest": false
     },
     {
       "id": "DE12TT_003_thithu12_1781692813247_430",
@@ -781,7 +838,7 @@
       "close": "",
       "html": "thithu12/DE12TT_003.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "type": "html"
     },
     {
@@ -794,7 +851,7 @@
       "close": "",
       "html": "toan11/DE11BAI4_002.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "type": "html"
     },
     {
@@ -807,7 +864,7 @@
       "close": "",
       "html": "toan11/DE11BAI4_003.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "type": "html"
     },
     {
@@ -820,7 +877,7 @@
       "close": "",
       "html": "toan11/DE11BAI4_001.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "type": "html"
     },
     {
@@ -833,7 +890,7 @@
       "close": "",
       "html": "toan11/DE11BAI3_003.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "type": "html"
     },
     {
@@ -846,7 +903,7 @@
       "close": "",
       "html": "toan11/DE11BAI3_002.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "type": "html"
     },
     {
@@ -859,7 +916,7 @@
       "close": "",
       "html": "toan11/DE11BAI3_001.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "type": "html"
     },
     {
@@ -872,7 +929,7 @@
       "close": "",
       "html": "toan11/DE11BAI2_003.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "type": "html"
     },
     {
@@ -885,7 +942,7 @@
       "close": "",
       "html": "toan11/DE11BAI2_002.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "type": "html"
     },
     {
@@ -898,7 +955,7 @@
       "close": "",
       "html": "toan11/DE11BAI2_001.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "type": "html"
     },
     {
@@ -911,7 +968,7 @@
       "close": "",
       "html": "toan11/DE11BAI1_003.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "type": "html"
     },
     {
@@ -924,7 +981,7 @@
       "close": "",
       "html": "toan11/DE11BAI1_002.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "type": "html"
     },
     {
@@ -937,7 +994,7 @@
       "close": "",
       "html": "toan11/DE11BAI1_001.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "type": "html"
     },
     {
@@ -950,7 +1007,7 @@
       "close": "",
       "html": "toan11/DE11BAI0_003.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "type": "html"
     },
     {
@@ -963,7 +1020,7 @@
       "close": "",
       "html": "toan11/DE11BAI0_002.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "type": "html"
     },
     {
@@ -976,7 +1033,7 @@
       "close": "",
       "html": "toan11/DE11BAI0_001.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "type": "html"
     },
     {
@@ -989,7 +1046,7 @@
       "close": "",
       "html": "toan11/DE11BAI9_003.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 20,
       "type": "html"
@@ -1004,7 +1061,7 @@
       "close": "",
       "html": "toan11/DE11BAI9_002.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 20,
       "type": "html"
@@ -1019,7 +1076,7 @@
       "close": "",
       "html": "toan11/DE11BAI9_001.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 20,
       "type": "html"
@@ -1034,7 +1091,7 @@
       "close": "",
       "html": "toan11/DE11BAI7_003.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 20,
       "type": "html"
@@ -1049,7 +1106,7 @@
       "close": "",
       "html": "toan11/DE11BAI7_002.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 20,
       "type": "html"
@@ -1064,7 +1121,7 @@
       "close": "",
       "html": "toan11/DE11BAI7_001.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 20,
       "type": "html"
@@ -1079,7 +1136,7 @@
       "close": "",
       "html": "toan11/DE11BAI6_003.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 20,
       "type": "html"
@@ -1094,7 +1151,7 @@
       "close": "",
       "html": "toan11/DE11BAI6_002.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 20,
       "type": "html"
@@ -1109,7 +1166,7 @@
       "close": "",
       "html": "toan11/DE11BAI6_001.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 20,
       "type": "html"
@@ -1124,7 +1181,7 @@
       "close": "",
       "html": "toan11/DE11BAI5_003.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 20,
       "type": "html"
@@ -1139,7 +1196,7 @@
       "close": "",
       "html": "toan11/DE11BAI5_002.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 20,
       "type": "html"
@@ -1154,7 +1211,7 @@
       "close": "",
       "html": "toan11/DE11BAI5_001.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 20,
       "type": "html"
@@ -1169,7 +1226,7 @@
       "close": "",
       "html": "toan11/DE11BAI14_003.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 20,
       "type": "html"
@@ -1184,7 +1241,7 @@
       "close": "",
       "html": "toan11/DE11BAI14_002.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 20,
       "type": "html"
@@ -1199,7 +1256,7 @@
       "close": "",
       "html": "toan11/DE11BAI14_001.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 20,
       "type": "html"
@@ -1214,7 +1271,7 @@
       "close": "",
       "html": "toan11/DE11BAI13_003.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 20,
       "type": "html"
@@ -1229,7 +1286,7 @@
       "close": "",
       "html": "toan11/DE11BAI13_002.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 20,
       "type": "html"
@@ -1244,7 +1301,7 @@
       "close": "",
       "html": "toan11/DE11BAI13_001.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 20,
       "type": "html"
@@ -1259,7 +1316,7 @@
       "close": "",
       "html": "toan11/DE11BAI12_003.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 20,
       "type": "html"
@@ -1274,7 +1331,7 @@
       "close": "",
       "html": "toan11/DE11BAI12_002.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 20,
       "type": "html"
@@ -1289,7 +1346,7 @@
       "close": "",
       "html": "toan11/DE11BAI12_001.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 20,
       "type": "html"
@@ -1304,7 +1361,7 @@
       "close": "",
       "html": "toan11/DE11BAI11_003.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 20,
       "type": "html"
@@ -1319,7 +1376,7 @@
       "close": "",
       "html": "toan11/DE11BAI11_002.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 20,
       "type": "html"
@@ -1334,7 +1391,7 @@
       "close": "",
       "html": "toan11/DE11BAI11_001.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 20,
       "type": "html"
@@ -1349,7 +1406,7 @@
       "close": "",
       "html": "toan11/DE11BAI10_003.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 20,
       "type": "html"
@@ -1364,7 +1421,7 @@
       "close": "",
       "html": "toan11/DE11BAI10_002.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 20,
       "type": "html"
@@ -1379,7 +1436,7 @@
       "close": "",
       "html": "toan11/DE11BAI10_001.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 20,
       "type": "html"
@@ -1394,7 +1451,7 @@
       "close": "",
       "html": "toan11/DE11BAI21_003.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 20,
       "type": "html"
@@ -1409,7 +1466,7 @@
       "close": "",
       "html": "toan11/DE11BAI21_002.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 20,
       "type": "html"
@@ -1424,7 +1481,7 @@
       "close": "",
       "html": "toan11/DE11BAI21_001.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 20,
       "type": "html"
@@ -1439,7 +1496,7 @@
       "close": "",
       "html": "toan11/DE11BAI20_003.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 20,
       "type": "html"
@@ -1454,7 +1511,7 @@
       "close": "",
       "html": "toan11/DE11BAI20_002.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 20,
       "type": "html"
@@ -1469,7 +1526,7 @@
       "close": "",
       "html": "toan11/DE11BAI20_001.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 20,
       "type": "html"
@@ -1484,7 +1541,7 @@
       "close": "",
       "html": "toan11/DE11BAI19_003.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 20,
       "type": "html"
@@ -1499,7 +1556,7 @@
       "close": "",
       "html": "toan11/DE11BAI19_002.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 20,
       "type": "html"
@@ -1514,7 +1571,7 @@
       "close": "",
       "html": "toan11/DE11BAI19_001.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 20,
       "type": "html"
@@ -1529,7 +1586,7 @@
       "close": "",
       "html": "toan11/DE11BAI18_003.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 20,
       "type": "html"
@@ -1544,7 +1601,7 @@
       "close": "",
       "html": "toan11/DE11BAI18_002.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 20,
       "type": "html"
@@ -1559,7 +1616,7 @@
       "close": "",
       "html": "toan11/DE11BAI18_001.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 20,
       "type": "html"
@@ -1574,7 +1631,7 @@
       "close": "",
       "html": "toan11/DE11BAI17_003.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 20,
       "type": "html"
@@ -1589,7 +1646,7 @@
       "close": "",
       "html": "toan11/DE11BAI17_002.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 20,
       "type": "html"
@@ -1604,7 +1661,7 @@
       "close": "",
       "html": "toan11/DE11BAI17_001.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 20,
       "type": "html"
@@ -1619,7 +1676,7 @@
       "close": "",
       "html": "toan11/DE11BAI16_003.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 20,
       "type": "html"
@@ -1634,7 +1691,7 @@
       "close": "",
       "html": "toan11/DE11BAI16_002.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 20,
       "type": "html"
@@ -1649,7 +1706,7 @@
       "close": "",
       "html": "toan11/DE11BAI16_001.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 20,
       "type": "html"
@@ -1664,7 +1721,7 @@
       "close": "",
       "html": "toan11/DE11BAI15_003.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 20,
       "type": "html"
@@ -1679,7 +1736,7 @@
       "close": "",
       "html": "toan11/DE11BAI15_002.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 20,
       "type": "html"
@@ -1694,7 +1751,7 @@
       "close": "",
       "html": "toan11/DE11BAI15_001.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 20,
       "type": "html"
@@ -1709,7 +1766,7 @@
       "close": "",
       "html": "toan11/DE11BAI27_003.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 20,
       "type": "html"
@@ -1724,7 +1781,7 @@
       "close": "",
       "html": "toan11/DE11BAI27_002.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 20,
       "type": "html"
@@ -1739,7 +1796,7 @@
       "close": "",
       "html": "toan11/DE11BAI27_001.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 20,
       "type": "html"
@@ -1754,7 +1811,7 @@
       "close": "",
       "html": "toan11/DE11BAI26_003.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 20,
       "type": "html"
@@ -1769,7 +1826,7 @@
       "close": "",
       "html": "toan11/DE11BAI26_002.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 20,
       "type": "html"
@@ -1784,7 +1841,7 @@
       "close": "",
       "html": "toan11/DE11BAI26_001.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 20,
       "type": "html"
@@ -1799,7 +1856,7 @@
       "close": "",
       "html": "toan11/DE11BAI25_003.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 20,
       "type": "html"
@@ -1814,7 +1871,7 @@
       "close": "",
       "html": "toan11/DE11BAI25_002.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 20,
       "type": "html"
@@ -1829,7 +1886,7 @@
       "close": "",
       "html": "toan11/DE11BAI25_001.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 20,
       "type": "html"
@@ -1844,7 +1901,7 @@
       "close": "",
       "html": "toan11/DE11BAI24_003.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 20,
       "type": "html"
@@ -1859,7 +1916,7 @@
       "close": "",
       "html": "toan11/DE11BAI24_002.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 20,
       "type": "html"
@@ -1874,7 +1931,7 @@
       "close": "",
       "html": "toan11/DE11BAI24_001.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 20,
       "type": "html"
@@ -1889,7 +1946,7 @@
       "close": "",
       "html": "toan11/DE11BAI23_003.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 20,
       "type": "html"
@@ -1904,7 +1961,7 @@
       "close": "",
       "html": "toan11/DE11BAI23_002.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 20,
       "type": "html"
@@ -1919,7 +1976,7 @@
       "close": "",
       "html": "toan11/DE11BAI23_001.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 20,
       "type": "html"
@@ -1934,7 +1991,7 @@
       "close": "",
       "html": "toan11/DE11BAI22_003.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 20,
       "type": "html"
@@ -1949,7 +2006,7 @@
       "close": "",
       "html": "toan11/DE11BAI22_002.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 20,
       "type": "html"
@@ -1964,7 +2021,7 @@
       "close": "",
       "html": "toan11/DE11BAI22_001.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 20,
       "type": "html"
@@ -1979,7 +2036,7 @@
       "close": "",
       "html": "toan11/DE11BAI33_003.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 0,
       "type": "html"
@@ -1994,7 +2051,7 @@
       "close": "",
       "html": "toan11/DE11BAI33_002.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 0,
       "type": "html"
@@ -2009,7 +2066,7 @@
       "close": "",
       "html": "toan11/DE11BAI33_001.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 0,
       "type": "html"
@@ -2024,7 +2081,7 @@
       "close": "",
       "html": "toan11/DE11BAI32_003.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 0,
       "type": "html"
@@ -2039,7 +2096,7 @@
       "close": "",
       "html": "toan11/DE11BAI32_002.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 0,
       "type": "html"
@@ -2054,7 +2111,7 @@
       "close": "",
       "html": "toan11/DE11BAI32_001.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 0,
       "type": "html"
@@ -2069,7 +2126,7 @@
       "close": "",
       "html": "toan11/DE11BAI31_003.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 0,
       "type": "html"
@@ -2084,7 +2141,7 @@
       "close": "",
       "html": "toan11/DE11BAI31_002.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 0,
       "type": "html"
@@ -2099,7 +2156,7 @@
       "close": "",
       "html": "toan11/DE11BAI31_001.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 0,
       "type": "html"
@@ -2114,7 +2171,7 @@
       "close": "",
       "html": "toan11/DE11BAI30_003.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 0,
       "type": "html"
@@ -2129,7 +2186,7 @@
       "close": "",
       "html": "toan11/DE11BAI30_002.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 0,
       "type": "html"
@@ -2144,7 +2201,7 @@
       "close": "",
       "html": "toan11/DE11BAI30_001.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 0,
       "type": "html"
@@ -2159,7 +2216,7 @@
       "close": "",
       "html": "toan11/DE11BAI29_003.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 0,
       "type": "html"
@@ -2174,7 +2231,7 @@
       "close": "",
       "html": "toan11/DE11BAI29_002.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 0,
       "type": "html"
@@ -2189,7 +2246,7 @@
       "close": "",
       "html": "toan11/DE11BAI29_001.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 0,
       "type": "html"
@@ -2204,7 +2261,7 @@
       "close": "",
       "html": "toan11/DE11BAI28_003.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 0,
       "type": "html"
@@ -2219,7 +2276,7 @@
       "close": "",
       "html": "toan11/DE11BAI28_002.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 0,
       "type": "html"
@@ -2234,7 +2291,7 @@
       "close": "",
       "html": "toan11/DE11BAI28_001.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 0,
       "type": "html"
@@ -2249,7 +2306,7 @@
       "close": "",
       "html": "toan10/DE10BAI11_003.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 0,
       "type": "html"
@@ -2264,7 +2321,7 @@
       "close": "",
       "html": "toan10/DE10BAI11_002.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 0,
       "type": "html"
@@ -2279,7 +2336,7 @@
       "close": "",
       "html": "toan10/DE10BAI11_001.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 0,
       "type": "html"
@@ -2294,7 +2351,7 @@
       "close": "",
       "html": "toan10/DE10BAI10_003.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 0,
       "type": "html"
@@ -2309,7 +2366,7 @@
       "close": "",
       "html": "toan10/DE10BAI10_002.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 0,
       "type": "html"
@@ -2324,7 +2381,7 @@
       "close": "",
       "html": "toan10/DE10BAI10_001.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 0,
       "type": "html"
@@ -2339,7 +2396,7 @@
       "close": "",
       "html": "toan10/DE10BAI9_003.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 0,
       "type": "html"
@@ -2354,7 +2411,7 @@
       "close": "",
       "html": "toan10/DE10BAI9_002.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 0,
       "type": "html"
@@ -2369,7 +2426,7 @@
       "close": "",
       "html": "toan10/DE10BAI9_001.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 0,
       "type": "html"
@@ -2384,7 +2441,7 @@
       "close": "",
       "html": "toan10/DE10BAI8_003.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 0,
       "type": "html"
@@ -2399,7 +2456,7 @@
       "close": "",
       "html": "toan10/DE10BAI8_002.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 0,
       "type": "html"
@@ -2414,7 +2471,7 @@
       "close": "",
       "html": "toan10/DE10BAI8_001.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 0,
       "type": "html"
@@ -2429,7 +2486,7 @@
       "close": "",
       "html": "toan10/DE10BAI7_003.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 0,
       "type": "html"
@@ -2444,7 +2501,7 @@
       "close": "",
       "html": "toan10/DE10BAI7_002.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 0,
       "type": "html"
@@ -2459,7 +2516,7 @@
       "close": "",
       "html": "toan10/DE10BAI7_001.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 0,
       "type": "html"
@@ -2474,7 +2531,7 @@
       "close": "",
       "html": "toan10/DE10BAI6_003.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 0,
       "type": "html"
@@ -2489,7 +2546,7 @@
       "close": "",
       "html": "toan10/DE10BAI6_002.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 0,
       "type": "html"
@@ -2504,7 +2561,7 @@
       "close": "",
       "html": "toan10/DE10BAI6_001.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 0,
       "type": "html"
@@ -2519,7 +2576,7 @@
       "close": "",
       "html": "toan10/DE10BAI5_003.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 0,
       "type": "html"
@@ -2534,7 +2591,7 @@
       "close": "",
       "html": "toan10/DE10BAI5_002.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 0,
       "type": "html"
@@ -2549,7 +2606,7 @@
       "close": "",
       "html": "toan10/DE10BAI5_001.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 0,
       "type": "html"
@@ -2564,7 +2621,7 @@
       "close": "",
       "html": "toan10/DE10BAI4_003.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 0,
       "type": "html"
@@ -2579,7 +2636,7 @@
       "close": "",
       "html": "toan10/DE10BAI4_002.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 0,
       "type": "html"
@@ -2594,7 +2651,7 @@
       "close": "",
       "html": "toan10/DE10BAI4_001.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 0,
       "type": "html"
@@ -2609,7 +2666,7 @@
       "close": "",
       "html": "toan10/DE10BAI3_003.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 0,
       "type": "html"
@@ -2624,7 +2681,7 @@
       "close": "",
       "html": "toan10/DE10BAI3_002.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 0,
       "type": "html"
@@ -2639,7 +2696,7 @@
       "close": "",
       "html": "toan10/DE10BAI3_001.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 0,
       "type": "html"
@@ -2654,7 +2711,7 @@
       "close": "",
       "html": "toan10/DE10BAI2_003.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 0,
       "type": "html"
@@ -2669,7 +2726,7 @@
       "close": "",
       "html": "toan10/DE10BAI2_002.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 0,
       "type": "html"
@@ -2684,7 +2741,7 @@
       "close": "",
       "html": "toan10/DE10BAI2_001.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 0,
       "type": "html"
@@ -2699,7 +2756,7 @@
       "close": "",
       "html": "toan10/DE10BAI1_003.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 0,
       "type": "html"
@@ -2714,7 +2771,7 @@
       "close": "",
       "html": "toan10/DE10BAI1_002.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 0,
       "type": "html"
@@ -2729,7 +2786,7 @@
       "close": "",
       "html": "toan10/DE10BAI1_001.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 0,
       "type": "html"
@@ -2744,7 +2801,7 @@
       "close": "",
       "html": "toan10/DE10BAI22_003.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 0,
       "type": "html"
@@ -2759,7 +2816,7 @@
       "close": "",
       "html": "toan10/DE10BAI22_002.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 0,
       "type": "html"
@@ -2774,7 +2831,7 @@
       "close": "",
       "html": "toan10/DE10BAI22_001.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 0,
       "type": "html"
@@ -2789,7 +2846,7 @@
       "close": "",
       "html": "toan10/DE10BAI21_003.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 0,
       "type": "html"
@@ -2804,7 +2861,7 @@
       "close": "",
       "html": "toan10/DE10BAI21_002.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 0,
       "type": "html"
@@ -2819,7 +2876,7 @@
       "close": "",
       "html": "toan10/DE10BAI21_001.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 0,
       "type": "html"
@@ -2834,7 +2891,7 @@
       "close": "",
       "html": "toan10/DE10BAI20_003.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 0,
       "type": "html"
@@ -2849,7 +2906,7 @@
       "close": "",
       "html": "toan10/DE10BAI20_002.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 0,
       "type": "html"
@@ -2864,7 +2921,7 @@
       "close": "",
       "html": "toan10/DE10BAI20_001.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 0,
       "type": "html"
@@ -2879,7 +2936,7 @@
       "close": "",
       "html": "toan10/DE10BAI19_003.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 0,
       "type": "html"
@@ -2894,7 +2951,7 @@
       "close": "",
       "html": "toan10/DE10BAI19_002.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 0,
       "type": "html"
@@ -2909,7 +2966,7 @@
       "close": "",
       "html": "toan10/DE10BAI19_001.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 0,
       "type": "html"
@@ -2924,7 +2981,7 @@
       "close": "",
       "html": "toan10/DE10BAI18_003.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 0,
       "type": "html"
@@ -2939,7 +2996,7 @@
       "close": "",
       "html": "toan10/DE10BAI18_002.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 0,
       "type": "html"
@@ -2954,7 +3011,7 @@
       "close": "",
       "html": "toan10/DE10BAI18_001.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 0,
       "type": "html"
@@ -2969,7 +3026,7 @@
       "close": "",
       "html": "toan10/DE10BAI17_003.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 0,
       "type": "html"
@@ -2984,7 +3041,7 @@
       "close": "",
       "html": "toan10/DE10BAI17_002.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 0,
       "type": "html"
@@ -2999,7 +3056,7 @@
       "close": "",
       "html": "toan10/DE10BAI17_001.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 0,
       "type": "html"
@@ -3014,7 +3071,7 @@
       "close": "",
       "html": "toan10/DE10BAI16_003.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 0,
       "type": "html"
@@ -3029,7 +3086,7 @@
       "close": "",
       "html": "toan10/DE10BAI16_002.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 0,
       "type": "html"
@@ -3044,7 +3101,7 @@
       "close": "",
       "html": "toan10/DE10BAI16_001.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 0,
       "type": "html"
@@ -3059,7 +3116,7 @@
       "close": "",
       "html": "toan10/DE10BAI15_003.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 0,
       "type": "html"
@@ -3074,7 +3131,7 @@
       "close": "",
       "html": "toan10/DE10BAI15_002.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 0,
       "type": "html"
@@ -3089,7 +3146,7 @@
       "close": "",
       "html": "toan10/DE10BAI15_001.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 0,
       "type": "html"
@@ -3104,7 +3161,7 @@
       "close": "",
       "html": "toan10/DE10BAI14_003.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 0,
       "type": "html"
@@ -3119,7 +3176,7 @@
       "close": "",
       "html": "toan10/DE10BAI14_002.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 0,
       "type": "html"
@@ -3134,7 +3191,7 @@
       "close": "",
       "html": "toan10/DE10BAI14_001.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 0,
       "type": "html"
@@ -3149,7 +3206,7 @@
       "close": "",
       "html": "toan10/DE10BAI13_003.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 0,
       "type": "html"
@@ -3164,7 +3221,7 @@
       "close": "",
       "html": "toan10/DE10BAI13_002.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 0,
       "type": "html"
@@ -3179,7 +3236,7 @@
       "close": "",
       "html": "toan10/DE10BAI13_001.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 0,
       "type": "html"
@@ -3194,7 +3251,7 @@
       "close": "",
       "html": "toan10/DE10BAI12_002.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 0,
       "type": "html"
@@ -3209,7 +3266,7 @@
       "close": "",
       "html": "toan10/DE10BAI12_001.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 0,
       "type": "html"
@@ -3449,7 +3506,7 @@
       "close": "",
       "html": "toan12/DE12BAI8_003.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 0,
       "type": "html"
@@ -3464,7 +3521,7 @@
       "close": "",
       "html": "toan12/DE12BAI8_002.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 0,
       "type": "html"
@@ -3479,7 +3536,7 @@
       "close": "",
       "html": "toan12/DE12BAI8_001.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 0,
       "type": "html"
@@ -3494,7 +3551,7 @@
       "close": "",
       "html": "thithu12/DE12TT26-SGD-AnGiang-NH25-26.html",
       "timeLimited": false,
-      "allowGuest": true,
+      "allowGuest": false,
       "rosterClasses": [],
       "minTimePct": 0,
       "type": "html"
