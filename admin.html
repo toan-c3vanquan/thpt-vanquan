@@ -117,12 +117,12 @@
         .template-header-row { display: grid; grid-template-columns: 90px 1fr 130px 130px 36px; gap: 10px; padding: 0 10px 4px; font-size: 0.75rem; font-weight: bold; color: #888; }
 
         /* ── ROSTER TABLE ── */
-        .roster-row { display: grid; grid-template-columns: 1fr 110px 36px; gap: 10px; align-items: center; padding: 6px 10px; border-radius: 8px; background: #fafafa; margin-bottom: 5px; }
-        .roster-row input { padding: 6px 8px; border-radius: 6px; border: 1px solid #ddd; font-size: 0.85rem; }
+        .roster-row { display: grid; grid-template-columns: 1fr 1fr 100px 36px; gap: 10px; align-items: center; padding: 6px 10px; border-radius: 8px; background: #fafafa; margin-bottom: 5px; }
+        .roster-row input, .roster-row select { padding: 6px 8px; border-radius: 6px; border: 1px solid #ddd; font-size: 0.85rem; }
         .roster-row input[type=text]:first-child { font-weight: bold; }
         .roster-del { background: #fee; color: #e74c3c; border: none; border-radius: 6px; cursor: pointer; font-size: 0.85rem; padding: 4px; }
         .roster-del:hover { background: #e74c3c; color: white; }
-        .roster-header-row { display: grid; grid-template-columns: 1fr 110px 36px; gap: 10px; padding: 0 10px 4px; font-size: 0.75rem; font-weight: bold; color: #888; }
+        .roster-header-row { display: grid; grid-template-columns: 1fr 1fr 100px 36px; gap: 10px; padding: 0 10px 4px; font-size: 0.75rem; font-weight: bold; color: #888; }
 
         /* ── GROUP RULES TABLE ── */
         .grouprule-row { display: grid; grid-template-columns: 36px 1fr 1fr 70px; gap: 10px; align-items: center; padding: 6px 10px; border-radius: 8px; background: #fafafa; margin-bottom: 5px; }
@@ -134,6 +134,13 @@
         .grouprule-actions { display: flex; gap: 4px; }
         .grouprule-del { background: #fee; color: #e74c3c; border: none; border-radius: 6px; cursor: pointer; font-size: 0.85rem; padding: 4px 8px; }
         .grouprule-del:hover { background: #e74c3c; color: white; }
+
+        /* ── SCHOOL LIST TABLE ── */
+        .school-row { display: grid; grid-template-columns: 1fr 90px 36px; gap: 10px; align-items: center; padding: 6px 10px; border-radius: 8px; background: #fafafa; margin-bottom: 5px; }
+        .school-row input[type=text] { padding: 6px 8px; border-radius: 6px; border: 1px solid #ddd; font-size: 0.85rem; }
+        .school-row input[type=radio] { width: 18px; height: 18px; cursor: pointer; }
+        .school-del { background: #fee; color: #e74c3c; border: none; border-radius: 6px; cursor: pointer; font-size: 0.85rem; padding: 4px 8px; }
+        .school-del:hover { background: #e74c3c; color: white; }
 
         /* ── QUIZ BUILDER ── */
         .question-item { background: #f8f9fa; padding: 12px 14px; margin: 10px 0; border-radius: 10px; border-left: 4px solid #1e3c72; }
@@ -249,11 +256,32 @@
             ⏳ % tối thiểu: <input type="number" id="bulkMinTimePct" min="0" max="100" step="1" value="0" style="width:60px;">
         </label>
         <button class="btn btn-purple btn-sm" id="bulkApplyMinPctBtn">💾 Áp dụng %</button>
+        <span style="color:#ccc;">|</span>
+        <label style="display:flex;align-items:center;gap:6px;font-size:0.85rem;">
+            👤 Khách: <select id="bulkAllowGuest" style="padding:4px 6px;border-radius:6px;border:none;">
+                <option value="true">Cho phép</option>
+                <option value="false">Không cho phép</option>
+            </select>
+        </label>
+        <button class="btn btn-purple btn-sm" id="bulkApplyGuestBtn">💾 Áp dụng (chỉ exams.json)</button>
+        <label class="btn btn-info btn-sm" style="cursor:pointer;margin:0;">
+            📂 Chọn file/folder .html để tiêm
+            <input type="file" id="bulkGuestFileInput" webkitdirectory multiple style="display:none;">
+        </label>
+        <span style="color:#ccc;">|</span>
         <button class="btn btn-danger btn-sm" id="bulkDeleteBtn">🗑️ Xóa đề đã chọn</button>
         <button class="btn btn-sm" style="background:#eee;color:#555;" id="bulkClearBtn">✕ Bỏ chọn</button>
     </div>
 
     <!-- Thêm đề mới -->
+    <div class="warning-box" id="bulkGuestHelp" style="display:none; margin-top:8px;">
+        💡 <b>Cách dùng tiêm "Cho phép Khách" cho đề CŨ (không cần qua form Thêm đề):</b><br>
+        1) Tick chọn các đề cần đổi trong bảng trên.<br>
+        2) Chọn "Cho phép" hoặc "Không cho phép" ở ô trên.<br>
+        3) Bấm <b>📂 Chọn file/folder .html để tiêm</b> — chọn đúng thư mục (VD <code>toan12/</code>) chứa các file .html tương ứng (admin sẽ tự dò đúng file theo tên trong exams.json, file không liên quan sẽ bị bỏ qua).<br>
+        4) Một file ZIP sẽ được tạo, chứa các file .html đã tiêm cờ + exams.json cập nhật — giải nén và upload đè lên GitHub.
+    </div>
+
     <div class="card">
         <div class="card-title">➕ Thêm đề mới</div>
         <div class="form-group">
@@ -413,6 +441,16 @@
                 <select id="rosterSelect"><option value="">-- Tạo lớp mới --</option></select>
             </div>
         </div>
+        <div class="form-row">
+            <div class="form-group">
+                <label>🏫 Trường mặc định cho lớp này</label>
+                <select id="rosterDefaultSchool"></select>
+            </div>
+            <div class="form-group">
+                <label style="visibility:hidden;">.</label>
+                <button class="btn btn-info btn-sm" id="applyDefaultSchoolBtn" style="width:100%;">↧ Áp dụng trường này cho TẤT CẢ học sinh dưới đây</button>
+            </div>
+        </div>
         <div class="form-group">
             <label>Dán danh sách họ tên học sinh (mỗi dòng 1 tên, copy từ Excel)</label>
             <textarea id="rosterNamesInput" rows="6" style="width:100%;padding:8px 10px;border-radius:8px;border:1px solid #ddd;font-size:0.88rem;font-family:inherit;" placeholder="Nguyễn Văn A&#10;Trần Thị B&#10;..."></textarea>
@@ -448,6 +486,25 @@
         <div class="warning-box" style="margin-top:10px;">
             💡 VD thêm nhóm mới: pattern <code>KT15P{n}</code> → label <code>KT 15 phút {n}</code>. Đề có tên chứa "KT15P3" sẽ tự vào nhóm "KT 15 phút 3". Lưu ý: nếu 1 mẫu là chuỗi con của mẫu khác (VD "HK" nằm trong "GHK"), hãy đặt mẫu dài/cụ thể hơn (GHK) lên TRƯỚC.<br>
             Sau khi lưu, file <b>exams.json</b> sẽ tự tải về — upload lên GitHub để học sinh thấy nhóm mới.
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-title">🏫 Danh sách trường <span class="cnt" id="schoolCount">0 trường</span></div>
+        <p style="font-size:0.85rem;color:#666;margin-bottom:12px;">
+            Danh sách trường hiển thị ở dropdown "Trường" — dùng cho tab "👤 Khách" trong đề (TRUONG_LIST), và cũng dùng làm lựa chọn nhanh khi gán "Trường mặc định" cho từng lớp ở tab "Danh sách lớp".
+        </p>
+        <div class="template-header-row" style="grid-template-columns: 1fr 90px 36px;">
+            <span>Tên trường</span><span>Mặc định</span><span></span>
+        </div>
+        <div id="schoolListArea"></div>
+        <div class="btn-group">
+            <button class="btn btn-success btn-sm" id="addSchoolBtn">➕ Thêm trường</button>
+            <button class="btn btn-info btn-sm" id="resetSchoolListBtn">↩️ Khôi phục mặc định</button>
+            <button class="btn btn-warning btn-sm" id="saveSchoolListBtn">💾 Lưu danh sách trường</button>
+        </div>
+        <div class="warning-box" style="margin-top:10px;">
+            💡 Danh sách này lưu trên trình duyệt (localStorage) để dùng nội bộ trong admin. Để áp dụng vào file đề (TRUONG_LIST), chọn đề ở tab "Đề thi" rồi dùng tính năng tiêm tương tự "Cho phép Khách" — hoặc tiêm khi tạo đề mới.
         </div>
     </div>
 
@@ -527,6 +584,8 @@ const DEFAULT_GROUP_RULES=[
     {pattern:"HK{n}",   label:"Đề HK{n}"},
     {pattern:"OTN",     label:"Đề OTN"}
 ];
+let schoolList=[];          // [{name, isDefault}] — danh sách trường (TRUONG_LIST trong đề)
+const DEFAULT_SCHOOL_LIST=["THPT Văn Quán","THPT Ngô Gia Tự","THPT Trần Nguyên Hãn","THPT Sông Lô","THPT Sáng Sơn","THPT Bình Sơn","THPT Liễn Sơn","THPT Tam Dương","Khác"];
 
 const ALL_GRADES=[
     {id:"2",name:"Lớp 2"},{id:"3",name:"Lớp 3"},{id:"4",name:"Lớp 4"},
@@ -629,6 +688,64 @@ document.getElementById("saveGroupRulesBtn").onclick=()=>{
     autoDownloadExams(`Đã lưu ${groupRules.length} quy tắc gom nhóm.`);
 };
 
+/* ── SCHOOL LIST (Danh sách trường — TRUONG_LIST) ── */
+function loadSchoolList(){
+    try{
+        let s=localStorage.getItem("schoolList");
+        schoolList=s?JSON.parse(s):DEFAULT_SCHOOL_LIST.map((name,i)=>({name,isDefault:i===0}));
+    }catch(e){
+        schoolList=DEFAULT_SCHOOL_LIST.map((name,i)=>({name,isDefault:i===0}));
+    }
+    if(!schoolList.some(s=>s.isDefault)&&schoolList.length) schoolList[0].isDefault=true;
+}
+function saveSchoolListToStorage(){
+    localStorage.setItem("schoolList",JSON.stringify(schoolList));
+}
+function renderSchoolList(){
+    document.getElementById("schoolCount").textContent=schoolList.length+" trường";
+    let c=document.getElementById("schoolListArea");
+    c.innerHTML=schoolList.map((s,idx)=>`
+        <div class="school-row">
+            <input type="text" value="${escapeHtml(s.name)}" placeholder="THPT ..." onchange="schoolList[${idx}].name=this.value">
+            <input type="radio" name="defaultSchool" ${s.isDefault?'checked':''} onchange="schoolList.forEach((x,i)=>x.isDefault=(i===${idx}))">
+            <button class="school-del" data-idx="${idx}" title="Xóa trường">🗑️</button>
+        </div>`).join("");
+    document.querySelectorAll(".school-del").forEach(btn=>{
+        btn.onclick=()=>{
+            let wasDefault=schoolList[parseInt(btn.dataset.idx)].isDefault;
+            schoolList.splice(parseInt(btn.dataset.idx),1);
+            if(wasDefault&&schoolList.length) schoolList[0].isDefault=true;
+            renderSchoolList();
+        };
+    });
+    populateSchoolSelects();
+}
+function populateSchoolSelects(){
+    // Đổ danh sách trường vào ô chọn "Trường mặc định" ở tab Danh sách lớp
+    let sel=document.getElementById("rosterDefaultSchool");
+    if(!sel)return;
+    let defaultSchool=(schoolList.find(s=>s.isDefault)||schoolList[0]||{}).name||"";
+    sel.innerHTML=schoolList.map(s=>`<option value="${escapeHtml(s.name)}" ${s.name===defaultSchool?'selected':''}>${escapeHtml(s.name)}</option>`).join("");
+}
+document.getElementById("addSchoolBtn").onclick=()=>{
+    schoolList.push({name:"",isDefault:schoolList.length===0});
+    renderSchoolList();
+};
+document.getElementById("resetSchoolListBtn").onclick=()=>{
+    if(!confirm("Khôi phục về danh sách trường mặc định? Các trường tự thêm sẽ mất nếu chưa lưu."))return;
+    schoolList=DEFAULT_SCHOOL_LIST.map((name,i)=>({name,isDefault:i===0}));
+    renderSchoolList();
+};
+document.getElementById("saveSchoolListBtn").onclick=()=>{
+    let cleaned=schoolList.filter(s=>s.name&&s.name.trim());
+    if(!cleaned.length){alert("Cần ít nhất 1 trường hợp lệ.");return;}
+    if(!cleaned.some(s=>s.isDefault)) cleaned[0].isDefault=true;
+    schoolList=cleaned;
+    saveSchoolListToStorage();
+    renderSchoolList();
+    alert(`✅ Đã lưu ${schoolList.length} trường.`);
+};
+
 /* ── WEEK TEMPLATES ── */
 function loadWeekTemplates(){
     try{let t=localStorage.getItem("weekTemplates");weekTemplates=t?JSON.parse(t):[];}catch(e){weekTemplates=[];}
@@ -713,13 +830,22 @@ function populateRosterApplyCheckboxes(){
 function renderRosterPreview(students){
     let area=document.getElementById("rosterPreviewArea");
     if(!students||!students.length){area.innerHTML="";return;}
-    let html=`<div class="roster-header-row"><span>Họ tên</span><span>Mật khẩu</span><span></span></div>`;
-    html+=students.map((s,idx)=>`
+    let schoolOptions=schoolList.map(s=>escapeHtml(s.name));
+    let html=`<div class="roster-header-row" style="grid-template-columns: 1fr 1fr 100px 36px;"><span>Họ tên</span><span>Trường</span><span>Mật khẩu</span><span></span></div>`;
+    html+=students.map((s,idx)=>{
+        let curSchool=s.truong||"";
+        let opts=schoolOptions.map(name=>`<option value="${name}" ${name===curSchool?'selected':''}>${name}</option>`).join("");
+        return`
         <div class="roster-row">
             <input type="text" value="${escapeHtml(s.name)}" onchange="window._rosterStudents[${idx}].name=this.value">
+            <select onchange="window._rosterStudents[${idx}].truong=this.value">
+                <option value="">-- Không gán --</option>
+                ${opts}
+            </select>
             <input type="text" value="${escapeHtml(s.pw)}" onchange="window._rosterStudents[${idx}].pw=this.value.toUpperCase()">
             <button class="roster-del" data-idx="${idx}" title="Xóa">🗑️</button>
-        </div>`).join("");
+        </div>`;
+    }).join("");
     area.innerHTML=html;
     document.querySelectorAll(".roster-del").forEach(btn=>{
         btn.onclick=()=>{
@@ -746,10 +872,20 @@ document.getElementById("rosterSelect").onchange=function(){
 document.getElementById("genRosterBtn").onclick=()=>{
     let names=document.getElementById("rosterNamesInput").value.split("\n").map(n=>n.trim()).filter(n=>n);
     if(!names.length){alert("Dán danh sách tên học sinh trước (mỗi dòng 1 tên)");return;}
-    // Giữ mật khẩu cũ nếu tên đã tồn tại trong danh sách hiện tại, chỉ sinh mới cho tên mới
+    // Giữ mật khẩu + trường cũ nếu tên đã tồn tại trong danh sách hiện tại, chỉ sinh mới cho tên mới
     let oldMap={};
-    (window._rosterStudents||[]).forEach(s=>{oldMap[s.name]=s.pw;});
-    window._rosterStudents=names.map(n=>({name:n,pw:oldMap[n]||genPassword(5)}));
+    (window._rosterStudents||[]).forEach(s=>{oldMap[s.name]={pw:s.pw,truong:s.truong};});
+    let defaultSchool=document.getElementById("rosterDefaultSchool").value||"";
+    window._rosterStudents=names.map(n=>{
+        let old=oldMap[n]||{};
+        return{name:n,pw:old.pw||genPassword(5),truong:(old.truong!==undefined?old.truong:defaultSchool)};
+    });
+    renderRosterPreview(window._rosterStudents);
+};
+document.getElementById("applyDefaultSchoolBtn").onclick=()=>{
+    if(!window._rosterStudents||!window._rosterStudents.length){alert("Chưa có học sinh nào trong danh sách.");return;}
+    let school=document.getElementById("rosterDefaultSchool").value||"";
+    window._rosterStudents.forEach(s=>s.truong=school);
     renderRosterPreview(window._rosterStudents);
 };
 document.getElementById("saveRosterBtn").onclick=()=>{
@@ -758,7 +894,7 @@ document.getElementById("saveRosterBtn").onclick=()=>{
     if(!window._rosterStudents||!window._rosterStudents.length){alert("Chưa có học sinh nào. Dán danh sách và bấm 'Sinh mật khẩu' trước.");return;}
     // Nếu đổi tên lớp khi đang sửa lớp cũ, xóa key cũ
     if(currentRosterKey&&currentRosterKey!==className) delete classRosters[currentRosterKey];
-    classRosters[className]=window._rosterStudents.map(s=>({name:s.name,pw:(s.pw||"").toUpperCase()}));
+    classRosters[className]=window._rosterStudents.map(s=>({name:s.name,pw:(s.pw||"").toUpperCase(),truong:s.truong||""}));
     saveClassRostersToStorage();
     currentRosterKey=className;
     populateRosterSelect();
@@ -970,8 +1106,10 @@ function updateBulkToolbar(){
     if(n>0){
         toolbar.classList.add("show");
         document.getElementById("bulkCount").textContent=`✅ ${n} đề được chọn`;
+        document.getElementById("bulkGuestHelp").style.display="block";
     } else {
         toolbar.classList.remove("show");
+        document.getElementById("bulkGuestHelp").style.display="none";
     }
 }
 document.getElementById("bulkClearBtn").onclick=()=>{
@@ -1019,6 +1157,94 @@ document.getElementById("bulkApplyMinPctBtn").onclick=()=>{
     let msg=`Đã đặt % thời gian tối thiểu = ${pct}% cho ${appliedCount} đề.`;
     if(skippedQuiz) msg+=` (Bỏ qua ${skippedQuiz} đề trắc nghiệm — không hỗ trợ tính năng này.)`;
     autoDownloadExams(msg);
+};
+
+/* ── BULK: CHO PHÉP / KHÔNG CHO PHÉP KHÁCH ── */
+// Chỉ đổi trong exams.json (không tiêm file .html) — dùng khi đã có cơ chế đọc động,
+// hoặc chỉ muốn cập nhật ghi chú/metadata trước, tiêm file sau.
+document.getElementById("bulkApplyGuestBtn").onclick=()=>{
+    if(!selectedExamIdxs.size){alert("Chưa chọn đề nào!");return;}
+    let allowGuestVal=document.getElementById("bulkAllowGuest").value==="true";
+    let appliedCount=0, skippedQuiz=0;
+    selectedExamIdxs.forEach(idx=>{
+        if(currentExams[idx].type==='quiz'){ skippedQuiz++; return; }
+        currentExams[idx].allowGuest=allowGuestVal;
+        appliedCount++;
+    });
+    renderExamList();
+    let msg=`Đã đặt "Cho phép Khách = ${allowGuestVal?'Có':'Không'}" cho ${appliedCount} đề trong exams.json.\n\n⚠️ Lưu ý: việc này CHƯA tiêm vào file .html — file đề vẫn hiển thị tab Khách như cũ trừ khi bạn dùng nút "📂 Chọn file/folder .html để tiêm" để cập nhật file thật.`;
+    if(skippedQuiz) msg+=`\n(Bỏ qua ${skippedQuiz} đề trắc nghiệm.)`;
+    autoDownloadExams(msg);
+};
+
+/* ── BULK: TIÊM ALLOW_GUEST VÀO FILE .HTML THẬT (cho đề CŨ) ── */
+// Chọn 1 folder/nhiều file .html từ máy (đã tải về từ GitHub trước đó).
+// Admin đối chiếu tên file với "html" trong exams.json của các đề ĐANG ĐƯỢC CHỌN,
+// tiêm đúng giá trị ALLOW_GUEST tương ứng, rồi xuất ZIP để upload đè lên GitHub.
+document.getElementById("bulkGuestFileInput").onchange=async(e)=>{
+    let files=Array.from(e.target.files).filter(f=>f.name.toLowerCase().endsWith('.html'));
+    e.target.value=""; // reset để có thể chọn lại lần sau
+    if(!files.length){alert("Không tìm thấy file .html nào trong lựa chọn.");return;}
+    if(!selectedExamIdxs.size){alert("Chưa chọn đề nào trong bảng! Hãy tick chọn đề trước khi chọn file để tiêm.");return;}
+
+    let allowGuestVal=document.getElementById("bulkAllowGuest").value==="true";
+
+    // Lập map: tên file (không kèm đường dẫn) -> giá trị allowGuest cần tiêm, CHỈ cho các đề đang được chọn
+    let targetMap={}; // { "DE12BAI1_001.html": true/false }
+    let targetExamIdxs=[];
+    selectedExamIdxs.forEach(idx=>{
+        let ex=currentExams[idx];
+        if(ex.type==='quiz'||!ex.html) return;
+        let fname=ex.html.split('/').pop();
+        targetMap[fname]=allowGuestVal;
+        targetExamIdxs.push(idx);
+    });
+
+    if(!Object.keys(targetMap).length){alert("Các đề đã chọn không có file .html hợp lệ để tiêm (có thể toàn là trắc nghiệm).");return;}
+
+    let zip=new JSZip();
+    let guestRegex=/var\s+ALLOW_GUEST\s*=\s*(true|false)\s*;/;
+    let matchedCount=0, missingVarCount=0, unmatchedFiles=[];
+
+    for(let file of files){
+        if(!(file.name in targetMap)){
+            unmatchedFiles.push(file.name); // file này không khớp đề nào đang được chọn, bỏ qua (không đưa vào ZIP)
+            continue;
+        }
+        let content=await file.text();
+        if(guestRegex.test(content)){
+            content=content.replace(guestRegex,`var ALLOW_GUEST = ${targetMap[file.name]};`);
+            matchedCount++;
+        } else {
+            missingVarCount++; // file không có biến ALLOW_GUEST, bỏ qua tiêm nhưng vẫn giữ file gốc trong ZIP để bạn biết
+        }
+        // Giữ nguyên đường dẫn thư mục con nếu trình duyệt cung cấp (webkitdirectory trả về webkitRelativePath)
+        let relPath=file.webkitRelativePath||file.name;
+        zip.file(relPath,content);
+    }
+
+    if(matchedCount===0){
+        alert(`⚠️ Không tiêm được file nào. Kiểm tra lại đã chọn đúng thư mục chứa các file .html tương ứng với đề đã tick chưa.\n\nFile không khớp: ${unmatchedFiles.length}\nFile thiếu biến ALLOW_GUEST: ${missingVarCount}`);
+        return;
+    }
+
+    // Cập nhật luôn metadata allowGuest trong exams.json cho các đề đã tiêm thành công
+    targetExamIdxs.forEach(idx=>{
+        let ex=currentExams[idx];
+        let fname=ex.html.split('/').pop();
+        if(unmatchedFiles.indexOf(fname)===-1) ex.allowGuest=allowGuestVal;
+    });
+    zip.file("exams.json",JSON.stringify(buildExamsExport(currentExams),null,2));
+
+    let blob=await zip.generateAsync({type:"blob"});
+    let a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="tiem_allow_guest_export.zip";a.click();URL.revokeObjectURL(a.href);
+
+    renderExamList();
+    let msg=`✅ Đã tiêm ALLOW_GUEST=${allowGuestVal} vào ${matchedCount} file.\n`;
+    if(missingVarCount) msg+=`⚠️ ${missingVarCount} file không có biến ALLOW_GUEST, giữ nguyên không đổi.\n`;
+    if(unmatchedFiles.length) msg+=`ℹ️ ${unmatchedFiles.length} file trong thư mục không khớp đề nào đang chọn, đã bỏ qua.\n`;
+    msg+=`\n📦 Giải nén ZIP và upload đè các file .html + exams.json lên GitHub (giữ đúng cấu trúc thư mục).`;
+    alert(msg);
 };
 document.getElementById("bulkApplyTemplateBtn").onclick=()=>{
     if(!selectedExamIdxs.size){alert("Chưa chọn đề nào!");return;}
@@ -1285,13 +1511,14 @@ document.getElementById("addMultipleBtn").onclick=async()=>{
         let mergedStudents=[];
         selectedRosterKeys.forEach(key=>{
             (classRosters[key]||[]).forEach(s=>{
-                mergedStudents.push({name:s.name,pw:s.pw,lop:key});
+                mergedStudents.push({name:s.name,pw:s.pw,lop:key,truong:s.truong||""});
             });
         });
         let stuListJson=JSON.stringify(mergedStudents);
 
         let guestFlagMissingFiles=[];
         let stuListMissingFiles=[];
+        let truongListMissingFiles=[];
         let minPctMissingFiles=[];
         for(let file of files){
             let content=await file.text();
@@ -1309,6 +1536,21 @@ document.getElementById("addMultipleBtn").onclick=async()=>{
                     content=content.replace(stuListRegex,`var STU_LIST    = ${stuListJson};`);
                 } else {
                     stuListMissingFiles.push(file.name); // file này không có biến STU_LIST, không tiêm được
+                }
+            }
+            // ── Tiêm TRUONG_LIST / TRUONG_DEFAULT (danh sách trường cho dropdown tab "Khách") ──
+            if(schoolList&&schoolList.length){
+                let truongListJson=JSON.stringify(schoolList.map(s=>s.name));
+                let truongDefault=(schoolList.find(s=>s.isDefault)||schoolList[0]).name;
+                let truongListRegex=/var\s+TRUONG_LIST\s*=\s*(\[[\s\S]*?\])\s*;/;
+                let truongDefaultRegex=/var\s+TRUONG_DEFAULT\s*=\s*'[^']*'\s*;/;
+                if(truongListRegex.test(content)){
+                    content=content.replace(truongListRegex,`var TRUONG_LIST = ${truongListJson};`);
+                } else {
+                    truongListMissingFiles.push(file.name);
+                }
+                if(truongDefaultRegex.test(content)){
+                    content=content.replace(truongDefaultRegex,`var TRUONG_DEFAULT = '${truongDefault.replace(/'/g,"\\'")}';`);
                 }
             }
             // ── Tiêm % thời gian tối thiểu trước khi nộp bài (giá trị khởi tạo) ──
@@ -1340,6 +1582,9 @@ document.getElementById("addMultipleBtn").onclick=async()=>{
         }
         if(stuListMissingFiles.length){
             alert(`⚠️ Lưu ý: ${stuListMissingFiles.length} file không có biến "STU_LIST" trong code (VD: ${stuListMissingFiles[0]}), nên không tiêm được danh sách lớp. Cần file có sẵn dòng "var STU_LIST = [...];".`);
+        }
+        if(truongListMissingFiles.length){
+            alert(`⚠️ Lưu ý: ${truongListMissingFiles.length} file không có biến "TRUONG_LIST" trong code (VD: ${truongListMissingFiles[0]}), nên không tiêm được danh sách trường. Cần file có sẵn dòng "var TRUONG_LIST = [...];".`);
         }
         if(minPctMissingFiles.length){
             alert(`⚠️ Lưu ý: ${minPctMissingFiles.length} file không có biến "MIN_TIME_PCT" trong code (VD: ${minPctMissingFiles[0]}), nên không áp dụng được % thời gian tối thiểu. Cần file có sẵn dòng "var MIN_TIME_PCT = 0;".`);
@@ -1421,6 +1666,8 @@ populateGradeSelects();
 renderGradeVisibilityCheckboxes();
 groupRules=JSON.parse(JSON.stringify(DEFAULT_GROUP_RULES));
 renderGroupRulesList();
+loadSchoolList();
+renderSchoolList();
 loadWeekTemplates();
 renderTemplateList();
 populateTemplateSelects();
