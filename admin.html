@@ -631,6 +631,8 @@ const ALL_GRADES=[
 ];
 
 function escapeHtml(s){if(!s)return'';return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));}
+// ns(a,b) — natural sort: "Bài 2" < "Bài 10", "Lớp 9" < "Lớp 10"
+function ns(a,b){return String(a||'').localeCompare(String(b||''),undefined,{numeric:true,sensitivity:'base'});}
 function hl(s,q){if(!q)return escapeHtml(s);let re=new RegExp(q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'),'gi');return escapeHtml(s).replace(re,m=>`<span class="hl">${m}</span>`);}
 function getToday(){let d=new Date();return`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;}
 function addDays(dateStr,n){let d=new Date(dateStr);d.setDate(d.getDate()+n);return d.toISOString().split('T')[0];}
@@ -1406,11 +1408,11 @@ function renderDocList(){
         return true;
     });
     // ── Sắp xếp ──
-    if(sortDocOrder==="title-asc")   list.sort((a,b)=>(a.doc.title||'').localeCompare(b.doc.title||''));
-    if(sortDocOrder==="title-desc")  list.sort((a,b)=>(b.doc.title||'').localeCompare(a.doc.title||''));
-    if(sortDocOrder==="grade-asc")   list.sort((a,b)=>(a.doc.grade||'').localeCompare(b.doc.grade||'')||(a.doc.subject||'').localeCompare(b.doc.subject||''));
-    if(sortDocOrder==="subject-asc") list.sort((a,b)=>(a.doc.subject||'').localeCompare(b.doc.subject||'')||(a.doc.title||'').localeCompare(b.doc.title||''));
-    if(sortDocOrder==="type-asc")    list.sort((a,b)=>(a.doc.mediaType||'').localeCompare(b.doc.mediaType||'')||(a.doc.title||'').localeCompare(b.doc.title||''));
+    if(sortDocOrder==="title-asc")   list.sort((a,b)=>ns(a.doc.title,b.doc.title));
+    if(sortDocOrder==="title-desc")  list.sort((a,b)=>ns(b.doc.title,a.doc.title));
+    if(sortDocOrder==="grade-asc")   list.sort((a,b)=>ns(a.doc.grade,b.doc.grade)||ns(a.doc.subject,b.doc.subject));
+    if(sortDocOrder==="subject-asc") list.sort((a,b)=>ns(a.doc.subject,b.doc.subject)||ns(a.doc.title,b.doc.title));
+    if(sortDocOrder==="type-asc")    list.sort((a,b)=>ns(a.doc.mediaType,b.doc.mediaType)||ns(a.doc.title,b.doc.title));
     document.getElementById("docCount").textContent=currentDocs.length+" tài liệu";
     document.getElementById("docFilterInfo").textContent=list.length!==currentDocs.length?`Hiển thị ${list.length}/${currentDocs.length}`:`${list.length} tài liệu`;
 

@@ -158,6 +158,8 @@ let countdownTimer=null;
 /* ── UTILS ── */
 function escapeHtml(s){if(!s)return'';return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));}
 function highlight(s,q){if(!q)return escapeHtml(s);let re=new RegExp(q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'),'gi');return escapeHtml(s).replace(re,m=>`<span class="hl">${m}</span>`);}
+// ns(a,b) — natural sort: "Bài 2" < "Bài 10", "Lớp 9" < "Lớp 10"
+function ns(a,b){return String(a||'').localeCompare(String(b||''),undefined,{numeric:true,sensitivity:'base'});}
 function getGroup(ex){
     if(ex.group)return ex.group;
     let src=(ex.title||ex.html||'');
@@ -311,8 +313,8 @@ function renderDeThi(){
 
     let filtered=[...exams];
     if(searchQuery.trim()){let q=searchQuery.trim().toLowerCase();filtered=filtered.filter(ex=>[(ex.title||''),(ex.subject||''),(ex.week||'')].join(' ').toLowerCase().includes(q));}
-    if(sortOrder==="name-asc") filtered.sort((a,b)=>(a.title||'').localeCompare(b.title||''));
-    if(sortOrder==="name-desc")filtered.sort((a,b)=>(b.title||'').localeCompare(a.title||''));
+    if(sortOrder==="name-asc") filtered.sort((a,b)=>ns(a.title,b.title));
+    if(sortOrder==="name-desc")filtered.sort((a,b)=>ns(b.title,a.title));
     if(sortOrder==="newest")   filtered.reverse();
 
     let groups={};
@@ -332,7 +334,7 @@ function renderDeThi(){
             return [rules.length, 0]; // 'Chung' và nhóm không khớp rule nào → xếp cuối
         }
         let [ca,na]=rank(a),[cb,nb]=rank(b);
-        return ca-cb || na-nb || a.localeCompare(b);
+        return ca-cb || na-nb || ns(a,b);
     });
 
     let totalOpen=filtered.filter(ex=>getExamStatus(ex,today)==='open').length;
@@ -499,10 +501,10 @@ function renderTaiLieu(){
 
     // ── Sắp xếp ──
     docs=[...docs];
-    if(docSortOrder==="title-asc")   docs.sort((a,b)=>(a.title||'').localeCompare(b.title||''));
-    if(docSortOrder==="title-desc")  docs.sort((a,b)=>(b.title||'').localeCompare(a.title||''));
-    if(docSortOrder==="type-asc")    docs.sort((a,b)=>(a.mediaType||'').localeCompare(b.mediaType||'')||(a.title||'').localeCompare(b.title||''));
-    if(docSortOrder==="subject-asc") docs.sort((a,b)=>(a.subject||'').localeCompare(b.subject||'')||(a.title||'').localeCompare(b.title||''));
+    if(docSortOrder==="title-asc")   docs.sort((a,b)=>ns(a.title,b.title));
+    if(docSortOrder==="title-desc")  docs.sort((a,b)=>ns(b.title,a.title));
+    if(docSortOrder==="type-asc")    docs.sort((a,b)=>ns(a.mediaType,b.mediaType)||ns(a.title,b.title));
+    if(docSortOrder==="subject-asc") docs.sort((a,b)=>ns(a.subject,b.subject)||ns(a.title,b.title));
 
     // ── Dropdown options ──
     let gradeOptions='<option value="">Tất cả lớp</option>';
