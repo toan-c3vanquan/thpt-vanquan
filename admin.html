@@ -380,6 +380,14 @@
                 <option value="image">🖼️ Ảnh</option><option value="video">🎥 Video</option>
                 <option value="pdf">📄 PDF</option><option value="docx">📝 DOCX</option><option value="link">🔗 Link</option>
             </select>
+            <select id="sortDocOrder">
+                <option value="default">Mặc định</option>
+                <option value="title-asc">Tên A→Z</option>
+                <option value="title-desc">Tên Z→A</option>
+                <option value="grade-asc">Lớp tăng dần</option>
+                <option value="subject-asc">Môn A→Z</option>
+                <option value="type-asc">Loại A→Z</option>
+            </select>
             <span class="count-info" id="docFilterInfo"></span>
         </div>
         <div class="tbl-wrap">
@@ -396,6 +404,8 @@
     </div>
     <div class="card">
         <div class="card-title">➕ Thêm tài liệu mới</div>
+
+        <!-- Form nhập 1 tài liệu -->
         <div class="form-row">
             <div class="form-group"><label>Tiêu đề *</label><input type="text" id="docTitle" placeholder="VD: Bài giảng chương 1"></div>
             <div class="form-group"><label>Mô tả</label><input type="text" id="docDesc" placeholder="Mô tả ngắn (không bắt buộc)"></div>
@@ -417,7 +427,7 @@
             </div>
         </div>
         <div id="docFileArea" class="form-group">
-            <label>Chọn file</label>
+            <label>Chọn file (có thể chọn nhiều file cùng lúc — mỗi file sẽ tạo 1 tài liệu riêng)</label>
             <input type="file" id="docFiles" accept="image/*,video/*,.pdf,.docx" multiple>
             <div id="selectedDocFilesList" class="file-preview" style="display:none;"></div>
         </div>
@@ -427,7 +437,24 @@
             <div class="warning-box" style="margin-top:6px;">🎬 YouTube sẽ nhúng trực tiếp. Drive/OneDrive sẽ có nút mở & sao chép link.</div>
         </div>
         <div class="btn-group">
-            <button id="addDocsBtn" class="btn btn-primary">📦 Tạo ZIP / Thêm tài liệu</button>
+            <button id="addToQueueBtn" class="btn btn-success">➕ Thêm vào hàng đợi</button>
+        </div>
+
+        <!-- Hàng đợi tài liệu chờ xuất -->
+        <div id="docQueueArea" style="display:none; margin-top:16px;">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;flex-wrap:wrap;gap:8px;">
+                <span style="font-weight:bold;color:#1e3c72;">📋 Hàng đợi: <span id="docQueueCount">0</span> tài liệu chờ xuất</span>
+                <div style="display:flex;gap:8px;">
+                    <button id="clearQueueBtn" class="btn btn-sm" style="background:#eee;color:#555;">🗑️ Xóa hết</button>
+                    <button id="addDocsBtn" class="btn btn-primary">📦 Tạo ZIP / Xuất tất cả</button>
+                </div>
+            </div>
+            <div class="tbl-wrap">
+                <table>
+                    <thead><tr><th>#</th><th>Tiêu đề</th><th>Lớp</th><th>Môn</th><th>Loại</th><th>File/Link</th><th>Xóa</th></tr></thead>
+                    <tbody id="docQueueTbody"></tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>
@@ -580,7 +607,7 @@
 <script>
 let currentExams=[], currentDocs=[], quizQuestions=[], editingIdx=-1;
 let examSearch="", filterExamGrade="", filterExamSubject="", filterExamType="", filterExamStatus="";
-let docSearch="",  filterDocGrade="",  filterDocSubject="",  filterDocType="";
+let docSearch="",  filterDocGrade="",  filterDocSubject="",  filterDocType="", sortDocOrder="default";
 let weekTemplates=[];      // [{name, desc, open, close}]
 let selectedExamIdxs=new Set();  // bulk-edit selection (lưu realIdx)
 let classRosters={};       // { "12A4": [{name, pw}], "12A5": [...] }
@@ -1378,6 +1405,12 @@ function renderDocList(){
         if(q&&![(doc.title||''),(doc.description||''),(doc.grade||''),(doc.subject||'')].join(' ').toLowerCase().includes(q))return false;
         return true;
     });
+    // ── Sắp xếp ──
+    if(sortDocOrder==="title-asc")   list.sort((a,b)=>(a.doc.title||'').localeCompare(b.doc.title||''));
+    if(sortDocOrder==="title-desc")  list.sort((a,b)=>(b.doc.title||'').localeCompare(a.doc.title||''));
+    if(sortDocOrder==="grade-asc")   list.sort((a,b)=>(a.doc.grade||'').localeCompare(b.doc.grade||'')||(a.doc.subject||'').localeCompare(b.doc.subject||''));
+    if(sortDocOrder==="subject-asc") list.sort((a,b)=>(a.doc.subject||'').localeCompare(b.doc.subject||'')||(a.doc.title||'').localeCompare(b.doc.title||''));
+    if(sortDocOrder==="type-asc")    list.sort((a,b)=>(a.doc.mediaType||'').localeCompare(b.doc.mediaType||'')||(a.doc.title||'').localeCompare(b.doc.title||''));
     document.getElementById("docCount").textContent=currentDocs.length+" tài liệu";
     document.getElementById("docFilterInfo").textContent=list.length!==currentDocs.length?`Hiển thị ${list.length}/${currentDocs.length}`:`${list.length} tài liệu`;
 
@@ -1412,6 +1445,7 @@ function bindFilters(){
     document.getElementById("filterDocGrade").onchange=e=>{filterDocGrade=e.target.value;renderDocList();};
     document.getElementById("filterDocSubject").onchange=e=>{filterDocSubject=e.target.value;renderDocList();};
     document.getElementById("filterDocType").onchange=e=>{filterDocType=e.target.value;renderDocList();};
+    document.getElementById("sortDocOrder").onchange=e=>{sortDocOrder=e.target.value;renderDocList();};
 }
 
 /* ── UPLOAD JSON ── */
@@ -1653,51 +1687,109 @@ document.getElementById("addMultipleBtn").onclick=async()=>{
     quizQuestions=[];renderQuestionBuilder();
 };
 
-/* ── THÊM TÀI LIỆU ── */
-document.getElementById("addDocsBtn").onclick=async()=>{
+/* ── THÊM TÀI LIỆU — HÀNG ĐỢI ── */
+let docQueue = []; // [{title, desc, grade, subject, mediaType, fileName, fileObj, url}]
+
+function renderDocQueue(){
+    let area=document.getElementById("docQueueArea");
+    let countEl=document.getElementById("docQueueCount");
+    if(!docQueue.length){area.style.display="none";return;}
+    area.style.display="block";
+    countEl.textContent=docQueue.length;
+    const TYPE_LABELS={link:"🔗 Link",image:"🖼️ Ảnh",video:"🎥 Video",pdf:"📄 PDF",docx:"📝 DOCX"};
+    document.getElementById("docQueueTbody").innerHTML=docQueue.map((item,idx)=>`
+        <tr>
+            <td style="color:#aaa;font-size:0.78rem;">${idx+1}</td>
+            <td><strong>${escapeHtml(item.title)}</strong>${item.desc?`<br><span style="font-size:0.75rem;color:#888;">${escapeHtml(item.desc)}</span>`:''}</td>
+            <td>${escapeHtml(item.grade||'')}</td>
+            <td>${escapeHtml(item.subject||'')}</td>
+            <td><span class="type-badge ${item.mediaType==='link'?'type-link':item.mediaType==='image'?'type-img':item.mediaType==='video'?'type-video':item.mediaType==='pdf'?'type-pdf':'type-docx'}">${TYPE_LABELS[item.mediaType]||item.mediaType}</span></td>
+            <td style="font-size:0.8rem;">${item.mediaType==='link'?`<a href="${escapeHtml(item.url)}" target="_blank">${escapeHtml(item.url.length>40?item.url.slice(0,40)+'…':item.url)}</a>`:escapeHtml(item.fileName||'')}</td>
+            <td><button class="btn btn-danger btn-sm delQueueBtn" data-idx="${idx}">🗑️</button></td>
+        </tr>`).join("");
+    document.querySelectorAll(".delQueueBtn").forEach(btn=>{
+        btn.onclick=()=>{docQueue.splice(parseInt(btn.dataset.idx),1);renderDocQueue();};
+    });
+}
+
+document.getElementById("addToQueueBtn").onclick=async()=>{
     let title=document.getElementById("docTitle").value.trim();
     if(!title){alert("Nhập tiêu đề");return;}
     let desc=document.getElementById("docDesc").value.trim();
     let grade=document.getElementById("docGrade").value,subject=document.getElementById("docSubject").value;
     if(!grade||!subject){alert("Chọn lớp và môn");return;}
-    let mediaTypeChoice=document.getElementById("docMediaType").value,newDocs=[];
+    let mediaTypeChoice=document.getElementById("docMediaType").value;
 
     if(mediaTypeChoice==="link"){
         let url=document.getElementById("docLinkUrl").value.trim();
         if(!url){alert("Nhập URL");return;}
         if(!url.startsWith("http")){alert("URL phải bắt đầu bằng https://");return;}
-        let id=`doc_${Date.now()}_${Math.random().toString(36).substr(2,6)}`;
-        newDocs.push({id,title,description:desc,file:url,mediaType:"link",grade,subject});
-        let allDocs=[...currentDocs,...newDocs];
-        let a=document.createElement("a");a.href=URL.createObjectURL(new Blob([JSON.stringify(allDocs,null,2)],{type:"application/json"}));a.download="docs.json";a.click();URL.revokeObjectURL(a.href);
-        alert(`✅ Đã thêm link (${allDocs.length} tài liệu). Upload docs.json lên GitHub!`);
-        currentDocs=allDocs;renderDocList();
-        document.getElementById("docTitle").value="";document.getElementById("docDesc").value="";document.getElementById("docLinkUrl").value="";
+        docQueue.push({title,desc,grade,subject,mediaType:"link",url});
+        document.getElementById("docLinkUrl").value="";
     } else {
         let files=Array.from(document.getElementById("docFiles").files);
-        if(!files.length){alert("Chọn file");return;}
-        let zip=new JSZip();
+        if(!files.length){alert("Chọn ít nhất 1 file");return;}
         for(let file of files){
             let ext=file.name.split('.').pop().toLowerCase(),mt="";
-            if(ext.match(/jpg|jpeg|png|gif/))mt="image";
-            else if(ext.match(/mp4|webm/))mt="video";
-            else if(ext==="pdf")mt="pdf";
-            else if(ext==="docx")mt="docx";
-            else{alert(`Bỏ qua ${file.name}`);continue;}
-            zip.file(file.name,await file.arrayBuffer());
-            let id=`doc_${Date.now()}_${Math.random().toString(36).substr(2,6)}`;
-            newDocs.push({id,title,description:desc,file:file.name,mediaType:mt,grade,subject});
+            if(ext.match(/jpg|jpeg|png|gif/)) mt="image";
+            else if(ext.match(/mp4|webm/)) mt="video";
+            else if(ext==="pdf") mt="pdf";
+            else if(ext==="docx") mt="docx";
+            else{alert(`Bỏ qua ${file.name} (không hỗ trợ định dạng này)`);continue;}
+            // Khi chọn nhiều file: nếu chỉ có 1 tiêu đề thì file đầu dùng tiêu đề đó, các file sau dùng tên file
+            let fileTitle=(docQueue.length===0&&files.indexOf(file)===0)||files.length===1 ? title : file.name.replace(/\.[^.]+$/,'');
+            docQueue.push({title:files.length===1?title:fileTitle,desc,grade,subject,mediaType:mt,fileName:file.name,fileObj:file});
         }
-        if(!newDocs.length){alert("Không có file hợp lệ");return;}
-        let allDocs=[...currentDocs,...newDocs];
-        zip.file("docs.json",JSON.stringify(allDocs,null,2));
+        document.getElementById("docFiles").value="";
+        document.getElementById("selectedDocFilesList").innerHTML="";
+        document.getElementById("selectedDocFilesList").style.display="none";
+    }
+    document.getElementById("docTitle").value="";
+    document.getElementById("docDesc").value="";
+    renderDocQueue();
+};
+
+document.getElementById("clearQueueBtn").onclick=()=>{
+    if(!confirm("Xóa hết hàng đợi?")) return;
+    docQueue=[];renderDocQueue();
+};
+
+document.getElementById("addDocsBtn").onclick=async()=>{
+    if(!docQueue.length){alert("Hàng đợi trống — thêm ít nhất 1 tài liệu trước.");return;}
+    let newDocs=[];
+    let zip=new JSZip();
+    let hasFiles=false;
+
+    for(let item of docQueue){
+        let id=`doc_${Date.now()}_${Math.random().toString(36).substr(2,6)}`;
+        if(item.mediaType==="link"){
+            newDocs.push({id,title:item.title,description:item.desc,file:item.url,mediaType:"link",grade:item.grade,subject:item.subject});
+        } else {
+            zip.file(item.fileName,await item.fileObj.arrayBuffer());
+            newDocs.push({id,title:item.title,description:item.desc,file:item.fileName,mediaType:item.mediaType,grade:item.grade,subject:item.subject});
+            hasFiles=true;
+        }
+    }
+
+    let allDocs=[...currentDocs,...newDocs];
+    zip.file("docs.json",JSON.stringify(allDocs,null,2));
+
+    if(hasFiles){
         let blob=await zip.generateAsync({type:"blob"});
         let a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="tai_lieu_export.zip";a.click();URL.revokeObjectURL(a.href);
-        alert(`✅ Đã tạo ZIP (${allDocs.length} tài liệu). Upload lên GitHub!`);
-        currentDocs=allDocs;renderDocList();
-        document.getElementById("docTitle").value="";document.getElementById("docDesc").value="";
-        document.getElementById("docFiles").value="";document.getElementById("selectedDocFilesList").style.display="none";
+        alert(`✅ Đã tạo ZIP với ${newDocs.length} tài liệu mới (tổng: ${allDocs.length}). Giải nén và upload lên GitHub!`);
+    } else {
+        // Toàn bộ là link, chỉ cần tải docs.json
+        let a=document.createElement("a");
+        a.href=URL.createObjectURL(new Blob([JSON.stringify(allDocs,null,2)],{type:"application/json"}));
+        a.download="docs.json";a.click();URL.revokeObjectURL(a.href);
+        alert(`✅ Đã thêm ${newDocs.length} link mới (tổng: ${allDocs.length} tài liệu). Upload docs.json lên GitHub!`);
     }
+
+    currentDocs=allDocs;
+    docQueue=[];
+    renderDocList();
+    renderDocQueue();
 };
 
 /* ── INIT ── */

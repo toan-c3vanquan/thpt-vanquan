@@ -477,39 +477,118 @@ window.onclick=e=>{
 };
 
 /* ── TÀI LIỆU ── */
+let docSearchIdx="", docSortOrder="default", docTypeFilter="";
+
 function renderTaiLieu(){
     let container=document.getElementById("content");
     if(!allDocs.length){container.innerHTML=`<div class="no-result">📭 Chưa có tài liệu nào.</div>`;return;}
     let enabledGrades=loadGradeVisibility();
-    let docs=allDocs.filter(d=>d.grade&&enabledGrades[d.grade]===true&&d.grade===currentDocGrade&&d.subject===currentDocSubject);
-    if(!docs.length){container.innerHTML=`<div class="no-result">📭 Không có tài liệu cho ${currentDocGrade} - ${currentDocSubject}.</div>`;return;}
-    let html=`<div class="category-title">📚 Tài liệu học tập</div>
-        <div class="filters">
-            <div class="filter-group"><label>📖 Lớp</label><select id="filterGrade"></select></div>
-            <div class="filter-group"><label>📚 Môn</label><select id="filterSubject"></select></div>
-            <div class="filter-group"><button id="applyDocFilterBtn">🔍 Lọc</button></div>
-        </div><div class="doc-list">`;
-    docs.forEach(doc=>{
-        let mediaHtml="";
-        if(doc.mediaType==="image") mediaHtml=`<img src="${doc.file}" alt="${doc.title}" style="max-width:100%;max-height:200px;cursor:pointer;" onclick="showMedia('${doc.file}','image')">`;
-        else if(doc.mediaType==="video") mediaHtml=`<video controls style="width:100%;max-height:200px;"><source src="${doc.file}" type="video/mp4"></video>`;
-        else if(doc.mediaType==="pdf") mediaHtml=`<a href="${doc.file}" target="_blank" class="btn btn-view">📖 Xem PDF</a>`;
-        else if(doc.mediaType==="docx") mediaHtml=`<a href="${doc.file}" download class="btn btn-download">⬇️ Tải DOCX</a>`;
-        else if(doc.mediaType==="link"){
-            let isYT=doc.file.match(/youtube\.com|youtu\.be/i),ytEmbed="";
-            if(isYT){let vid=doc.file.match(/(?:v=|youtu\.be\/)([A-Za-z0-9_-]{11})/);if(vid)ytEmbed=`<div style="position:relative;padding-bottom:56.25%;height:0;margin-top:10px;overflow:hidden;border-radius:10px;"><iframe src="https://www.youtube.com/embed/${vid[1]}" style="position:absolute;top:0;left:0;width:100%;height:100%;" frameborder="0" allowfullscreen></iframe></div>`;}
-            mediaHtml=`${ytEmbed}<div style="margin-top:8px;"><a href="${doc.file}" target="_blank" rel="noopener" class="btn btn-view">🔗 Mở link</a><button class="btn" style="background:#8e44ad;" onclick="navigator.clipboard.writeText('${doc.file.replace(/'/g,"\\'")}').then(()=>alert('Đã sao chép link!'))">📋 Sao chép link</button></div>`;
+
+    // ── Lọc ──
+    let docs=allDocs.filter(d=>{
+        if(!d.grade||!enabledGrades[d.grade]) return false;
+        if(currentDocGrade&&d.grade!==currentDocGrade) return false;
+        if(currentDocSubject&&d.subject!==currentDocSubject) return false;
+        if(docTypeFilter&&d.mediaType!==docTypeFilter) return false;
+        if(docSearchIdx){
+            let q=docSearchIdx.toLowerCase();
+            if(![(d.title||''),(d.description||'')].join(' ').toLowerCase().includes(q)) return false;
         }
-        html+=`<div class="doc-card"><h3>📘 ${escapeHtml(doc.title)}</h3><p>${escapeHtml(doc.description||'')}</p>${mediaHtml}${doc.mediaType!=='link'?`<div><a href="${doc.file}" download class="btn btn-download">⬇️ Tải về</a></div>`:''}</div>`;
+        return true;
     });
-    html+=`</div>`;
-    container.innerHTML=html;
-    let gs=document.getElementById("filterGrade"),enabled=loadGradeVisibility();
-    Object.keys(enabled).filter(g=>enabled[g]).forEach(g=>{let name=ALL_CATEGORIES.find(c=>c.id===g)?.name||g;gs.innerHTML+=`<option value="${g}" ${g===currentDocGrade?'selected':''}>${name}</option>`;});
-    let ss=document.getElementById("filterSubject"),subjects=[...new Set(allDocs.filter(d=>enabledGrades[d.grade]).map(d=>d.subject))];
-    if(!subjects.length)subjects=["Toán","Vật lý","Hóa học","Ngữ văn","Tiếng Anh","Lịch sử","Địa lý","GDCD","Sinh học","Tin học","Công nghệ"];
-    subjects.forEach(s=>{ss.innerHTML+=`<option value="${s}" ${s===currentDocSubject?'selected':''}>${s}</option>`;});
-    document.getElementById("applyDocFilterBtn").onclick=()=>{currentDocGrade=document.getElementById("filterGrade").value;currentDocSubject=document.getElementById("filterSubject").value;renderTaiLieu();};
+
+    // ── Sắp xếp ──
+    docs=[...docs];
+    if(docSortOrder==="title-asc")   docs.sort((a,b)=>(a.title||'').localeCompare(b.title||''));
+    if(docSortOrder==="title-desc")  docs.sort((a,b)=>(b.title||'').localeCompare(a.title||''));
+    if(docSortOrder==="type-asc")    docs.sort((a,b)=>(a.mediaType||'').localeCompare(b.mediaType||'')||(a.title||'').localeCompare(b.title||''));
+    if(docSortOrder==="subject-asc") docs.sort((a,b)=>(a.subject||'').localeCompare(b.subject||'')||(a.title||'').localeCompare(b.title||''));
+
+    // ── Dropdown options ──
+    let gradeOptions='<option value="">Tất cả lớp</option>';
+    Object.keys(enabledGrades).filter(g=>enabledGrades[g]).forEach(g=>{
+        let name=ALL_CATEGORIES.find(c=>c.id===g)?.name||g;
+        gradeOptions+=`<option value="${g}" ${g===currentDocGrade?'selected':''}>${name}</option>`;
+    });
+    let allSubjects=[...new Set(allDocs.filter(d=>enabledGrades[d.grade]).map(d=>d.subject))].sort();
+    if(!allSubjects.length) allSubjects=["Toán","Vật lý","Hóa học","Ngữ văn","Tiếng Anh","Lịch sử","Địa lý","GDCD","Sinh học","Tin học"];
+    let subjectOptions='<option value="">Tất cả môn</option>'+allSubjects.map(s=>`<option value="${s}" ${s===currentDocSubject?'selected':''}>${s}</option>`).join('');
+
+    let TYPE_LABELS={image:"🖼️ Ảnh",video:"🎥 Video",pdf:"📄 PDF",docx:"📝 DOCX",link:"🔗 Link"};
+
+    let html=`
+    <div class="toolbar" style="flex-wrap:wrap;gap:8px;">
+        <div class="search-box" style="min-width:180px;flex:1;">
+            <span>🔍</span>
+            <input id="docSearchInput" type="text" placeholder="Tìm tài liệu..." value="${escapeHtml(docSearchIdx)}">
+        </div>
+        <select id="docGradeSelect" style="padding:7px 10px;border-radius:8px;border:1px solid #ddd;background:#f8f9fa;font-size:0.88rem;">${gradeOptions}</select>
+        <select id="docSubjectSelect" style="padding:7px 10px;border-radius:8px;border:1px solid #ddd;background:#f8f9fa;font-size:0.88rem;">${subjectOptions}</select>
+        <select id="docTypeSelect" style="padding:7px 10px;border-radius:8px;border:1px solid #ddd;background:#f8f9fa;font-size:0.88rem;">
+            <option value="" ${!docTypeFilter?'selected':''}>Tất cả loại</option>
+            <option value="image" ${docTypeFilter==='image'?'selected':''}>🖼️ Ảnh</option>
+            <option value="video" ${docTypeFilter==='video'?'selected':''}>🎥 Video</option>
+            <option value="pdf" ${docTypeFilter==='pdf'?'selected':''}>📄 PDF</option>
+            <option value="docx" ${docTypeFilter==='docx'?'selected':''}>📝 DOCX</option>
+            <option value="link" ${docTypeFilter==='link'?'selected':''}>🔗 Link</option>
+        </select>
+        <select id="docSortSelect" style="padding:7px 10px;border-radius:8px;border:1px solid #ddd;background:#f8f9fa;font-size:0.88rem;">
+            <option value="default"     ${docSortOrder==='default'    ?'selected':''}>Mặc định</option>
+            <option value="title-asc"   ${docSortOrder==='title-asc'  ?'selected':''}>Tên A→Z</option>
+            <option value="title-desc"  ${docSortOrder==='title-desc' ?'selected':''}>Tên Z→A</option>
+            <option value="subject-asc" ${docSortOrder==='subject-asc'?'selected':''}>Môn A→Z</option>
+            <option value="type-asc"    ${docSortOrder==='type-asc'   ?'selected':''}>Loại A→Z</option>
+        </select>
+    </div>
+    <div style="font-size:0.82rem;color:#888;margin-bottom:12px;padding-left:4px;">
+        ${docs.length} tài liệu
+        ${docSearchIdx?`&nbsp;·&nbsp;<span style="color:#e67e22;">Tìm kiếm "<b>${escapeHtml(docSearchIdx)}</b>"</span>`:''}
+        ${docs.length<allDocs.length?`&nbsp;·&nbsp;<a href="#" onclick="clearDocFilters()" style="color:#1e3c72;">Xóa bộ lọc</a>`:''}
+    </div>`;
+
+    if(!docs.length){
+        html+=`<div class="no-result">😕 Không tìm thấy tài liệu phù hợp. <a href="#" onclick="clearDocFilters()" style="color:#1e3c72;">Xóa bộ lọc</a></div>`;
+        container.innerHTML=html;
+    } else {
+        html+=`<div class="doc-list">`;
+        docs.forEach(doc=>{
+            let mediaHtml="";
+            if(doc.mediaType==="image") mediaHtml=`<img src="${doc.file}" alt="${doc.title}" style="max-width:100%;max-height:200px;cursor:pointer;" onclick="showMedia('${doc.file}','image')">`;
+            else if(doc.mediaType==="video") mediaHtml=`<video controls style="width:100%;max-height:200px;"><source src="${doc.file}" type="video/mp4"></video>`;
+            else if(doc.mediaType==="pdf") mediaHtml=`<a href="${doc.file}" target="_blank" class="btn btn-view">📖 Xem PDF</a>`;
+            else if(doc.mediaType==="docx") mediaHtml=`<a href="${doc.file}" download class="btn btn-download">⬇️ Tải DOCX</a>`;
+            else if(doc.mediaType==="link"){
+                let isYT=doc.file.match(/youtube\.com|youtu\.be/i),ytEmbed="";
+                if(isYT){let vid=doc.file.match(/(?:v=|youtu\.be\/)([A-Za-z0-9_-]{11})/);if(vid)ytEmbed=`<div style="position:relative;padding-bottom:56.25%;height:0;margin-top:10px;overflow:hidden;border-radius:10px;"><iframe src="https://www.youtube.com/embed/${vid[1]}" style="position:absolute;top:0;left:0;width:100%;height:100%;" frameborder="0" allowfullscreen></iframe></div>`;}
+                mediaHtml=`${ytEmbed}<div style="margin-top:8px;"><a href="${doc.file}" target="_blank" rel="noopener" class="btn btn-view">🔗 Mở link</a><button class="btn" style="background:#8e44ad;" onclick="navigator.clipboard.writeText('${doc.file.replace(/'/g,"\\'")}').then(()=>alert('Đã sao chép link!'))">📋 Sao chép link</button></div>`;
+            }
+            let typeBadge=TYPE_LABELS[doc.mediaType]||'';
+            html+=`<div class="doc-card">
+                <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:6px;flex-wrap:wrap;">
+                    <h3 style="margin:0;">📘 ${escapeHtml(doc.title)}</h3>
+                    ${typeBadge?`<span style="font-size:0.72rem;background:#f0f2f5;color:#555;padding:2px 8px;border-radius:12px;white-space:nowrap;">${typeBadge}</span>`:''}
+                </div>
+                <p style="font-size:0.82rem;color:#888;margin-top:4px;">${escapeHtml(doc.description||'')}</p>
+                ${mediaHtml}
+                ${doc.mediaType!=='link'?`<div><a href="${doc.file}" download class="btn btn-download">⬇️ Tải về</a></div>`:''}
+            </div>`;
+        });
+        html+=`</div>`;
+        container.innerHTML=html;
+    }
+
+    // ── Bind toolbar events ──
+    document.getElementById("docSearchInput").oninput=e=>{docSearchIdx=e.target.value;renderTaiLieu();};
+    document.getElementById("docGradeSelect").onchange=e=>{currentDocGrade=e.target.value;renderTaiLieu();};
+    document.getElementById("docSubjectSelect").onchange=e=>{currentDocSubject=e.target.value;renderTaiLieu();};
+    document.getElementById("docTypeSelect").onchange=e=>{docTypeFilter=e.target.value;renderTaiLieu();};
+    document.getElementById("docSortSelect").onchange=e=>{docSortOrder=e.target.value;renderTaiLieu();};
+}
+
+function clearDocFilters(){
+    docSearchIdx=""; docTypeFilter=""; docSortOrder="default";
+    currentDocGrade=""; currentDocSubject="";
+    renderTaiLieu(); return false;
 }
 
 /* ── INIT ── */
