@@ -736,5 +736,158 @@
     "mediaType": "link",
     "grade": "10",
     "subject": "Toán"
+  },
+  {
+    "id": "doc_1782980871193_3k157m",
+    "title": "Bài 1: Khái niệm phương trình và hệ hai phương trình bậc nhất hai ẩn",
+    "description": "",
+    "file": "https://www.youtube.com/watch?v=11EXtByHKvU",
+    "mediaType": "link",
+    "grade": "9",
+    "subject": "Toán"
+  },
+  {
+    "id": "doc_1782980871193_x3olvp",
+    "title": "Bài 2: Giải hệ hai phương trình bậc nhất hai ẩn",
+    "description": "",
+    "file": "https://www.youtube.com/watch?v=oQa-SC8V7s0",
+    "mediaType": "link",
+    "grade": "9",
+    "subject": "Toán"
+  },
+  {
+    "id": "doc_1782980871193_5euylh",
+    "title": "Bài 4: Phương trình quy về phương trình bậc nhất một ẩn",
+    "description": "",
+    "file": "https://www.youtube.com/watch?v=rduoKFhA9PM",
+    "mediaType": "link",
+    "grade": "9",
+    "subject": "Toán"
+  },
+  {
+    "id": "doc_1782980871193_wys3hk",
+    "title": "Bài 7: Căn bậc hai và căn thức bậc hai",
+    "description": "",
+    "file": "https://www.youtube.com/watch?v=f3xR74F7Qb4",
+    "mediaType": "link",
+    "grade": "9",
+    "subject": "Toán"
+  },
+  {
+    "id": "doc_1782980871193_uc6567",
+    "title": "Bài 8: Khai căn bậc hai với phép nhân và phép chia",
+    "description": "",
+    "file": "https://www.youtube.com/watch?v=PqEkuEa7Kco",
+    "mediaType": "link",
+    "grade": "9",
+    "subject": "Toán"
+  },
+  {
+    "id": "doc_1782980871193_yk2dgt",
+    "title": "Bài 6: Bất phương trình bậc nhất một ẩn",
+    "description": "",
+    "file": "https://www.youtube.com/watch?v=GdcsBcwKsUc",
+    "mediaType": "link",
+    "grade": "9",
+    "subject": "Toán"
+  },
+  {
+    "id": "doc_1782980871193_w69caf",
+    "title": "Bài 9: Biến đổi đơn giản và rút gọn biểu thức chứa căn thức bậc hai",
+    "description": "",
+    "file": "https://www.youtube.com/watch?v=0pJjIzMQU4k&list=PL5q2T2FxzK7U0KuBkDMy1h613GLR1AD26&index=9",
+    "mediaType": "link",
+    "grade": "9",
+    "subject": "Toán"
+  },
+  {
+    "id": "doc_1782980871193_z4l8ht",
+    "title": "Bài 10: Căn bậc ba và căn thức bậc ba",
+    "description": "",
+    "file": "https://www.youtube.com/watch?v=bFfH0NimWMQ&list=PL5q2T2FxzK7U0KuBkDMy1h613GLR1AD26&index=10",
+    "mediaType": "link",
+    "grade": "9",
+    "subject": "Toán"
+  },
+  {
+    "id": "doc_1782980871193_imvx60",
+    "title": "Bài 11: Tỉ số lượng giác của góc nhọn",
+    "description": "",
+    "file": "https://www.youtube.com/watch?v=ndcDhjs_4BI&list=PL5q2T2FxzK7U0KuBkDMy1h613GLR1AD26&index=12",
+    "mediaType": "link",
+    "grade": "9",
+    "subject": "Toán"
+  },
+  {
+    "id": "doc_1782980871193_jy47h5",
+    "title": "Bài 14: Cung và dây của một đường tròn",
+    "description": "",
+    "file": "https://www.youtube.com/watch?v=GLig4exFNBo&list=PL5q2T2FxzK7U0KuBkDMy1h613GLR1AD26&index=15",
+    "mediaType": "link",
+    "grade": "9",
+    "subject": "Toán"
+  },
+  {
+    "id": "doc_1782980871193_w1gy39",
+    "title": "Bài 22: Bảng tần số và biểu đồ tần số",
+    "description": "",
+    "file": "https://www.youtube.com/watch?v=9C9PgEigXOw&list=PL5q2T2FxzK7U0KuBkDMy1h613GLR1AD26&index=23",
+    "mediaType": "link",
+    "grade": "9",
+    "subject": "Toán"
+  },
+  {
+    "id": "doc_1782980871193_olh9ay",
+    "title": "Bài 24: Bảng tần số, tần số tương đối ghép nhóm và biểu đồ",
+    "description": "",
+    "file": "https://www.youtube.com/watch?v=v2SvesUIOb0&list=PL5q2T2FxzK7U0KuBkDMy1h613GLR1AD26&index=25",
+    "mediaType": "link",
+    "grade": "9",
+    "subject": "Toán"
+  },
+  {
+    "id": "doc_1782980871193_attuci",
+    "title": "Bài 26: Xác suất của biến cố liên quan tới phép thử",
+    "description": "",
+    "file": "https://www.youtube.com/watch?v=5rsbo3MhWXM&list=PL5q2T2FxzK7U0KuBkDMy1h613GLR1AD26&index=27",
+    "mediaType": "link",
+    "grade": "9",
+    "subject": "Toán"
+  },
+  {
+    "id": "doc_1782980871193_mm2kde",
+    "title": "Bài 28: Đường tròn ngoại tiếp và đường tròn nội tiếp của một tam giác",
+    "description": "",
+    "file": "https://www.youtube.com/watch?v=AVarjYJ3vO8&list=PL5q2T2FxzK7U0KuBkDMy1h613GLR1AD26&index=29",
+    "mediaType": "link",
+    "grade": "9",
+    "subject": "Toán"
+  },
+  {
+    "id": "doc_1782980871193_vse4i2",
+    "title": "Bài 30: Đa giác đều",
+    "description": "",
+    "file": "https://www.youtube.com/watch?v=E1MSRJzOr1o&list=PL5q2T2FxzK7U0KuBkDMy1h613GLR1AD26&index=31",
+    "mediaType": "link",
+    "grade": "9",
+    "subject": "Toán"
+  },
+  {
+    "id": "doc_1782980871193_b0rwl7",
+    "title": "Bài 32: Hình cầu",
+    "description": "",
+    "file": "https://www.youtube.com/watch?v=9afXqUiUrGY&list=PL5q2T2FxzK7U0KuBkDMy1h613GLR1AD26&index=33",
+    "mediaType": "link",
+    "grade": "9",
+    "subject": "Toán"
+  },
+  {
+    "id": "doc_1782980871193_ri0ck2",
+    "title": "Bài 18. Hàm số y = ax² (a khác 0)",
+    "description": "",
+    "file": "https://www.youtube.com/watch?v=TDNDzRgLpHs&list=PLcQ0-6tPlbCpxg73bJ_T7o5yrfMEPOZK-",
+    "mediaType": "link",
+    "grade": "9",
+    "subject": "Toán"
   }
 ]
