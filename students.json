@@ -1,849 +1,605 @@
 {
-  "classes": [
+  "12A4": [
     {
-      "name": "Lớp học",
-      "students": []
+      "name": "12A4_Lưu Chí Thức",
+      "pw": "F8P5N",
+      "truong": ""
     },
     {
-      "name": "12A4",
-      "students": [
-        {
-          "name": "12A6_Lưu Chí Thức",
-          "password": "HRNUK",
-          "weight": 3,
-          "correct": 0,
-          "wrong": 0
-        },
-        {
-          "name": "12A6_Nguyễn Thùy An",
-          "password": "WXASX",
-          "weight": 3,
-          "correct": 0,
-          "wrong": 0
-        },
-        {
-          "name": "12A6_Đỗ Mai Anh",
-          "password": "XHTHZ",
-          "weight": 3,
-          "correct": 0,
-          "wrong": 0
-        },
-        {
-          "name": "12A6_Đỗ Việt Anh",
-          "password": "SDUVA",
-          "weight": 3,
-          "correct": 0,
-          "wrong": 0
-        },
-        {
-          "name": "12A6_Nguyễn Ngọc Anh",
-          "password": "ZP8TK",
-          "weight": 3,
-          "correct": 0,
-          "wrong": 0
-        },
-        {
-          "name": "12A6_Trần Thảo Anh",
-          "password": "M2ED5",
-          "weight": 3,
-          "correct": 0,
-          "wrong": 0
-        },
-        {
-          "name": "12A6_Trần Thị Hải Anh",
-          "password": "W4JCK",
-          "weight": 3,
-          "correct": 0,
-          "wrong": 0
-        },
-        {
-          "name": "12A6_Trần Vân Anh",
-          "password": "3LYL8",
-          "weight": 3,
-          "correct": 0,
-          "wrong": 0
-        },
-        {
-          "name": "12A6_Lê Ngọc Ánh",
-          "password": "VJ7GX",
-          "weight": 3,
-          "correct": 0,
-          "wrong": 0
-        },
-        {
-          "name": "12A6_Nguyễn Thị Ngọc Ánh",
-          "password": "9HG8T",
-          "weight": 3,
-          "correct": 0,
-          "wrong": 0
-        },
-        {
-          "name": "12A6_Triệu Thị Thanh Ba",
-          "password": "CMHTB",
-          "weight": 3,
-          "correct": 0,
-          "wrong": 0
-        },
-        {
-          "name": "12A6_Đỗ Nguyễn Hà Châm",
-          "password": "ZCAT4",
-          "weight": 3,
-          "correct": 0,
-          "wrong": 0
-        },
-        {
-          "name": "12A6_Vũ Lâm Châu",
-          "password": "C2D7H",
-          "weight": 3,
-          "correct": 0,
-          "wrong": 0
-        },
-        {
-          "name": "12A6_Nguyễn Ngọc Chương",
-          "password": "V2HCU",
-          "weight": 3,
-          "correct": 0,
-          "wrong": 0
-        },
-        {
-          "name": "12A6_Khổng Minh Cương",
-          "password": "LQHZH",
-          "weight": 3,
-          "correct": 0,
-          "wrong": 0
-        },
-        {
-          "name": "12A6_Nguyễn Quốc Cường",
-          "password": "KGTQX",
-          "weight": 3,
-          "correct": 0,
-          "wrong": 0
-        },
-        {
-          "name": "12A6_Khổng Chí Dũng",
-          "password": "HUERK",
-          "weight": 3,
-          "correct": 0,
-          "wrong": 0
-        },
-        {
-          "name": "12A6_Khổng Tuấn Dũng",
-          "password": "CZFS7",
-          "weight": 3,
-          "correct": 0,
-          "wrong": 0
-        },
-        {
-          "name": "12A6_Nguyễn Đức Duy",
-          "password": "5LZKL",
-          "weight": 3,
-          "correct": 0,
-          "wrong": 0
-        },
-        {
-          "name": "12A6_Trần Thị Thùy Dương",
-          "password": "URP8J",
-          "weight": 3,
-          "correct": 0,
-          "wrong": 0
-        },
-        {
-          "name": "12A6_Trần Quang Đạo",
-          "password": "8TLNN",
-          "weight": 3,
-          "correct": 0,
-          "wrong": 0
-        },
-        {
-          "name": "12A6_Khổng Tiến Đạt",
-          "password": "UPWW6",
-          "weight": 3,
-          "correct": 0,
-          "wrong": 0
-        },
-        {
-          "name": "12A6_Trần Quang Đạt",
-          "password": "8Q9CN",
-          "weight": 3,
-          "correct": 0,
-          "wrong": 0
-        },
-        {
-          "name": "12A6_Nguyễn Thị Định",
-          "password": "DW78T",
-          "weight": 3,
-          "correct": 0,
-          "wrong": 0
-        },
-        {
-          "name": "12A6_Nguyễn Thiện Đức",
-          "password": "9XPKY",
-          "weight": 3,
-          "correct": 0,
-          "wrong": 0
-        },
-        {
-          "name": "12A6_Dương Minh Hải",
-          "password": "ZF8TG",
-          "weight": 3,
-          "correct": 0,
-          "wrong": 0
-        },
-        {
-          "name": "12A6_Đỗ Chí Hải",
-          "password": "7AN9N",
-          "weight": 3,
-          "correct": 0,
-          "wrong": 0
-        },
-        {
-          "name": "12A6_Trần Thị Thu Hằng",
-          "password": "UTFAZ",
-          "weight": 3,
-          "correct": 0,
-          "wrong": 0
-        },
-        {
-          "name": "12A6_Vũ Minh Hằng",
-          "password": "DMQ54",
-          "weight": 3,
-          "correct": 0,
-          "wrong": 0
-        },
-        {
-          "name": "12A6_Nguyễn Thị Kim Huệ",
-          "password": "PUU44",
-          "weight": 3,
-          "correct": 0,
-          "wrong": 0
-        },
-        {
-          "name": "12A6_Nguyễn Đức Huy",
-          "password": "ZG7J3",
-          "weight": 3,
-          "correct": 0,
-          "wrong": 0
-        },
-        {
-          "name": "12A6_Trần Quang Huy",
-          "password": "2ASWK",
-          "weight": 3,
-          "correct": 0,
-          "wrong": 0
-        },
-        {
-          "name": "12A6_Vũ Thị Thu Huyền",
-          "password": "E9V26",
-          "weight": 3,
-          "correct": 0,
-          "wrong": 0
-        },
-        {
-          "name": "12A6_Nguyễn Thế Hưng",
-          "password": "WWPU6",
-          "weight": 3,
-          "correct": 0,
-          "wrong": 0
-        },
-        {
-          "name": "12A6_Đỗ Thị Mỹ Hương",
-          "password": "BSMFX",
-          "weight": 3,
-          "correct": 0,
-          "wrong": 0
-        },
-        {
-          "name": "12A6_Nguyễn Anh Kiệt",
-          "password": "7725Q",
-          "weight": 3,
-          "correct": 0,
-          "wrong": 0
-        },
-        {
-          "name": "12A6_Hoàng Bảo Tuệ Lâm",
-          "password": "VHX4L",
-          "weight": 3,
-          "correct": 0,
-          "wrong": 0
-        },
-        {
-          "name": "12A6_Đỗ Thị Mỹ Lệ",
-          "password": "CLW4U",
-          "weight": 3,
-          "correct": 0,
-          "wrong": 0
-        },
-        {
-          "name": "12A6_Dương Hà Linh",
-          "password": "E8V8F",
-          "weight": 3,
-          "correct": 0,
-          "wrong": 0
-        },
-        {
-          "name": "12A6_Lương Thị Ngọc Linh",
-          "password": "8MMZG",
-          "weight": 3,
-          "correct": 0,
-          "wrong": 0
-        },
-        {
-          "name": "12A6_Nguyễn Thị Linh",
-          "password": "FHNRQ",
-          "weight": 3,
-          "correct": 0,
-          "wrong": 0
-        },
-        {
-          "name": "12A6_Nguyễn Thị Phương Ngân",
-          "password": "N7G97",
-          "weight": 3,
-          "correct": 0,
-          "wrong": 0
-        }
-      ]
+      "name": "12A4_Nguyễn Thùy An",
+      "pw": "UM64B",
+      "truong": ""
     },
     {
-      "name": "12A5",
-      "students": [
-        {
-          "name": "11A5_Đỗ Mai Linh",
-          "password": "P2B3W",
-          "weight": 3,
-          "correct": 0,
-          "wrong": 0
-        },
-        {
-          "name": "11A5_Phan Diệu Linh",
-          "password": "UCEC3",
-          "weight": 3,
-          "correct": 0,
-          "wrong": 0
-        },
-        {
-          "name": "11A5_Phan Thùy Linh",
-          "password": "MXMCE",
-          "weight": 3,
-          "correct": 0,
-          "wrong": 0
-        },
-        {
-          "name": "11A5_Đỗ Đức Long",
-          "password": "PMHWE",
-          "weight": 3,
-          "correct": 0,
-          "wrong": 0
-        },
-        {
-          "name": "11A5_Trần Hiền Lương",
-          "password": "5EZ7U",
-          "weight": 3,
-          "correct": 0,
-          "wrong": 0
-        },
-        {
-          "name": "11A5_Đào Trần Khánh Ly",
-          "password": "KXCKE",
-          "weight": 3,
-          "correct": 0,
-          "wrong": 0
-        },
-        {
-          "name": "11A5_Vũ Thị Khánh Ly",
-          "password": "92E7F",
-          "weight": 3,
-          "correct": 0,
-          "wrong": 0
-        },
-        {
-          "name": "11A5_Dương Đức Mạnh",
-          "password": "C4DYC",
-          "weight": 3,
-          "correct": 0,
-          "wrong": 0
-        },
-        {
-          "name": "11A5_Trần Đức Mạnh",
-          "password": "9AGGU",
-          "weight": 3,
-          "correct": 0,
-          "wrong": 0
-        },
-        {
-          "name": "11A5_Lê Thị Quý Mến",
-          "password": "W89PR",
-          "weight": 3,
-          "correct": 0,
-          "wrong": 0
-        },
-        {
-          "name": "11A5_Nguyễn Quang Minh",
-          "password": "65QQR",
-          "weight": 3,
-          "correct": 0,
-          "wrong": 0
-        },
-        {
-          "name": "11A5_Trần Việt Nam",
-          "password": "QQ8PT",
-          "weight": 3,
-          "correct": 0,
-          "wrong": 0
-        },
-        {
-          "name": "11A5_Hà Bảo Ngân",
-          "password": "CX3Y9",
-          "weight": 3,
-          "correct": 0,
-          "wrong": 0
-        },
-        {
-          "name": "11A5_Nguyễn Bích Ngọc",
-          "password": "B2FGW",
-          "weight": 3,
-          "correct": 0,
-          "wrong": 0
-        },
-        {
-          "name": "11A5_Nguyễn Hồng Nhung",
-          "password": "W4BU9",
-          "weight": 3,
-          "correct": 0,
-          "wrong": 0
-        },
-        {
-          "name": "11A5_Trần Hữu Ninh",
-          "password": "B46PH",
-          "weight": 3,
-          "correct": 0,
-          "wrong": 0
-        },
-        {
-          "name": "11A5_Nguyễn Văn Phúc",
-          "password": "KYEEE",
-          "weight": 3,
-          "correct": 0,
-          "wrong": 0
-        },
-        {
-          "name": "11A5_Nguyễn Minh Phương",
-          "password": "RKE3V",
-          "weight": 3,
-          "correct": 0,
-          "wrong": 0
-        },
-        {
-          "name": "11A5_Trần Như Quỳnh",
-          "password": "M473N",
-          "weight": 3,
-          "correct": 0,
-          "wrong": 0
-        },
-        {
-          "name": "11A5_Khổng Ánh Sáng",
-          "password": "AK6EC",
-          "weight": 3,
-          "correct": 0,
-          "wrong": 0
-        },
-        {
-          "name": "11A5_Hoàng Thị Phương Thảo",
-          "password": "PSSET",
-          "weight": 3,
-          "correct": 0,
-          "wrong": 0
-        },
-        {
-          "name": "11A5_Nguyễn Duy Thiều",
-          "password": "Q2RPB",
-          "weight": 3,
-          "correct": 0,
-          "wrong": 0
-        },
-        {
-          "name": "11A5_Nguyễn Thị Thu",
-          "password": "UZM6H",
-          "weight": 3,
-          "correct": 0,
-          "wrong": 0
-        },
-        {
-          "name": "11A5_Khương Thị Anh Thư",
-          "password": "XFLNZ",
-          "weight": 3,
-          "correct": 0,
-          "wrong": 0
-        },
-        {
-          "name": "11A5_Nguyễn Thị Ngọc Thương",
-          "password": "ELHY5",
-          "weight": 3,
-          "correct": 0,
-          "wrong": 0
-        },
-        {
-          "name": "11A5_Khổng Thị Thu Trang",
-          "password": "HBQ6T",
-          "weight": 3,
-          "correct": 0,
-          "wrong": 0
-        },
-        {
-          "name": "11A5_Nguyễn Thị Quỳnh Trang",
-          "password": "888TY",
-          "weight": 3,
-          "correct": 0,
-          "wrong": 0
-        },
-        {
-          "name": "11A5_Đặng Minh Triết",
-          "password": "8FWDG",
-          "weight": 3,
-          "correct": 0,
-          "wrong": 0
-        },
-        {
-          "name": "11A5_Trần Anh Tuấn",
-          "password": "PHAWG",
-          "weight": 3,
-          "correct": 0,
-          "wrong": 0
-        },
-        {
-          "name": "11A5_Hoàng Ánh Tuyết",
-          "password": "HRHGM",
-          "weight": 3,
-          "correct": 0,
-          "wrong": 0
-        },
-        {
-          "name": "11A5_Phan Ánh Tuyết",
-          "password": "PLFE8",
-          "weight": 3,
-          "correct": 0,
-          "wrong": 0
-        },
-        {
-          "name": "11A5_Khổng Mạnh Tú",
-          "password": "5HQ6D",
-          "weight": 3,
-          "correct": 0,
-          "wrong": 0
-        },
-        {
-          "name": "11A5_Khổng Ngọc Tú",
-          "password": "K47BC",
-          "weight": 3,
-          "correct": 0,
-          "wrong": 0
-        },
-        {
-          "name": "11A5_Nguyễn Anh Tú",
-          "password": "A6SXS",
-          "weight": 3,
-          "correct": 0,
-          "wrong": 0
-        },
-        {
-          "name": "11A5_Nguyễn Văn Việt",
-          "password": "GA8LG",
-          "weight": 3,
-          "correct": 0,
-          "wrong": 0
-        },
-        {
-          "name": "11A5_Đào Tường Vy",
-          "password": "2E8RZ",
-          "weight": 3,
-          "correct": 0,
-          "wrong": 0
-        },
-        {
-          "name": "11A5_Nguyễn Bảo Yến",
-          "password": "KB775",
-          "weight": 3,
-          "correct": 0,
-          "wrong": 0
-        },
-        {
-          "name": "11A5_Nguyễn Thị Yến",
-          "password": "344MC",
-          "weight": 3,
-          "correct": 0,
-          "wrong": 0
-        }
-      ]
+      "name": "12A4_Đỗ Mai Anh",
+      "pw": "U9G7R",
+      "truong": ""
     },
     {
-      "name": "12A6",
-      "students": [
-        {
-          "name": "11A6_Trần Thúy An",
-          "password": "LG2RY",
-          "weight": 3,
-          "correct": 0,
-          "wrong": 0
-        },
-        {
-          "name": "11A6_Nguyễn Thi Lan Anh_1",
-          "password": "45P2C",
-          "weight": 3,
-          "correct": 0,
-          "wrong": 0
-        },
-        {
-          "name": "11A6_Nguyễn Thị Lan Anh_2",
-          "password": "TGW68",
-          "weight": 3,
-          "correct": 0,
-          "wrong": 0
-        },
-        {
-          "name": "11A6_Nguyễn Thị Lan Anh_3",
-          "password": "CJJUQ",
-          "weight": 3,
-          "correct": 0,
-          "wrong": 0
-        },
-        {
-          "name": "11A6_Khương Ngọc Ánh",
-          "password": "9P8KX",
-          "weight": 3,
-          "correct": 0,
-          "wrong": 0
-        },
-        {
-          "name": "11A6_Nguyễn Ngọc Ánh",
-          "password": "JW62Q",
-          "weight": 3,
-          "correct": 0,
-          "wrong": 0
-        },
-        {
-          "name": "11A6_Trần Linh Chi",
-          "password": "SWBJM",
-          "weight": 3,
-          "correct": 0,
-          "wrong": 0
-        },
-        {
-          "name": "11A6_Vũ Quang Chung",
-          "password": "KKEHU",
-          "weight": 3,
-          "correct": 0,
-          "wrong": 0
-        },
-        {
-          "name": "11A6_Nguyễn Thanh Doan",
-          "password": "R72BX",
-          "weight": 3,
-          "correct": 0,
-          "wrong": 0
-        },
-        {
-          "name": "11A6_Dương Văn Duy",
-          "password": "FGKQU",
-          "weight": 3,
-          "correct": 0,
-          "wrong": 0
-        },
-        {
-          "name": "11A6_Phạm Khánh Duy",
-          "password": "CW4HN",
-          "weight": 3,
-          "correct": 0,
-          "wrong": 0
-        },
-        {
-          "name": "11A6_Ngô Tiến Dũng",
-          "password": "VFBBR",
-          "weight": 3,
-          "correct": 0,
-          "wrong": 0
-        },
-        {
-          "name": "11A6_Nguyễn Thị Ánh Dương",
-          "password": "BFADQ",
-          "weight": 3,
-          "correct": 0,
-          "wrong": 0
-        },
-        {
-          "name": "11A6_Nguyễn Tùng Dương",
-          "password": "C9ZND",
-          "weight": 3,
-          "correct": 0,
-          "wrong": 0
-        },
-        {
-          "name": "11A6_Ngô Ngọc Đại",
-          "password": "N5E6T",
-          "weight": 3,
-          "correct": 0,
-          "wrong": 0
-        },
-        {
-          "name": "11A6_Nguyễn Công Đoàn",
-          "password": "DMA8K",
-          "weight": 3,
-          "correct": 0,
-          "wrong": 0
-        },
-        {
-          "name": "11A6_Phan Thị Hương Giang",
-          "password": "X8SVX",
-          "weight": 3,
-          "correct": 0,
-          "wrong": 0
-        },
-        {
-          "name": "11A6_Trần Thị Thu Hằng",
-          "password": "72P2M",
-          "weight": 3,
-          "correct": 0,
-          "wrong": 0
-        },
-        {
-          "name": "11A6_Khổng Minh Hiếu",
-          "password": "CD7AA",
-          "weight": 3,
-          "correct": 0,
-          "wrong": 0
-        },
-        {
-          "name": "11A6_Lưu Trung Hiếu",
-          "password": "ZK5HV",
-          "weight": 3,
-          "correct": 0,
-          "wrong": 0
-        },
-        {
-          "name": "11A6_Hứa Thị Hoa",
-          "password": "M3Q74",
-          "weight": 3,
-          "correct": 0,
-          "wrong": 0
-        },
-        {
-          "name": "11A6_Trần Huy Hoàng",
-          "password": "HFLPQ",
-          "weight": 3,
-          "correct": 0,
-          "wrong": 0
-        },
-        {
-          "name": "11A6_Nguyễn Văn Học",
-          "password": "A2BYX",
-          "weight": 3,
-          "correct": 0,
-          "wrong": 0
-        },
-        {
-          "name": "11A6_Nguyễn Thúy Hồng",
-          "password": "HZL5X",
-          "weight": 3,
-          "correct": 0,
-          "wrong": 0
-        },
-        {
-          "name": "11A6_Lăng Thanh Huệ",
-          "password": "BTUAG",
-          "weight": 3,
-          "correct": 0,
-          "wrong": 0
-        },
-        {
-          "name": "11A6_Nguyễn Hà Tuấn Hùng",
-          "password": "MA83W",
-          "weight": 3,
-          "correct": 0,
-          "wrong": 0
-        },
-        {
-          "name": "11A6_Lương Thế Hưng",
-          "password": "U2SWD",
-          "weight": 3,
-          "correct": 0,
-          "wrong": 0
-        },
-        {
-          "name": "11A6_Nguyễn Thành Hưng",
-          "password": "GRC2H",
-          "weight": 3,
-          "correct": 0,
-          "wrong": 0
-        },
-        {
-          "name": "11A6_Khổng Lan Hương",
-          "password": "HAJXA",
-          "weight": 3,
-          "correct": 0,
-          "wrong": 0
-        },
-        {
-          "name": "11A6_Nguyễn Thị Mai Hương",
-          "password": "4C4ZJ",
-          "weight": 3,
-          "correct": 0,
-          "wrong": 0
-        },
-        {
-          "name": "11A6_Phan Thị Thu Hương",
-          "password": "P9QPV",
-          "weight": 3,
-          "correct": 0,
-          "wrong": 0
-        },
-        {
-          "name": "11A6_Phạm Anh Khoa",
-          "password": "WCDCR",
-          "weight": 3,
-          "correct": 0,
-          "wrong": 0
-        },
-        {
-          "name": "11A6_Bùi Minh Khuyến",
-          "password": "ECSPX",
-          "weight": 3,
-          "correct": 0,
-          "wrong": 0
-        },
-        {
-          "name": "11A6_Vũ Hoàng Lân",
-          "password": "45GF2",
-          "weight": 3,
-          "correct": 0,
-          "wrong": 0
-        },
-        {
-          "name": "11A6_Hà Thị Thu Lê",
-          "password": "XC2BC",
-          "weight": 3,
-          "correct": 0,
-          "wrong": 0
-        },
-        {
-          "name": "11A6_Trần Thị Yến Linh",
-          "password": "4LS98",
-          "weight": 3,
-          "correct": 0,
-          "wrong": 0
-        },
-        {
-          "name": "11A6_Vương Thị Thùy Linh",
-          "password": "QQGTZ",
-          "weight": 3,
-          "correct": 0,
-          "wrong": 0
-        },
-        {
-          "name": "11A6_Hoàng Quốc Việt",
-          "password": "NTSZU",
-          "weight": 3,
-          "correct": 0,
-          "wrong": 0
-        }
-      ]
+      "name": "12A4_Đỗ Việt Anh",
+      "pw": "4VVNC",
+      "truong": ""
+    },
+    {
+      "name": "12A4_Nguyễn Ngọc Anh",
+      "pw": "FJ4QJ",
+      "truong": ""
+    },
+    {
+      "name": "12A4_Trần Thảo Anh",
+      "pw": "UPPSS",
+      "truong": ""
+    },
+    {
+      "name": "12A4_Trần Thị Hải Anh",
+      "pw": "N749L",
+      "truong": ""
+    },
+    {
+      "name": "12A4_Trần Vân Anh",
+      "pw": "8ATNX",
+      "truong": ""
+    },
+    {
+      "name": "12A4_Lê Ngọc Ánh",
+      "pw": "MTH4E",
+      "truong": ""
+    },
+    {
+      "name": "12A4_Nguyễn Thị Ngọc Ánh",
+      "pw": "48NBC",
+      "truong": ""
+    },
+    {
+      "name": "12A4_Triệu Thị Thanh Ba",
+      "pw": "EV7UB",
+      "truong": ""
+    },
+    {
+      "name": "12A4_Đỗ Nguyễn Hà Châm",
+      "pw": "ML82D",
+      "truong": ""
+    },
+    {
+      "name": "12A4_Vũ Lâm Châu",
+      "pw": "RYAHZ",
+      "truong": ""
+    },
+    {
+      "name": "12A4_Nguyễn Ngọc Chương",
+      "pw": "CL9P2",
+      "truong": ""
+    },
+    {
+      "name": "12A4_Khổng Minh Cương",
+      "pw": "C777X",
+      "truong": ""
+    },
+    {
+      "name": "12A4_Nguyễn Quốc Cường",
+      "pw": "Y3HNY",
+      "truong": ""
+    },
+    {
+      "name": "12A4_Khổng Chí Dũng",
+      "pw": "HHYAH",
+      "truong": ""
+    },
+    {
+      "name": "12A4_Khổng Tuấn Dũng",
+      "pw": "UDU24",
+      "truong": ""
+    },
+    {
+      "name": "12A4_Nguyễn Đức Duy",
+      "pw": "NB2JV",
+      "truong": ""
+    },
+    {
+      "name": "12A4_Trần Thị Thùy Dương",
+      "pw": "ZTNVH",
+      "truong": ""
+    },
+    {
+      "name": "12A4_Trần Quang Đạo",
+      "pw": "8ZES6",
+      "truong": ""
+    },
+    {
+      "name": "12A4_Khổng Tiến Đạt",
+      "pw": "KGVHM",
+      "truong": ""
+    },
+    {
+      "name": "12A4_Trần Quang Đạt",
+      "pw": "H7KDD",
+      "truong": ""
+    },
+    {
+      "name": "12A4_Nguyễn Thị Định",
+      "pw": "NDMAB",
+      "truong": ""
+    },
+    {
+      "name": "12A4_Nguyễn Thiện Đức",
+      "pw": "YUQSU",
+      "truong": ""
+    },
+    {
+      "name": "12A4_Dương Minh Hải",
+      "pw": "LKF6C",
+      "truong": ""
+    },
+    {
+      "name": "12A4_Đỗ Chí Hải",
+      "pw": "SQEF2",
+      "truong": ""
+    },
+    {
+      "name": "12A4_Trần Thị Thu Hằng",
+      "pw": "67WAY",
+      "truong": ""
+    },
+    {
+      "name": "12A4_Vũ Minh Hằng",
+      "pw": "E72CV",
+      "truong": ""
+    },
+    {
+      "name": "12A4_Nguyễn Thị Kim Huệ",
+      "pw": "BAQ2L",
+      "truong": ""
+    },
+    {
+      "name": "12A4_Nguyễn Đức Huy",
+      "pw": "HMNVA",
+      "truong": ""
+    },
+    {
+      "name": "12A4_Trần Quang Huy",
+      "pw": "EE7PW",
+      "truong": ""
+    },
+    {
+      "name": "12A4_Vũ Thị Thu Huyền",
+      "pw": "WRVQ7",
+      "truong": ""
+    },
+    {
+      "name": "12A4_Nguyễn Thế Hưng",
+      "pw": "6UFP9",
+      "truong": ""
+    },
+    {
+      "name": "12A4_Đỗ Thị Mỹ Hương",
+      "pw": "26NQM",
+      "truong": ""
+    },
+    {
+      "name": "12A4_Nguyễn Anh Kiệt",
+      "pw": "TGXEZ",
+      "truong": ""
+    },
+    {
+      "name": "12A4_Hoàng Bảo Tuệ Lâm",
+      "pw": "D4K4K",
+      "truong": ""
+    },
+    {
+      "name": "12A4_Đỗ Thị Mỹ Lệ",
+      "pw": "J3YMK",
+      "truong": ""
+    },
+    {
+      "name": "12A4_Dương Hà Linh",
+      "pw": "4XPQ5",
+      "truong": ""
+    },
+    {
+      "name": "12A4_Lương Thị Ngọc Linh",
+      "pw": "TF58Z",
+      "truong": ""
+    },
+    {
+      "name": "12A4_Nguyễn Thị Linh",
+      "pw": "MG3JQ",
+      "truong": ""
+    },
+    {
+      "name": "12A4_Nguyễn Thị Phương Ngân",
+      "pw": "Z2UG4",
+      "truong": ""
+    }
+  ],
+  "12A5": [
+    {
+      "name": "12A5_Đỗ Mai Linh",
+      "pw": "5673B",
+      "truong": ""
+    },
+    {
+      "name": "12A5_Phan Diệu Linh",
+      "pw": "4NEV3",
+      "truong": ""
+    },
+    {
+      "name": "12A5_Phan Thùy Linh",
+      "pw": "QETTC",
+      "truong": ""
+    },
+    {
+      "name": "12A5_Đỗ Đức Long",
+      "pw": "MUQ44",
+      "truong": ""
+    },
+    {
+      "name": "12A5_Trần Hiền Lương",
+      "pw": "WKT6Y",
+      "truong": ""
+    },
+    {
+      "name": "12A5_Đào Trần Khánh Ly",
+      "pw": "VJULT",
+      "truong": ""
+    },
+    {
+      "name": "12A5_Vũ Thị Khánh Ly",
+      "pw": "9Y2JN",
+      "truong": ""
+    },
+    {
+      "name": "12A5_Dương Đức Mạnh",
+      "pw": "5HS6A",
+      "truong": ""
+    },
+    {
+      "name": "12A5_Trần Đức Mạnh",
+      "pw": "L8GHZ",
+      "truong": ""
+    },
+    {
+      "name": "12A5_Lê Thị Quý Mến",
+      "pw": "DT4KY",
+      "truong": ""
+    },
+    {
+      "name": "12A5_Nguyễn Quang Minh",
+      "pw": "EWVQM",
+      "truong": ""
+    },
+    {
+      "name": "12A5_Trần Việt Nam",
+      "pw": "C4E39",
+      "truong": ""
+    },
+    {
+      "name": "12A5_Hà Bảo Ngân",
+      "pw": "3HNG9",
+      "truong": ""
+    },
+    {
+      "name": "12A5_Nguyễn Bích Ngọc",
+      "pw": "793WX",
+      "truong": ""
+    },
+    {
+      "name": "12A5_Nguyễn Hồng Nhung",
+      "pw": "KRHE9",
+      "truong": ""
+    },
+    {
+      "name": "12A5_Trần Hữu Ninh",
+      "pw": "6Z9Q5",
+      "truong": ""
+    },
+    {
+      "name": "12A5_Nguyễn Văn Phúc",
+      "pw": "X48G4",
+      "truong": ""
+    },
+    {
+      "name": "12A5_Nguyễn Minh Phương",
+      "pw": "F8Y5U",
+      "truong": ""
+    },
+    {
+      "name": "12A5_Trần Như Quỳnh",
+      "pw": "22FZH",
+      "truong": ""
+    },
+    {
+      "name": "12A5_Khổng Ánh Sáng",
+      "pw": "3XLE3",
+      "truong": ""
+    },
+    {
+      "name": "12A5_Hoàng Thị Phương Thảo",
+      "pw": "WQVRU",
+      "truong": ""
+    },
+    {
+      "name": "12A5_Nguyễn Duy Thiều",
+      "pw": "TMB4C",
+      "truong": ""
+    },
+    {
+      "name": "12A5_Nguyễn Thị Thu",
+      "pw": "82Q7M",
+      "truong": ""
+    },
+    {
+      "name": "12A5_Khương Thị Anh Thư",
+      "pw": "BSQKM",
+      "truong": ""
+    },
+    {
+      "name": "12A5_Nguyễn Thị Ngọc Thương",
+      "pw": "NHNSC",
+      "truong": ""
+    },
+    {
+      "name": "12A5_Khổng Thị Thu Trang",
+      "pw": "VBRQN",
+      "truong": ""
+    },
+    {
+      "name": "12A5_Nguyễn Thị Quỳnh Trang",
+      "pw": "JDRA2",
+      "truong": ""
+    },
+    {
+      "name": "12A5_Đặng Minh Triết",
+      "pw": "W7CBV",
+      "truong": ""
+    },
+    {
+      "name": "12A5_Trần Anh Tuấn",
+      "pw": "CJJJG",
+      "truong": ""
+    },
+    {
+      "name": "12A5_Hoàng Ánh Tuyết",
+      "pw": "GKW8Z",
+      "truong": ""
+    },
+    {
+      "name": "12A5_Phan Ánh Tuyết",
+      "pw": "JPHR6",
+      "truong": ""
+    },
+    {
+      "name": "12A5_Khổng Mạnh Tú",
+      "pw": "VZQW6",
+      "truong": ""
+    },
+    {
+      "name": "12A5_Khổng Ngọc Tú",
+      "pw": "JTWWE",
+      "truong": ""
+    },
+    {
+      "name": "12A5_Nguyễn Anh Tú",
+      "pw": "2N2PK",
+      "truong": ""
+    },
+    {
+      "name": "12A5_Nguyễn Văn Việt",
+      "pw": "SUDC9",
+      "truong": ""
+    },
+    {
+      "name": "12A5_Đào Tường Vy",
+      "pw": "3X3J8",
+      "truong": ""
+    },
+    {
+      "name": "12A5_Nguyễn Bảo Yến",
+      "pw": "8ZXMG",
+      "truong": ""
+    },
+    {
+      "name": "12A5_Nguyễn Thị Yến",
+      "pw": "GAPSG",
+      "truong": ""
+    }
+  ],
+  "12A6": [
+    {
+      "name": "12A6_Trần Thúy An",
+      "pw": "YLGLX",
+      "truong": "THPT Văn Quán"
+    },
+    {
+      "name": "12A6_Nguyễn Thi Lan Anh_1",
+      "pw": "V4ZFA",
+      "truong": "THPT Văn Quán"
+    },
+    {
+      "name": "12A6_Nguyễn Thị Lan Anh_2",
+      "pw": "BDUKJ",
+      "truong": "THPT Văn Quán"
+    },
+    {
+      "name": "12A6_Nguyễn Thị Lan Anh_3",
+      "pw": "ALNHU",
+      "truong": "THPT Văn Quán"
+    },
+    {
+      "name": "12A6_Khương Ngọc Ánh",
+      "pw": "UVDAV",
+      "truong": "THPT Văn Quán"
+    },
+    {
+      "name": "12A6_Nguyễn Ngọc Ánh",
+      "pw": "BHAAN",
+      "truong": "THPT Văn Quán"
+    },
+    {
+      "name": "12A6_Trần Linh Chi",
+      "pw": "K62WK",
+      "truong": "THPT Văn Quán"
+    },
+    {
+      "name": "12A6_Vũ Quang Chung",
+      "pw": "WDFPU",
+      "truong": "THPT Văn Quán"
+    },
+    {
+      "name": "12A6_Nguyễn Thanh Doan",
+      "pw": "JB6DM",
+      "truong": "THPT Văn Quán"
+    },
+    {
+      "name": "12A6_Dương Văn Duy",
+      "pw": "TLJDM",
+      "truong": "THPT Văn Quán"
+    },
+    {
+      "name": "12A6_Phạm Khánh Duy",
+      "pw": "6T8EH",
+      "truong": "THPT Văn Quán"
+    },
+    {
+      "name": "12A6_Ngô Tiến Dũng",
+      "pw": "EG2ZQ",
+      "truong": "THPT Văn Quán"
+    },
+    {
+      "name": "12A6_Nguyễn Thị Ánh Dương",
+      "pw": "U2VUZ",
+      "truong": "THPT Văn Quán"
+    },
+    {
+      "name": "12A6_Nguyễn Tùng Dương",
+      "pw": "L6KYG",
+      "truong": "THPT Văn Quán"
+    },
+    {
+      "name": "12A6_Ngô Ngọc Đại",
+      "pw": "QMFPU",
+      "truong": "THPT Văn Quán"
+    },
+    {
+      "name": "12A6_Nguyễn Công Đoàn",
+      "pw": "LQ233",
+      "truong": "THPT Văn Quán"
+    },
+    {
+      "name": "12A6_Phan Thị Hương Giang",
+      "pw": "NK7AS",
+      "truong": "THPT Văn Quán"
+    },
+    {
+      "name": "12A6_Trần Thị Thu Hằng",
+      "pw": "FBNPF",
+      "truong": "THPT Văn Quán"
+    },
+    {
+      "name": "12A6_Khổng Minh Hiếu",
+      "pw": "B25V2",
+      "truong": "THPT Văn Quán"
+    },
+    {
+      "name": "12A6_Lưu Trung Hiếu",
+      "pw": "B3FU3",
+      "truong": "THPT Văn Quán"
+    },
+    {
+      "name": "12A6_Hứa Thị Hoa",
+      "pw": "48T62",
+      "truong": "THPT Văn Quán"
+    },
+    {
+      "name": "12A6_Trần Huy Hoàng",
+      "pw": "WVPJ2",
+      "truong": "THPT Văn Quán"
+    },
+    {
+      "name": "12A6_Nguyễn Văn Học",
+      "pw": "S2KHF",
+      "truong": "THPT Văn Quán"
+    },
+    {
+      "name": "12A6_Nguyễn Thúy Hồng",
+      "pw": "G43ZP",
+      "truong": "THPT Văn Quán"
+    },
+    {
+      "name": "12A6_Lăng Thanh Huệ",
+      "pw": "FRXYP",
+      "truong": "THPT Văn Quán"
+    },
+    {
+      "name": "12A6_Nguyễn Hà Tuấn Hùng",
+      "pw": "NS3ZR",
+      "truong": "THPT Văn Quán"
+    },
+    {
+      "name": "12A6_Lương Thế Hưng",
+      "pw": "LUFE6",
+      "truong": "THPT Văn Quán"
+    },
+    {
+      "name": "12A6_Nguyễn Thành Hưng",
+      "pw": "KVJJ2",
+      "truong": "THPT Văn Quán"
+    },
+    {
+      "name": "12A6_Khổng Lan Hương",
+      "pw": "FK2ZX",
+      "truong": "THPT Văn Quán"
+    },
+    {
+      "name": "12A6_Nguyễn Thị Mai Hương",
+      "pw": "YTC2R",
+      "truong": "THPT Văn Quán"
+    },
+    {
+      "name": "12A6_Phan Thị Thu Hương",
+      "pw": "6T4RF",
+      "truong": "THPT Văn Quán"
+    },
+    {
+      "name": "12A6_Phạm Anh Khoa",
+      "pw": "UF2FL",
+      "truong": "THPT Văn Quán"
+    },
+    {
+      "name": "12A6_Bùi Minh Khuyến",
+      "pw": "4VPDF",
+      "truong": "THPT Văn Quán"
+    },
+    {
+      "name": "12A6_Vũ Hoàng Lân",
+      "pw": "VECYZ",
+      "truong": "THPT Văn Quán"
+    },
+    {
+      "name": "12A6_Hà Thị Thu Lê",
+      "pw": "CZMZB",
+      "truong": "THPT Văn Quán"
+    },
+    {
+      "name": "12A6_Trần Thị Yến Linh",
+      "pw": "VUD3V",
+      "truong": "THPT Văn Quán"
+    },
+    {
+      "name": "12A6_Vương Thị Thùy Linh",
+      "pw": "6RHR5",
+      "truong": "THPT Văn Quán"
+    },
+    {
+      "name": "12A6_Hoàng Quốc Việt",
+      "pw": "RD5MJ",
+      "truong": "THPT Văn Quán"
+    }
+  ],
+  "TỰ DO": [
+    {
+      "name": "12A6_TRẦN HUY HOÀNG",
+      "pw": "NPXRL",
+      "truong": "THPT Văn Quán"
     }
   ]
 }
